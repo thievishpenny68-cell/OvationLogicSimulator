@@ -1,0 +1,248 @@
+{
+  "basis": "REF_1100 §4.120 p415–416 plus explicit aligned software scan origin; independent literal expectations, not Ovation runtime",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "init0": {
+          "OUT": -3
+        },
+        "init1": {
+          "OUT": -3
+        },
+        "init2": {
+          "OUT": -3
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": -3
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 0,
+          "phase": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "init0": {
+          "OUT": 0
+        },
+        "init1": {
+          "OUT": 0
+        },
+        "init2": {
+          "OUT": 8
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 0,
+          "phase": 1
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "init0": {
+          "OUT": 0
+        },
+        "init1": {
+          "OUT": 0
+        },
+        "init2": {
+          "OUT": 8
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 0,
+          "phase": 0
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "init0": {
+          "OUT": 0
+        },
+        "init1": {
+          "OUT": 0
+        },
+        "init2": {
+          "OUT": 8
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 0,
+          "phase": 1
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "init0": {
+          "OUT": 0
+        },
+        "init1": {
+          "OUT": 0
+        },
+        "init2": {
+          "OUT": 8
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 10,
+          "phase": 0
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "init0": {
+          "OUT": 0
+        },
+        "init1": {
+          "OUT": 0
+        },
+        "init2": {
+          "OUT": 8
+        },
+        "init3": {
+          "OUT": -3
+        },
+        "init4": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 10,
+          "phase": 1
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "init0": {
+          "OUT": 10
+        },
+        "init1": {
+          "OUT": 10
+        },
+        "init2": {
+          "OUT": 10
+        },
+        "init3": {
+          "OUT": 10
+        },
+        "init4": {
+          "OUT": 10
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 20,
+          "phase": 0
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "init0": {
+          "OUT": 10
+        },
+        "init1": {
+          "OUT": 10
+        },
+        "init2": {
+          "OUT": 10
+        },
+        "init3": {
+          "OUT": 10
+        },
+        "init4": {
+          "OUT": 10
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 20,
+          "phase": 1
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 0.8,
+      "values": {
+        "init0": {
+          "OUT": 20
+        },
+        "init1": {
+          "OUT": 20
+        },
+        "init2": {
+          "OUT": 20
+        },
+        "init3": {
+          "OUT": 20
+        },
+        "init4": {
+          "OUT": 20
+        }
+      },
+      "states": {
+        "init4": {
+          "S01": 30,
+          "phase": 0
+        }
+      }
+    }
+  ]
+}

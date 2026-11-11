@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.18.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "FIRSTOUT · 已有高忽略 / 多首出 / 重新待命",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "rst",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 50,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              true
+            ],
+            [
+              0.7,
+              true
+            ],
+            [
+              0.8,
+              false
+            ],
+            [
+              0.9,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "one",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 260,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              true
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              true
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              true
+            ],
+            [
+              0.8,
+              true
+            ],
+            [
+              0.9,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "last",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 470,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              true
+            ],
+            [
+              0.8,
+              false
+            ],
+            [
+              0.9,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "all",
+      "type": "FIRSTOUT",
+      "name": "FIRSTOUT",
+      "x": 430,
+      "y": 30,
+      "params": {
+        "MCFG": 0
+      },
+      "initial": {
+        "MNTR": 0,
+        "MULT": false,
+        "NTRP": 0,
+        "TRPD": false,
+        "mode": 0,
+        "previousRST": false,
+        "previousMask": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "low",
+      "type": "FIRSTOUT",
+      "name": "FIRSTOUT",
+      "x": 900,
+      "y": 30,
+      "params": {
+        "MCFG": 1
+      },
+      "initial": {
+        "MNTR": 0,
+        "MULT": false,
+        "NTRP": 0,
+        "TRPD": false,
+        "mode": 0,
+        "previousRST": false,
+        "previousMask": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "rst",
+      "fromPort": "OUT",
+      "to": "all",
+      "toPort": "RST"
+    },
+    {
+      "from": "one",
+      "fromPort": "OUT",
+      "to": "all",
+      "toPort": "IN1"
+    },
+    {
+      "from": "last",
+      "fromPort": "OUT",
+      "to": "all",
+      "toPort": "IN16"
+    },
+    {
+      "from": "rst",
+      "fromPort": "OUT",
+      "to": "low",
+      "toPort": "RST"
+    },
+    {
+      "from": "one",
+      "fromPort": "OUT",
+      "to": "low",
+      "toPort": "IN1"
+    },
+    {
+      "from": "last",
+      "fromPort": "OUT",
+      "to": "low",
+      "toPort": "IN16"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 1400,
+      "y": 40,
+      "width": 480,
+      "height": 500,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"all\",\"values\",\"MNTR\"]",
+        "[\"all\",\"values\",\"MULT\"]",
+        "[\"all\",\"values\",\"NTRP\"]",
+        "[\"all\",\"values\",\"TRPD\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "示波器 2",
+      "x": 1400,
+      "y": 570,
+      "width": 480,
+      "height": 240,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"low\",\"values\",\"MNTR\"]",
+        "[\"all\",\"states\",\"mode\"]"
+      ]
+    }
+  ]
+}

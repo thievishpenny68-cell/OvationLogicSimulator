@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.12.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "G02 · 精度分歧停止示例",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "input-IN1",
+      "type": "INPUT",
+      "name": "IN1 测试输入",
+      "x": 40,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              0.7
+            ],
+            [
+              0.1,
+              0.7
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "algorithm",
+      "type": "GAINBIAS",
+      "name": "GAINBIAS",
+      "x": 330,
+      "y": 90,
+      "params": {
+        "GAIN": 1.1,
+        "BIAS": 0.3,
+        "BTSC": -4,
+        "TPSC": 4
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual",
+        "ruleReference": "REF_1100 §4.42 p177"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input-IN1",
+      "fromPort": "OUT",
+      "to": "algorithm",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "G02 OUT",
+      "x": 570,
+      "y": 30,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"algorithm\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

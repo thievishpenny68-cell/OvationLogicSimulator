@@ -1,0 +1,110 @@
+{
+  "basis": "Independent hand-derived bit masks REF_1100 §4.71/4.124, not Ovation runtime",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "packA": {
+          "POUT": 16384
+        },
+        "packB": {
+          "POUT": 16384
+        },
+        "early": {
+          "D1": false,
+          "D2": false
+        },
+        "late": {
+          "D1": false,
+          "D2": false,
+          "D14": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "packA": {
+          "POUT": 16387
+        },
+        "packB": {
+          "POUT": 16387
+        },
+        "early": {
+          "D1": false,
+          "D2": false
+        },
+        "late": {
+          "D1": true,
+          "D2": false,
+          "D14": true
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "packA": {
+          "POUT": 49156
+        },
+        "packB": {
+          "POUT": 49156
+        },
+        "early": {
+          "D1": true,
+          "D2": false
+        },
+        "late": {
+          "D1": false,
+          "D2": true,
+          "D14": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "packA": {
+          "POUT": 16389
+        },
+        "packB": {
+          "POUT": 16389
+        },
+        "early": {
+          "D1": false,
+          "D2": true
+        },
+        "late": {
+          "D1": false,
+          "D2": true,
+          "D14": true
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "packA": {
+          "POUT": 16386
+        },
+        "packB": {
+          "POUT": 16386
+        },
+        "early": {
+          "D1": false,
+          "D2": true
+        },
+        "late": {
+          "D1": true,
+          "D2": false,
+          "D14": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.13.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "基本比较、选择、计数与冻结累加（手册工况）",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "a",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0.1,
+              2
+            ],
+            [
+              0.3,
+              4
+            ],
+            [
+              0.5,
+              1
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 220,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 3
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "trigger",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 410,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              true
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "run",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 600,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "constant",
+          "value": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "reset",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 790,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.4,
+              true
+            ],
+            [
+              0.5,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "freeze",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 980,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.5,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "zero",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 1170,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "constant",
+          "value": false
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "compare",
+      "type": "COMPARE",
+      "name": "COMPARE",
+      "x": 410,
+      "y": 40,
+      "params": {},
+      "initial": {
+        "OUT": false,
+        "OUTG": false,
+        "OUTL": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "selector",
+      "type": "SELECTOR",
+      "name": "SELECTOR",
+      "x": 410,
+      "y": 390,
+      "params": {
+        "NMIN": 2
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "counter",
+      "type": "COUNTER",
+      "name": "COUNTER",
+      "x": 410,
+      "y": 780,
+      "params": {
+        "DRCT": 1,
+        "TARG": 2
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "digital",
+      "type": "DIGCOUNT",
+      "name": "DIGCOUNT",
+      "x": 820,
+      "y": 40,
+      "params": {
+        "NMIN": 2,
+        "MTRU": 1
+      },
+      "initial": {
+        "OUT": 0,
+        "FOUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "sum",
+      "type": "RESETSUM",
+      "name": "RESETSUM",
+      "x": 820,
+      "y": 520,
+      "params": {
+        "RCNT": 10,
+        "GAIN": 1,
+        "TRST": 0
+      },
+      "initial": {
+        "OUT": 0,
+        "FOUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "monitor",
+      "type": "HIGHLOWMON",
+      "name": "HIGHLOWMON",
+      "x": 820,
+      "y": 850,
+      "params": {
+        "HISP": 3,
+        "HIDB": 1,
+        "LOSP": 0,
+        "LODB": 0
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "transfer",
+      "type": "TRANSFER",
+      "name": "TRANSFER",
+      "x": 820,
+      "y": 1100,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 100,
+        "BTSC": -100,
+        "SLEW": "OFF",
+        "OTRK": "OFF",
+        "TRR1": 2.5,
+        "TRR2": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "compare",
+      "toPort": "IN1"
+    },
+    {
+      "from": "b",
+      "fromPort": "OUT",
+      "to": "compare",
+      "toPort": "IN2"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "selector",
+      "toPort": "IN1"
+    },
+    {
+      "from": "b",
+      "fromPort": "OUT",
+      "to": "selector",
+      "toPort": "IN2"
+    },
+    {
+      "from": "trigger",
+      "fromPort": "OUT",
+      "to": "selector",
+      "toPort": "DIN1"
+    },
+    {
+      "from": "reset",
+      "fromPort": "OUT",
+      "to": "selector",
+      "toPort": "DIN2"
+    },
+    {
+      "from": "zero",
+      "fromPort": "OUT",
+      "to": "selector",
+      "toPort": "DIN3"
+    },
+    {
+      "from": "trigger",
+      "fromPort": "OUT",
+      "to": "counter",
+      "toPort": "IN1"
+    },
+    {
+      "from": "run",
+      "fromPort": "OUT",
+      "to": "counter",
+      "toPort": "ENBL"
+    },
+    {
+      "from": "trigger",
+      "fromPort": "OUT",
+      "to": "digital",
+      "toPort": "IN1"
+    },
+    {
+      "from": "reset",
+      "fromPort": "OUT",
+      "to": "digital",
+      "toPort": "IN2"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "IN1"
+    },
+    {
+      "from": "run",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "RUN"
+    },
+    {
+      "from": "freeze",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "FFLG"
+    },
+    {
+      "from": "reset",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "RSET"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "monitor",
+      "toPort": "IN1"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "transfer",
+      "toPort": "IN1"
+    },
+    {
+      "from": "b",
+      "fromPort": "OUT",
+      "to": "transfer",
+      "toPort": "IN2"
+    },
+    {
+      "from": "trigger",
+      "fromPort": "OUT",
+      "to": "transfer",
+      "toPort": "FLAG"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-a",
+      "name": "示波器 1",
+      "x": 1260,
+      "y": 40,
+      "width": 430,
+      "height": 360,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"counter\",\"values\",\"ACT\"]",
+        "[\"counter\",\"values\",\"OUT\"]",
+        "[\"digital\",\"values\",\"OUT\"]",
+        "[\"digital\",\"values\",\"FOUT\"]"
+      ]
+    },
+    {
+      "id": "scope-b",
+      "name": "示波器 1",
+      "x": 1260,
+      "y": 490,
+      "width": 430,
+      "height": 360,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"sum\",\"values\",\"OUT\"]",
+        "[\"sum\",\"values\",\"FOUT\"]",
+        "[\"selector\",\"values\",\"OUT\"]",
+        "[\"monitor\",\"values\",\"OUT\"]",
+        "[\"transfer\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

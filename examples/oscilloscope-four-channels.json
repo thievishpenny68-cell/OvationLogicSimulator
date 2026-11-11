@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.30.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "示例 · 四通道示波器",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "enable",
+      "type": "INPUT",
+      "name": "使能信号",
+      "x": 60,
+      "y": 60,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.7,
+              true
+            ],
+            [
+              1.4,
+              false
+            ],
+            [
+              2,
+              true
+            ],
+            [
+              3.5,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "enable-out",
+      "type": "OUTPUT",
+      "name": "使能信号观察点",
+      "x": 430,
+      "y": 60,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "temperature",
+      "type": "INPUT",
+      "name": "温度（℃）",
+      "x": 60,
+      "y": 230,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "linear",
+          "points": [
+            [
+              0,
+              20
+            ],
+            [
+              1,
+              35
+            ],
+            [
+              2,
+              28
+            ],
+            [
+              3,
+              45
+            ],
+            [
+              4,
+              32
+            ],
+            [
+              5,
+              38
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "temperature-out",
+      "type": "OUTPUT",
+      "name": "温度（℃）观察点",
+      "x": 430,
+      "y": 230,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "pressure",
+      "type": "INPUT",
+      "name": "压力（MPa）",
+      "x": 60,
+      "y": 400,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "linear",
+          "points": [
+            [
+              0,
+              2
+            ],
+            [
+              0.6,
+              5
+            ],
+            [
+              1.8,
+              3
+            ],
+            [
+              2.7,
+              7
+            ],
+            [
+              3.7,
+              4
+            ],
+            [
+              5,
+              6
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "pressure-out",
+      "type": "OUTPUT",
+      "name": "压力（MPa）观察点",
+      "x": 430,
+      "y": 400,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "flow",
+      "type": "INPUT",
+      "name": "流量（%）",
+      "x": 60,
+      "y": 570,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "linear",
+          "points": [
+            [
+              0,
+              50
+            ],
+            [
+              1,
+              30
+            ],
+            [
+              2,
+              70
+            ],
+            [
+              3,
+              40
+            ],
+            [
+              4,
+              80
+            ],
+            [
+              5,
+              60
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "flow-out",
+      "type": "OUTPUT",
+      "name": "流量（%）观察点",
+      "x": 430,
+      "y": 570,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "enable",
+      "fromPort": "OUT",
+      "to": "enable-out",
+      "toPort": "IN1"
+    },
+    {
+      "from": "temperature",
+      "fromPort": "OUT",
+      "to": "temperature-out",
+      "toPort": "IN1"
+    },
+    {
+      "from": "pressure",
+      "fromPort": "OUT",
+      "to": "pressure-out",
+      "toPort": "IN1"
+    },
+    {
+      "from": "flow",
+      "fromPort": "OUT",
+      "to": "flow-out",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "四路波形",
+      "x": 800,
+      "y": 70,
+      "width": 660,
+      "height": 460,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"enable\",\"values\",\"OUT\"]",
+        "[\"temperature\",\"values\",\"OUT\"]",
+        "[\"pressure\",\"values\",\"OUT\"]",
+        "[\"flow\",\"values\",\"OUT\"]"
+      ],
+      "ranges": {
+        "[\"temperature\",\"values\",\"OUT\"]": {
+          "min": 0,
+          "max": 60
+        },
+        "[\"pressure\",\"values\",\"OUT\"]": {
+          "min": 0,
+          "max": 10
+        },
+        "[\"flow\",\"values\",\"OUT\"]": {
+          "min": 0,
+          "max": 100
+        }
+      }
+    }
+  ]
+}

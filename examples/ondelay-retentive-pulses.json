@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.10.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "ONDELAY · 短脉冲断续累计",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "in",
+      "type": "INPUT",
+      "name": "每次TRUE一拍",
+      "x": 30,
+      "y": 30,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              true
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              true
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              true
+            ],
+            [
+              0.9,
+              false
+            ],
+            [
+              1,
+              true
+            ],
+            [
+              1.1,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "en",
+      "type": "INPUT",
+      "name": "持续启用",
+      "x": 30,
+      "y": 200,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "constant",
+          "value": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "timer",
+      "type": "ONDELAY",
+      "name": "ONDELAY",
+      "x": 300,
+      "y": 90,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.35
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "in",
+      "fromPort": "OUT",
+      "to": "timer",
+      "toPort": "IN1"
+    },
+    {
+      "from": "en",
+      "fromPort": "OUT",
+      "to": "timer",
+      "toPort": "ENBL"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "断续输入与累计值",
+      "x": 560,
+      "y": 30,
+      "width": 420,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"in\",\"values\",\"OUT\"]",
+        "[\"timer\",\"values\",\"ACT\"]",
+        "[\"timer\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

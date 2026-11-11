@@ -1,0 +1,216 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "REF1100 formulas and table rules; independently written expected values, not simulator output",
+  "ovationRuntimeEvidence": false,
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "assign": {
+          "OUT": 0
+        },
+        "assign-digital": {
+          "OUT": false
+        },
+        "interp": {
+          "YOUT": 0,
+          "VALID": false
+        },
+        "table": {
+          "OUT": 99
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "assign": {
+          "OUT": -1
+        },
+        "assign-digital": {
+          "OUT": false
+        },
+        "interp": {
+          "YOUT": 10,
+          "VALID": false
+        },
+        "table": {
+          "OUT": 99
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "assign": {
+          "OUT": 0
+        },
+        "assign-digital": {
+          "OUT": false
+        },
+        "interp": {
+          "YOUT": 10,
+          "VALID": true
+        },
+        "table": {
+          "OUT": 99
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "assign": {
+          "OUT": 1
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 15,
+          "VALID": true
+        },
+        "table": {
+          "OUT": -10
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "assign": {
+          "OUT": 2
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 20,
+          "VALID": true
+        },
+        "table": {
+          "OUT": 50
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "assign": {
+          "OUT": 3
+        },
+        "assign-digital": {
+          "OUT": false
+        },
+        "interp": {
+          "YOUT": 25,
+          "VALID": true
+        },
+        "table": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "assign": {
+          "OUT": 4
+        },
+        "assign-digital": {
+          "OUT": false
+        },
+        "interp": {
+          "YOUT": 30,
+          "VALID": true
+        },
+        "table": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "assign": {
+          "OUT": 5
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 30,
+          "VALID": false
+        },
+        "table": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 0.8,
+      "values": {
+        "assign": {
+          "OUT": 50
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 30,
+          "VALID": false
+        },
+        "table": {
+          "OUT": 32767
+        }
+      }
+    },
+    {
+      "tick": 9,
+      "time": 0.9,
+      "values": {
+        "assign": {
+          "OUT": 51
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 30,
+          "VALID": false
+        },
+        "table": {
+          "OUT": 32767
+        }
+      }
+    },
+    {
+      "tick": 10,
+      "time": 1,
+      "values": {
+        "assign": {
+          "OUT": 1.899999976158142
+        },
+        "assign-digital": {
+          "OUT": true
+        },
+        "interp": {
+          "YOUT": 19.5,
+          "VALID": true
+        },
+        "table": {
+          "OUT": -10
+        }
+      }
+    }
+  ]
+}

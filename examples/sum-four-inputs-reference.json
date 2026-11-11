@@ -1,0 +1,80 @@
+{
+  "basis": "REF_1100 §4.112 p396–398, independent literal gain/bias/sum/limit expectations; GOOD inputs, no tracking; not Ovation runtime",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "full": {
+          "OUT": 0
+        },
+        "legacy": {
+          "OUT": 0
+        },
+        "skip3": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "full": {
+          "OUT": 17
+        },
+        "legacy": {
+          "OUT": 3
+        },
+        "skip3": {
+          "OUT": 9
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "full": {
+          "OUT": 28
+        },
+        "legacy": {
+          "OUT": 6
+        },
+        "skip3": {
+          "OUT": 14
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "full": {
+          "OUT": -5
+        },
+        "legacy": {
+          "OUT": -3
+        },
+        "skip3": {
+          "OUT": -1
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "full": {
+          "OUT": 100
+        },
+        "legacy": {
+          "OUT": 100
+        },
+        "skip3": {
+          "OUT": 100
+        }
+      }
+    }
+  ]
+}

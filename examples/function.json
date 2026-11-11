@@ -1,0 +1,744 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.24.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "FUNCTION：分段查表、输入标度与重复点",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "identity-source",
+      "type": "INPUT",
+      "name": "两点默认函数输入",
+      "x": 40,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -200
+            ],
+            [
+              0.2,
+              -100
+            ],
+            [
+              0.3,
+              -50
+            ],
+            [
+              0.4,
+              0
+            ],
+            [
+              0.5,
+              25
+            ],
+            [
+              0.6,
+              100
+            ],
+            [
+              0.7,
+              200
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "identity",
+      "type": "FUNCTION",
+      "name": "两点默认函数",
+      "x": 40,
+      "y": 150,
+      "params": {
+        "GAIN": 1,
+        "BIAS": 0,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 2,
+        "X1": -100,
+        "Y1": -100,
+        "X2": 100,
+        "Y2": 100,
+        "X3": 0,
+        "Y3": 0,
+        "X4": 0,
+        "Y4": 0,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "piecewise-source",
+      "type": "INPUT",
+      "name": "四点分段函数输入",
+      "x": 370,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -3
+            ],
+            [
+              0.2,
+              -2
+            ],
+            [
+              0.3,
+              -1
+            ],
+            [
+              0.4,
+              0
+            ],
+            [
+              0.5,
+              1
+            ],
+            [
+              0.6,
+              3
+            ],
+            [
+              0.7,
+              5
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "piecewise",
+      "type": "FUNCTION",
+      "name": "四点分段函数",
+      "x": 370,
+      "y": 150,
+      "params": {
+        "GAIN": 1,
+        "BIAS": 0,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 4,
+        "X1": -2,
+        "Y1": 4,
+        "X2": 0,
+        "Y2": 0,
+        "X3": 2,
+        "Y3": 2,
+        "X4": 4,
+        "Y4": 2,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "gained-source",
+      "type": "INPUT",
+      "name": "增益和偏置输入",
+      "x": 700,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -2
+            ],
+            [
+              0.2,
+              -1
+            ],
+            [
+              0.3,
+              -0.5
+            ],
+            [
+              0.4,
+              0
+            ],
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.6,
+              1
+            ],
+            [
+              0.7,
+              2
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "gained",
+      "type": "FUNCTION",
+      "name": "增益和偏置",
+      "x": 700,
+      "y": 150,
+      "params": {
+        "GAIN": 2,
+        "BIAS": 1,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 3,
+        "X1": -1,
+        "Y1": 10,
+        "X2": 1,
+        "Y2": 20,
+        "X3": 3,
+        "Y3": 0,
+        "X4": 0,
+        "Y4": 0,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "negative-source",
+      "type": "INPUT",
+      "name": "负增益输入",
+      "x": 1030,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -2
+            ],
+            [
+              0.2,
+              -1
+            ],
+            [
+              0.3,
+              -0.5
+            ],
+            [
+              0.4,
+              0
+            ],
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.6,
+              1
+            ],
+            [
+              0.7,
+              2
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "negative",
+      "type": "FUNCTION",
+      "name": "负增益",
+      "x": 1030,
+      "y": 150,
+      "params": {
+        "GAIN": -2,
+        "BIAS": 1,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 3,
+        "X1": -1,
+        "Y1": 10,
+        "X2": 1,
+        "Y2": 20,
+        "X3": 3,
+        "Y3": 0,
+        "X4": 0,
+        "Y4": 0,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "twelve-source",
+      "type": "INPUT",
+      "name": "十二点表输入",
+      "x": 40,
+      "y": 430,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -1
+            ],
+            [
+              0.2,
+              0
+            ],
+            [
+              0.3,
+              0.5
+            ],
+            [
+              0.4,
+              5
+            ],
+            [
+              0.5,
+              10.5
+            ],
+            [
+              0.6,
+              11
+            ],
+            [
+              0.7,
+              12
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "twelve",
+      "type": "FUNCTION",
+      "name": "十二点表",
+      "x": 40,
+      "y": 540,
+      "params": {
+        "GAIN": 1,
+        "BIAS": 0,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 12,
+        "X1": 0,
+        "Y1": 0,
+        "X2": 1,
+        "Y2": 2,
+        "X3": 2,
+        "Y3": 4,
+        "X4": 3,
+        "Y4": 6,
+        "X5": 4,
+        "Y5": 8,
+        "X6": 5,
+        "Y6": 10,
+        "X7": 6,
+        "Y7": 12,
+        "X8": 7,
+        "Y8": 14,
+        "X9": 8,
+        "Y9": 16,
+        "X10": 9,
+        "Y10": 18,
+        "X11": 10,
+        "Y11": 20,
+        "X12": 11,
+        "Y12": 22
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "duplicate-source",
+      "type": "INPUT",
+      "name": "重复点精确命中输入",
+      "x": 370,
+      "y": 430,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0.2,
+              1
+            ],
+            [
+              0.3,
+              2
+            ],
+            [
+              0.4,
+              -1
+            ],
+            [
+              0.5,
+              3
+            ],
+            [
+              0.6,
+              1
+            ],
+            [
+              0.7,
+              0
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "duplicate",
+      "type": "FUNCTION",
+      "name": "重复点精确命中",
+      "x": 370,
+      "y": 540,
+      "params": {
+        "GAIN": 1,
+        "BIAS": 0,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 4,
+        "X1": 0,
+        "Y1": 0,
+        "X2": 1,
+        "Y2": 10,
+        "X3": 1,
+        "Y3": 99,
+        "X4": 2,
+        "Y4": 20,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "equal-source",
+      "type": "INPUT",
+      "name": "同值重复点插值输入",
+      "x": 700,
+      "y": 430,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -1
+            ],
+            [
+              0.2,
+              0
+            ],
+            [
+              0.3,
+              0.5
+            ],
+            [
+              0.4,
+              1
+            ],
+            [
+              0.5,
+              1.5
+            ],
+            [
+              0.6,
+              2
+            ],
+            [
+              0.7,
+              3
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "equal",
+      "type": "FUNCTION",
+      "name": "同值重复点插值",
+      "x": 700,
+      "y": 540,
+      "params": {
+        "GAIN": 1,
+        "BIAS": 0,
+        "TPSC": 100,
+        "BTSC": 0,
+        "TRAT": 2.5,
+        "BPTS": 4,
+        "X1": 0,
+        "Y1": 0,
+        "X2": 1,
+        "Y2": 10,
+        "X3": 1,
+        "Y3": 10,
+        "X4": 2,
+        "Y4": 20,
+        "X5": 0,
+        "Y5": 0,
+        "X6": 0,
+        "Y6": 0,
+        "X7": 0,
+        "Y7": 0,
+        "X8": 0,
+        "Y8": 0,
+        "X9": 0,
+        "Y9": 0,
+        "X10": 0,
+        "Y10": 0,
+        "X11": 0,
+        "Y11": 0,
+        "X12": 0,
+        "Y12": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "identity-source",
+      "fromPort": "OUT",
+      "to": "identity",
+      "toPort": "IN1"
+    },
+    {
+      "from": "piecewise-source",
+      "fromPort": "OUT",
+      "to": "piecewise",
+      "toPort": "IN1"
+    },
+    {
+      "from": "gained-source",
+      "fromPort": "OUT",
+      "to": "gained",
+      "toPort": "IN1"
+    },
+    {
+      "from": "negative-source",
+      "fromPort": "OUT",
+      "to": "negative",
+      "toPort": "IN1"
+    },
+    {
+      "from": "twelve-source",
+      "fromPort": "OUT",
+      "to": "twelve",
+      "toPort": "IN1"
+    },
+    {
+      "from": "duplicate-source",
+      "fromPort": "OUT",
+      "to": "duplicate",
+      "toPort": "IN1"
+    },
+    {
+      "from": "equal-source",
+      "fromPort": "OUT",
+      "to": "equal",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "分段函数与输入标度",
+      "x": 40,
+      "y": 850,
+      "width": 660,
+      "height": 350,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"identity\",\"values\",\"OUT\"]",
+        "[\"piecewise\",\"values\",\"OUT\"]",
+        "[\"gained\",\"values\",\"OUT\"]",
+        "[\"negative\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "十二点与重复断点",
+      "x": 750,
+      "y": 850,
+      "width": 570,
+      "height": 350,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"twelve\",\"values\",\"OUT\"]",
+        "[\"duplicate\",\"values\",\"OUT\"]",
+        "[\"equal\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

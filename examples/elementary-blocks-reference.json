@@ -1,0 +1,232 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "manual-formula-and-pseudocode-not-controller-scans",
+  "ovationRuntimeEvidence": false,
+  "note": "按手册独立填写6拍12路输出；COUNTER按p80先比较再加减，RESETSUM按p309先FOUT再复位OUT。不是模拟器输出或现场采集。",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": false,
+          "OUTL": false
+        },
+        "selector": {
+          "OUT": 0
+        },
+        "counter": {
+          "OUT": false,
+          "ACT": 0
+        },
+        "digital": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "sum": {
+          "OUT": 0,
+          "FOUT": 0
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "transfer": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": false,
+          "OUTL": true
+        },
+        "selector": {
+          "OUT": 0
+        },
+        "counter": {
+          "OUT": false,
+          "ACT": 0
+        },
+        "digital": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "sum": {
+          "OUT": 2,
+          "FOUT": 0
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "transfer": {
+          "OUT": 2
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": false,
+          "OUTL": true
+        },
+        "selector": {
+          "OUT": 2
+        },
+        "counter": {
+          "OUT": false,
+          "ACT": 1
+        },
+        "digital": {
+          "OUT": 1,
+          "FOUT": true
+        },
+        "sum": {
+          "OUT": 4,
+          "FOUT": 0
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "transfer": {
+          "OUT": 3
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": true,
+          "OUTL": false
+        },
+        "selector": {
+          "OUT": 0
+        },
+        "counter": {
+          "OUT": false,
+          "ACT": 1
+        },
+        "digital": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "sum": {
+          "OUT": 8,
+          "FOUT": 8
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "transfer": {
+          "OUT": 4
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": true,
+          "OUTL": false
+        },
+        "selector": {
+          "OUT": 0
+        },
+        "counter": {
+          "OUT": false,
+          "ACT": 2
+        },
+        "digital": {
+          "OUT": 2,
+          "FOUT": true
+        },
+        "sum": {
+          "OUT": 10,
+          "FOUT": 12
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "transfer": {
+          "OUT": 3
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": false,
+          "OUTL": true
+        },
+        "selector": {
+          "OUT": 0
+        },
+        "counter": {
+          "OUT": true,
+          "ACT": 2
+        },
+        "digital": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "sum": {
+          "OUT": 11,
+          "FOUT": 12
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "transfer": {
+          "OUT": 1
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "compare": {
+          "OUT": false,
+          "OUTG": false,
+          "OUTL": true
+        },
+        "selector": {
+          "OUT": 1
+        },
+        "counter": {
+          "OUT": true,
+          "ACT": 3
+        },
+        "digital": {
+          "OUT": 1,
+          "FOUT": true
+        },
+        "sum": {
+          "OUT": 12,
+          "FOUT": 12
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "transfer": {
+          "OUT": 3
+        }
+      }
+    }
+  ]
+}

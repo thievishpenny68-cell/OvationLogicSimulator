@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.9.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "AND / OR 非连续输入：IN1、IN2、IN8",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "sIN1",
+      "type": "INPUT",
+      "name": "IN1 工况",
+      "x": 70,
+      "y": 50,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.2,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "sIN2",
+      "type": "INPUT",
+      "name": "IN2 工况",
+      "x": 70,
+      "y": 205,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.4,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "sIN8",
+      "type": "INPUT",
+      "name": "IN8 工况",
+      "x": 70,
+      "y": 360,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.6,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "and",
+      "type": "AND",
+      "name": "AND（IN1/IN2/IN8）",
+      "x": 450,
+      "y": 150,
+      "params": {
+        "inputs": [
+          "IN1",
+          "IN2",
+          "IN8"
+        ]
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "or",
+      "type": "OR",
+      "name": "OR（IN1/IN2/IN8）",
+      "x": 700,
+      "y": 150,
+      "params": {
+        "inputs": [
+          "IN1",
+          "IN2",
+          "IN8"
+        ]
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "sIN1",
+      "fromPort": "OUT",
+      "to": "and",
+      "toPort": "IN1"
+    },
+    {
+      "from": "sIN2",
+      "fromPort": "OUT",
+      "to": "and",
+      "toPort": "IN2"
+    },
+    {
+      "from": "sIN8",
+      "fromPort": "OUT",
+      "to": "and",
+      "toPort": "IN8"
+    },
+    {
+      "from": "sIN1",
+      "fromPort": "OUT",
+      "to": "or",
+      "toPort": "IN1"
+    },
+    {
+      "from": "sIN2",
+      "fromPort": "OUT",
+      "to": "or",
+      "toPort": "IN2"
+    },
+    {
+      "from": "sIN8",
+      "fromPort": "OUT",
+      "to": "or",
+      "toPort": "IN8"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "非连续输入的逻辑输出",
+      "x": 70,
+      "y": 560,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"and\",\"values\",\"OUT\"]",
+        "[\"or\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

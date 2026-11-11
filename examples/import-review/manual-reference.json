@@ -1,0 +1,141 @@
+{
+  "basis": "manual-derived-software-fixture-truth-table-not-Ovation-runtime",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "source-result": {
+          "OUT": false
+        },
+        "source-branch": {
+          "OUT": false
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "source-result": {
+          "OUT": false
+        },
+        "source-branch": {
+          "OUT": true
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "source-result": {
+          "OUT": true
+        },
+        "source-branch": {
+          "OUT": false
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "source-result": {
+          "OUT": true
+        },
+        "source-branch": {
+          "OUT": false
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": true
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "source-result": {
+          "OUT": true
+        },
+        "source-branch": {
+          "OUT": true
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": true
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "source-result": {
+          "OUT": true
+        },
+        "source-branch": {
+          "OUT": false
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": true
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "source-result": {
+          "OUT": false
+        },
+        "source-branch": {
+          "OUT": true
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": false
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "source-result": {
+          "OUT": false
+        },
+        "source-branch": {
+          "OUT": true
+        }
+      },
+      "states": {
+        "macro:source-instance:expansion-1:source-memory": {
+          "memory": false
+        }
+      }
+    }
+  ]
+}

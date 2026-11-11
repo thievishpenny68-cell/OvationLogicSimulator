@@ -1,0 +1,125 @@
+{
+  "basis": "REF_1100 p47/p158/p417-418; independent manual-derived literals; not Ovation runtime",
+  "softwareTimeOrigin": "tick 0 is explicit software pre-scan values, not controller startup",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "analog": {
+          "OUT": 0
+        },
+        "digital": {
+          "OUT": false
+        },
+        "store": {
+          "O01": -1,
+          "O02": -2,
+          "O03": -3
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.25,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": -1,
+          "O02": 20,
+          "O03": -3
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.5,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": -1,
+          "O02": 20,
+          "O03": 30
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.75,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": -1,
+          "O02": 20,
+          "O03": 30
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 1,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": -1,
+          "O02": 20,
+          "O03": 30
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 1.25,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": 60,
+          "O02": 20,
+          "O03": 30
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 1.5,
+      "values": {
+        "analog": {
+          "OUT": -2.5
+        },
+        "digital": {
+          "OUT": true
+        },
+        "store": {
+          "O01": 60,
+          "O02": 70,
+          "O03": 30
+        }
+      }
+    }
+  ]
+}

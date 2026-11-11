@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "手绘主线与分支",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "s",
+      "type": "INPUT",
+      "name": "启停信号",
+      "x": 70,
+      "y": 80,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.5,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "a",
+      "type": "OUTPUT",
+      "name": "OUTPUT",
+      "x": 850,
+      "y": 80,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b",
+      "type": "OUTPUT",
+      "name": "OUTPUT",
+      "x": 850,
+      "y": 360,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "c",
+      "type": "OUTPUT",
+      "name": "OUTPUT",
+      "x": 850,
+      "y": 600,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "a",
+      "toPort": "IN1",
+      "routing": {
+        "mode": "manual",
+        "points": [
+          {
+            "x": 214,
+            "y": 157
+          },
+          {
+            "x": 360,
+            "y": 157
+          },
+          {
+            "x": 360,
+            "y": 260
+          },
+          {
+            "x": 700,
+            "y": 260
+          },
+          {
+            "x": 700,
+            "y": 157
+          },
+          {
+            "x": 886,
+            "y": 157
+          }
+        ]
+      }
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "b",
+      "toPort": "IN1",
+      "routing": {
+        "mode": "manual",
+        "points": [
+          {
+            "x": 450,
+            "y": 260
+          },
+          {
+            "x": 450,
+            "y": 480
+          },
+          {
+            "x": 600,
+            "y": 480
+          },
+          {
+            "x": 600,
+            "y": 437
+          },
+          {
+            "x": 886,
+            "y": 437
+          }
+        ],
+        "branch": {
+          "to": "a",
+          "toPort": "IN1"
+        }
+      }
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "c",
+      "toPort": "IN1",
+      "routing": {
+        "mode": "manual",
+        "points": [
+          {
+            "x": 450,
+            "y": 400
+          },
+          {
+            "x": 300,
+            "y": 400
+          },
+          {
+            "x": 300,
+            "y": 677
+          },
+          {
+            "x": 886,
+            "y": 677
+          }
+        ],
+        "branch": {
+          "to": "b",
+          "toPort": "IN1"
+        }
+      }
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

@@ -1,0 +1,200 @@
+{
+  "basis": {
+    "kind": "manual",
+    "document": "REF_1100（2006-05）§4.104 p363～364",
+    "formula": "OUT=(1-exp(-dt/SMTH))*IN1+exp(-dt/SMTH)*oldOUT；0直通，负常数质量路径未支持。",
+    "fixture": "dt=1秒，SMTH=Float32(1/ln2)=1.4426950216293335；声明分阶段系数均0.5，宽精度候选最终Float32一致。",
+    "expectations": "独立字面40项执行OUT、5项明确初态；不从模拟器轨迹生成，不是实机采集。"
+  },
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "direct": {
+          "OUT": 50
+        },
+        "filtered": {
+          "OUT": 0
+        },
+        "warm": {
+          "OUT": 4
+        },
+        "cascade": {
+          "OUT": 0
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 1,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 4
+        },
+        "warm": {
+          "OUT": 6
+        },
+        "cascade": {
+          "OUT": 2
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 2,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 6
+        },
+        "warm": {
+          "OUT": 7
+        },
+        "cascade": {
+          "OUT": 4
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 3,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 7
+        },
+        "warm": {
+          "OUT": 7.5
+        },
+        "cascade": {
+          "OUT": 5.5
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 4,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 7.5
+        },
+        "warm": {
+          "OUT": 7.75
+        },
+        "cascade": {
+          "OUT": 6.5
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 5,
+      "values": {
+        "direct": {
+          "OUT": 0
+        },
+        "filtered": {
+          "OUT": 3.75
+        },
+        "warm": {
+          "OUT": 3.875
+        },
+        "cascade": {
+          "OUT": 5.125
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 6,
+      "values": {
+        "direct": {
+          "OUT": 0
+        },
+        "filtered": {
+          "OUT": 1.875
+        },
+        "warm": {
+          "OUT": 1.9375
+        },
+        "cascade": {
+          "OUT": 3.5
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 7,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 4.9375
+        },
+        "warm": {
+          "OUT": 4.96875
+        },
+        "cascade": {
+          "OUT": 4.21875
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 8,
+      "values": {
+        "direct": {
+          "OUT": 8
+        },
+        "filtered": {
+          "OUT": 6.46875
+        },
+        "warm": {
+          "OUT": 6.484375
+        },
+        "cascade": {
+          "OUT": 5.34375
+        },
+        "steady": {
+          "OUT": 8
+        }
+      }
+    }
+  ]
+}

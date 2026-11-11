@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.14.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "同类型赋值、线性插值与整数查表",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "x",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              -1
+            ],
+            [
+              0.1,
+              -1
+            ],
+            [
+              0.2,
+              0
+            ],
+            [
+              0.3,
+              1
+            ],
+            [
+              0.4,
+              2
+            ],
+            [
+              0.5,
+              3
+            ],
+            [
+              0.6,
+              4
+            ],
+            [
+              0.7,
+              5
+            ],
+            [
+              0.8,
+              50
+            ],
+            [
+              0.9,
+              51
+            ],
+            [
+              1,
+              1.9
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "digital",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 330,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.7,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "y1",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 550,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 10
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "y2",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 760,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 20
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "y3",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 970,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 30
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "assign",
+      "type": "ASSIGN",
+      "name": "ASSIGN",
+      "x": 440,
+      "y": 30,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "assign-digital",
+      "type": "ASSIGN",
+      "name": "ASSIGN",
+      "x": 440,
+      "y": 310,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "interp",
+      "type": "INTERP",
+      "name": "INTERP",
+      "x": 920,
+      "y": 30,
+      "params": {
+        "TYPE": "LINEAR",
+        "NUMR": 3,
+        "X1": 0,
+        "X2": 2,
+        "X3": 4,
+        "X4": 3,
+        "X5": 4,
+        "X6": 5,
+        "X7": 6,
+        "X8": 7,
+        "X9": 8,
+        "X10": 9,
+        "TPSC": 100,
+        "BTSC": 0
+      },
+      "initial": {
+        "YOUT": 0,
+        "VALID": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "table",
+      "type": "TRANSLATOR",
+      "name": "TRANSLATOR",
+      "x": 920,
+      "y": 560,
+      "params": {
+        "I01": -10,
+        "I02": 50,
+        "I03": 0,
+        "I04": 0,
+        "I05": 0,
+        "I06": 0,
+        "I07": 0,
+        "I08": 0,
+        "I09": 0,
+        "I10": 0,
+        "I11": 0,
+        "I12": 0,
+        "I13": 0,
+        "I14": 0,
+        "I15": 0,
+        "I16": 0,
+        "I17": 0,
+        "I18": 0,
+        "I19": 0,
+        "I20": 0,
+        "I21": 0,
+        "I22": 0,
+        "I23": 0,
+        "I24": 0,
+        "I25": 0,
+        "I26": 0,
+        "I27": 0,
+        "I28": 0,
+        "I29": 0,
+        "I30": 0,
+        "I31": 0,
+        "I32": 0,
+        "I33": 0,
+        "I34": 0,
+        "I35": 0,
+        "I36": 0,
+        "I37": 0,
+        "I38": 0,
+        "I39": 0,
+        "I40": 0,
+        "I41": 0,
+        "I42": 0,
+        "I43": 0,
+        "I44": 0,
+        "I45": 0,
+        "I46": 0,
+        "I47": 0,
+        "I48": 0,
+        "I49": 0,
+        "I50": 32767
+      },
+      "initial": {
+        "OUT": 99
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "assign",
+      "toPort": "IN1"
+    },
+    {
+      "from": "digital",
+      "fromPort": "OUT",
+      "to": "assign-digital",
+      "toPort": "IN1"
+    },
+    {
+      "from": "assign",
+      "fromPort": "OUT",
+      "to": "interp",
+      "toPort": "XIN"
+    },
+    {
+      "from": "y1",
+      "fromPort": "OUT",
+      "to": "interp",
+      "toPort": "Y1"
+    },
+    {
+      "from": "y2",
+      "fromPort": "OUT",
+      "to": "interp",
+      "toPort": "Y2"
+    },
+    {
+      "from": "y3",
+      "fromPort": "OUT",
+      "to": "interp",
+      "toPort": "Y3"
+    },
+    {
+      "from": "assign",
+      "fromPort": "OUT",
+      "to": "table",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 1400,
+      "y": 30,
+      "width": 440,
+      "height": 430,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"assign\",\"values\",\"OUT\"]",
+        "[\"assign-digital\",\"values\",\"OUT\"]",
+        "[\"interp\",\"values\",\"YOUT\"]",
+        "[\"interp\",\"values\",\"VALID\"]",
+        "[\"table\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

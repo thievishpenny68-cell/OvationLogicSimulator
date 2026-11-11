@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.12.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "基本沿记忆 · 首次INIT、复位优先与脉冲计数",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "pulse",
+      "type": "INPUT",
+      "name": "上升沿脉冲",
+      "x": 40,
+      "y": 70,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              true
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              true
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "reset",
+      "type": "INPUT",
+      "name": "复位请求",
+      "x": 40,
+      "y": 280,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.6,
+              true
+            ],
+            [
+              0.7,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init",
+      "type": "INPUT",
+      "name": "仅首次采用的INIT",
+      "x": 40,
+      "y": 490,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              true
+            ],
+            [
+              0.2,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "toggle",
+      "type": "AAFLIPFLOP",
+      "name": "AAFLIPFLOP",
+      "x": 340,
+      "y": 90,
+      "params": {},
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "count",
+      "type": "PULSECNT",
+      "name": "PULSECNT",
+      "x": 340,
+      "y": 360,
+      "params": {},
+      "initial": {
+        "OUT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "toggle",
+      "toPort": "SRST"
+    },
+    {
+      "from": "reset",
+      "fromPort": "OUT",
+      "to": "toggle",
+      "toPort": "RSET"
+    },
+    {
+      "from": "init",
+      "fromPort": "OUT",
+      "to": "toggle",
+      "toPort": "INIT"
+    },
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "count",
+      "toPort": "IN1"
+    },
+    {
+      "from": "reset",
+      "fromPort": "OUT",
+      "to": "count",
+      "toPort": "RSET"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "翻转与计数",
+      "x": 740,
+      "y": 80,
+      "width": 430,
+      "height": 340,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"toggle\",\"values\",\"OUT\"]",
+        "[\"count\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

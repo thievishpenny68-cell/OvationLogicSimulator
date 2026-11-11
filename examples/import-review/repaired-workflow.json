@@ -1,0 +1,1825 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.15.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "通用导入修复工况",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "source-set",
+      "type": "INPUT",
+      "name": "INPUT set",
+      "x": 50,
+      "y": 50,
+      "params": {
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ]
+          ]
+        },
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "workflow.svg",
+        "objectId": "set",
+        "svgObjectId": "set",
+        "svgSourceFile": "workflow.svg",
+        "attributes": {
+          "id": "set",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "set",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "fieldAudit": [],
+        "parametersEdited": true
+      }
+    },
+    {
+      "id": "source-reset",
+      "type": "INPUT",
+      "name": "INPUT reset",
+      "x": 50,
+      "y": 280,
+      "params": {
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ]
+          ]
+        },
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "workflow.svg",
+        "objectId": "reset",
+        "svgObjectId": "reset",
+        "svgSourceFile": "workflow.svg",
+        "attributes": {
+          "id": "reset",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "reset",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "fieldAudit": [],
+        "parametersEdited": true
+      }
+    },
+    {
+      "id": "source-result",
+      "type": "OUTPUT",
+      "name": "OUTPUT result",
+      "x": 750,
+      "y": 100,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "workflow.svg",
+        "objectId": "result",
+        "svgObjectId": "result",
+        "svgSourceFile": "workflow.svg",
+        "attributes": {
+          "id": "result",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "OUTPUT",
+          "cb-alg-in": "$instance$cb-alg-out$"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "result",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "OUTPUT",
+          "cb-alg-in": "$instance$cb-alg-out$"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "svg",
+            "file": "workflow.svg",
+            "attribute": "cb-alg-in",
+            "value": "$instance$cb-alg-out$",
+            "role": "input-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "workflow.svg",
+                "attribute": "cb-alg-in"
+              }
+            ]
+          }
+        ],
+        "parametersEdited": true
+      }
+    },
+    {
+      "id": "source-branch",
+      "type": "NOT",
+      "name": "NOT branch",
+      "x": 400,
+      "y": 370,
+      "params": {},
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "workflow.svg",
+        "objectId": "branch",
+        "svgObjectId": "branch",
+        "svgSourceFile": "workflow.svg",
+        "attributes": {
+          "id": "branch",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "NOT"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "branch",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "NOT"
+        },
+        "fieldAudit": []
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:source-s",
+      "type": "ASSIGN",
+      "name": "REVIEW_MEMORY instance/IN1",
+      "x": 400,
+      "y": 100,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "memory.svg",
+        "objectId": "s",
+        "svgObjectId": "s",
+        "svgSourceFile": "memory.svg",
+        "attributes": {
+          "id": "s",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT",
+          "cb-alg-out": "IN1"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "s",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT",
+          "cb-alg-out": "IN1"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-out",
+            "value": "IN1",
+            "role": "symbol-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "memory.svg",
+                "attribute": "cb-alg-out"
+              }
+            ]
+          }
+        ],
+        "interfaceRole": "macro-input-relay",
+        "macroInstance": "source-instance",
+        "macroExpansionScope": "macro:source-instance:expansion-1:",
+        "definitionId": "definition:memory.svg",
+        "originalNodeId": "source-s",
+        "macroChain": [
+          "definition:memory.svg"
+        ]
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:source-r",
+      "type": "ASSIGN",
+      "name": "REVIEW_MEMORY instance/IN2",
+      "x": 400,
+      "y": 260,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "memory.svg",
+        "objectId": "r",
+        "svgObjectId": "r",
+        "svgSourceFile": "memory.svg",
+        "attributes": {
+          "id": "r",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT",
+          "cb-alg-out": "IN2"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "r",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT",
+          "cb-alg-out": "IN2"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-out",
+            "value": "IN2",
+            "role": "symbol-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "memory.svg",
+                "attribute": "cb-alg-out"
+              }
+            ]
+          }
+        ],
+        "interfaceRole": "macro-input-relay",
+        "macroInstance": "source-instance",
+        "macroExpansionScope": "macro:source-instance:expansion-1:",
+        "definitionId": "definition:memory.svg",
+        "originalNodeId": "source-r",
+        "macroChain": [
+          "definition:memory.svg"
+        ]
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:source-memory",
+      "type": "FLIPFLOP",
+      "name": "REVIEW_MEMORY instance/UNMAPPED_MEMORY memory",
+      "x": 660,
+      "y": 170,
+      "params": {
+        "TYPE": 1
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "memory.svg",
+        "objectId": "memory",
+        "svgObjectId": "memory",
+        "svgSourceFile": "memory.svg",
+        "attributes": {
+          "id": "memory",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "UNMAPPED_MEMORY",
+          "cb-alg-set": "$s$cb-alg-out$",
+          "cb-alg-rset": "$r$cb-alg-out$",
+          "cb-alg-7f": "17.25"
+        },
+        "parameterSources": {
+          "TYPE": {
+            "manual": true,
+            "file": "memory.svg",
+            "attribute": "cb-alg-7f",
+            "fieldIndex": 2,
+            "value": 1,
+            "note": "软件夹具明确采用TYPE=1置位优先；17.25只保留为源编码，不作数值解码",
+            "at": "2026-11-05T12:22:30.336Z"
+          }
+        },
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "memory",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "UNMAPPED_MEMORY",
+          "cb-alg-set": "$s$cb-alg-out$",
+          "cb-alg-rset": "$r$cb-alg-out$",
+          "cb-alg-7f": "17.25"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-set",
+            "value": "$s$cb-alg-out$",
+            "role": "input-binding",
+            "status": "unresolved",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-rset",
+            "value": "$r$cb-alg-out$",
+            "role": "input-binding",
+            "status": "unresolved",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-7f",
+            "value": "17.25",
+            "role": "unclassified",
+            "status": "unresolved",
+            "evidence": []
+          }
+        ],
+        "macroInstance": "source-instance",
+        "macroExpansionScope": "macro:source-instance:expansion-1:",
+        "definitionId": "definition:memory.svg",
+        "originalNodeId": "source-memory",
+        "macroChain": [
+          "definition:memory.svg"
+        ],
+        "manualMapping": {
+          "type": "FLIPFLOP",
+          "at": "2026-11-05T12:22:30.300Z"
+        },
+        "manualFieldBindings": [
+          {
+            "action": "bind",
+            "nodeType": "FLIPFLOP",
+            "fieldIndex": 2,
+            "source": {
+              "namespace": "svg",
+              "file": "memory.svg",
+              "attribute": "cb-alg-7f",
+              "value": "17.25",
+              "role": "unclassified",
+              "status": "unresolved",
+              "evidence": []
+            },
+            "key": "TYPE",
+            "value": 1,
+            "note": "软件夹具明确采用TYPE=1置位优先；17.25只保留为源编码，不作数值解码",
+            "at": "2026-11-05T12:22:30.336Z",
+            "previousValue": 0
+          }
+        ],
+        "parametersEdited": true
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:source-q",
+      "type": "OUTPUT",
+      "name": "REVIEW_MEMORY instance/OUT",
+      "x": 930,
+      "y": 170,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "memory.svg",
+        "objectId": "q",
+        "svgObjectId": "q",
+        "svgSourceFile": "memory.svg",
+        "attributes": {
+          "id": "q",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "OUTPUT",
+          "cb-alg-in": "$memory$cb-alg-out$",
+          "cb-alg-tout": "OUT"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "same-object-id",
+        "svgAttributes": {
+          "id": "q",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "OUTPUT",
+          "cb-alg-in": "$memory$cb-alg-out$",
+          "cb-alg-tout": "OUT"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-in",
+            "value": "$memory$cb-alg-out$",
+            "role": "input-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "memory.svg",
+                "attribute": "cb-alg-in"
+              }
+            ]
+          },
+          {
+            "namespace": "svg",
+            "file": "memory.svg",
+            "attribute": "cb-alg-tout",
+            "value": "OUT",
+            "role": "symbol-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "memory.svg",
+                "attribute": "cb-alg-tout"
+              }
+            ]
+          }
+        ],
+        "macroInstance": "source-instance",
+        "macroExpansionScope": "macro:source-instance:expansion-1:",
+        "definitionId": "definition:memory.svg",
+        "originalNodeId": "source-q",
+        "macroChain": [
+          "definition:memory.svg"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "macro:source-instance:expansion-1:source-s",
+      "fromPort": "OUT",
+      "to": "macro:source-instance:expansion-1:source-memory",
+      "toPort": "SET",
+      "provenance": {
+        "file": "memory.svg",
+        "attribute": "cb-alg-set",
+        "sourceValue": "$s$cb-alg-out$"
+      }
+    },
+    {
+      "from": "macro:source-instance:expansion-1:source-r",
+      "fromPort": "OUT",
+      "to": "macro:source-instance:expansion-1:source-memory",
+      "toPort": "RSET",
+      "provenance": {
+        "file": "memory.svg",
+        "attribute": "cb-alg-rset",
+        "sourceValue": "$r$cb-alg-out$"
+      }
+    },
+    {
+      "from": "macro:source-instance:expansion-1:source-memory",
+      "fromPort": "OUT",
+      "to": "macro:source-instance:expansion-1:source-q",
+      "toPort": "IN1",
+      "provenance": {
+        "file": "memory.svg",
+        "attribute": "cb-alg-in",
+        "sourceValue": "$memory$cb-alg-out$"
+      }
+    },
+    {
+      "from": "source-set",
+      "fromPort": "OUT",
+      "to": "macro:source-instance:expansion-1:source-s",
+      "toPort": "IN1",
+      "provenance": {
+        "file": "workflow.svg",
+        "attribute": "cb-alg-in1",
+        "sourceValue": "$set$cb-alg-out$"
+      }
+    },
+    {
+      "from": "source-reset",
+      "fromPort": "OUT",
+      "to": "macro:source-instance:expansion-1:source-r",
+      "toPort": "IN1",
+      "provenance": {
+        "file": "workflow.svg",
+        "attribute": "cb-alg-in2",
+        "sourceValue": "$reset$cb-alg-out$"
+      }
+    },
+    {
+      "from": "macro:source-instance:expansion-1:source-memory",
+      "fromPort": "OUT",
+      "to": "source-result",
+      "toPort": "IN1",
+      "provenance": {
+        "file": "workflow.svg",
+        "attribute": "cb-alg-in",
+        "sourceValue": "$instance$cb-alg-out$"
+      }
+    },
+    {
+      "from": "source-set",
+      "fromPort": "OUT",
+      "to": "source-branch",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [
+    {
+      "id": "import-1",
+      "code": "INPUT_SCENARIO_REQUIRED",
+      "message": "需要设置外部输入随时间变化的规律",
+      "nodeId": "source-set",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:30.913Z"
+      }
+    },
+    {
+      "id": "import-2",
+      "code": "INPUT_SCENARIO_REQUIRED",
+      "message": "需要设置外部输入随时间变化的规律",
+      "nodeId": "source-reset",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:30.938Z"
+      }
+    },
+    {
+      "id": "import-3",
+      "code": "UNKNOWN_BLOCK",
+      "message": "未支持的控制块：REVIEW_MEMORY",
+      "nodeId": "source-instance",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z"
+      }
+    },
+    {
+      "id": "import-4",
+      "code": "MACRO_BINDING_REQUIRED",
+      "message": "宏定义已提供，请明确实例绑定后展开",
+      "nodeId": "source-instance",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z"
+      }
+    },
+    {
+      "id": "import-5",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "source-set",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:30.962Z"
+      }
+    },
+    {
+      "id": "import-6",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "source-reset",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:30.987Z"
+      }
+    },
+    {
+      "id": "import-7",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "source-result",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:31.012Z"
+      }
+    },
+    {
+      "id": "import-8",
+      "code": "SCAN_CONFIGURATION_REQUIRED",
+      "message": "源文件未提供已核实扫描周期；请明确设置模拟周期",
+      "severity": "error",
+      "resolved": true,
+      "resolution": {
+        "signature": "{\"dtUs\":100000,\"mode\":\"topological\",\"order\":[\"source-reset\",\"macro:source-instance:expansion-1:source-r\",\"source-set\",\"macro:source-instance:expansion-1:source-s\",\"macro:source-instance:expansion-1:source-memory\",\"macro:source-instance:expansion-1:source-q\",\"source-branch\",\"source-result\"],\"taskConstraints\":{\"schemaVersion\":1,\"taskGroups\":[{\"scope\":\"import\",\"tasks\":[{\"file\":\"workflow.svg\",\"objectId\":null,\"sourceClass\":\"ControlFunction\",\"taskId\":\"1\"}]},{\"scope\":\"macro:source-instance:expansion-1:import\",\"tasks\":[]}]},\"nodes\":[[\"macro:source-instance:expansion-1:source-memory\",\"FLIPFLOP\",[[[\"RSET\",\"boolean\"],[\"SET\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-q\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"macro:source-instance:expansion-1:source-r\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-s\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-branch\",\"NOT\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-reset\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"source-result\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"source-set\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]]],\"edges\":[[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"macro:source-instance:expansion-1:source-q\",\"IN1\"],[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"source-result\",\"IN1\"],[\"macro:source-instance:expansion-1:source-r\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"RSET\"],[\"macro:source-instance:expansion-1:source-s\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"SET\"],[\"source-reset\",\"OUT\",\"macro:source-instance:expansion-1:source-r\",\"IN1\"],[\"source-set\",\"OUT\",\"macro:source-instance:expansion-1:source-s\",\"IN1\"],[\"source-set\",\"OUT\",\"source-branch\",\"IN1\"]]}",
+        "note": "已明确单任务模拟周期及执行顺序：软件回归工况：明确当前单任务周期与逐块拓扑顺序，非现场采集",
+        "at": "2026-11-05T12:22:31.161Z"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-0",
+      "code": "INPUT_SCENARIO_REQUIRED",
+      "message": "需要设置外部输入随时间变化的规律",
+      "nodeId": "macro:source-instance:expansion-1:source-s",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-1",
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z",
+        "reason": "宏输入已重连调用者信号；内部传递接口不再使用独立波形"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-1",
+      "code": "INPUT_SCENARIO_REQUIRED",
+      "message": "需要设置外部输入随时间变化的规律",
+      "nodeId": "macro:source-instance:expansion-1:source-r",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-2",
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z",
+        "reason": "宏输入已重连调用者信号；内部传递接口不再使用独立波形"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-2",
+      "code": "UNKNOWN_BLOCK",
+      "message": "未支持的控制块：UNMAPPED_MEMORY",
+      "nodeId": "macro:source-instance:expansion-1:source-memory",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-3",
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:31.062Z"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-3",
+      "code": "OPAQUE_BINDINGS",
+      "message": "存在未解析的端口/参数字段：cb-alg-set, cb-alg-rset, cb-alg-7f",
+      "nodeId": "macro:source-instance:expansion-1:source-memory",
+      "severity": "error",
+      "resolved": true,
+      "sourceFile": "memory.svg",
+      "sourceNamespace": "svg",
+      "sourceFields": [
+        "cb-alg-set",
+        "cb-alg-rset",
+        "cb-alg-7f"
+      ],
+      "sourceIssueId": "import-4",
+      "remainingSourceFields": [
+        "cb-alg-set",
+        "cb-alg-rset"
+      ],
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:31.087Z"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-4",
+      "code": "SVG_FIELDS_UNRESOLVED",
+      "message": "SVG字段尚未核实：cb-alg-set, cb-alg-rset, cb-alg-7f",
+      "nodeId": "macro:source-instance:expansion-1:source-memory",
+      "severity": "error",
+      "resolved": true,
+      "sourceFile": "memory.svg",
+      "sourceNamespace": "svg",
+      "sourceFields": [
+        "cb-alg-set",
+        "cb-alg-rset",
+        "cb-alg-7f"
+      ],
+      "sourceIssueId": "import-5",
+      "remainingSourceFields": [
+        "cb-alg-set",
+        "cb-alg-rset"
+      ],
+      "resolution": {
+        "note": "软件验收夹具：已明确映射为TYPE1锁存，SET/RSET分别核对至IN1/IN2、两路数字工况及初态，周期0.1秒；不是现场运行证据",
+        "at": "2026-11-05T12:22:31.112Z"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-5",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "macro:source-instance:expansion-1:source-s",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-6",
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z",
+        "reason": "命名接口的类型已由定义或显式实例绑定明确"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-6",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "macro:source-instance:expansion-1:source-r",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-7",
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z",
+        "reason": "命名接口的类型已由定义或显式实例绑定明确"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-7",
+      "code": "SIGNAL_TYPE_REQUIRED",
+      "message": "需要明确外部接口的信号类型",
+      "nodeId": "macro:source-instance:expansion-1:source-q",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-8",
+      "resolution": {
+        "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+        "at": "2026-11-05T12:22:30.221Z",
+        "reason": "命名接口的类型已由定义或显式实例绑定明确"
+      }
+    },
+    {
+      "id": "macro:source-instance:expansion-1:diagnostic-8",
+      "code": "SCAN_CONFIGURATION_REQUIRED",
+      "message": "源文件未提供已核实扫描周期；请明确设置模拟周期",
+      "nodeId": "macro:source-instance:expansion-1:source-s",
+      "severity": "error",
+      "resolved": true,
+      "sourceIssueId": "import-9",
+      "resolution": {
+        "signature": "{\"dtUs\":100000,\"mode\":\"topological\",\"order\":[\"source-reset\",\"macro:source-instance:expansion-1:source-r\",\"source-set\",\"macro:source-instance:expansion-1:source-s\",\"macro:source-instance:expansion-1:source-memory\",\"macro:source-instance:expansion-1:source-q\",\"source-branch\",\"source-result\"],\"taskConstraints\":{\"schemaVersion\":1,\"taskGroups\":[{\"scope\":\"import\",\"tasks\":[{\"file\":\"workflow.svg\",\"objectId\":null,\"sourceClass\":\"ControlFunction\",\"taskId\":\"1\"}]},{\"scope\":\"macro:source-instance:expansion-1:import\",\"tasks\":[]}]},\"nodes\":[[\"macro:source-instance:expansion-1:source-memory\",\"FLIPFLOP\",[[[\"RSET\",\"boolean\"],[\"SET\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-q\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"macro:source-instance:expansion-1:source-r\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-s\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-branch\",\"NOT\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-reset\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"source-result\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"source-set\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]]],\"edges\":[[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"macro:source-instance:expansion-1:source-q\",\"IN1\"],[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"source-result\",\"IN1\"],[\"macro:source-instance:expansion-1:source-r\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"RSET\"],[\"macro:source-instance:expansion-1:source-s\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"SET\"],[\"source-reset\",\"OUT\",\"macro:source-instance:expansion-1:source-r\",\"IN1\"],[\"source-set\",\"OUT\",\"macro:source-instance:expansion-1:source-s\",\"IN1\"],[\"source-set\",\"OUT\",\"source-branch\",\"IN1\"]]}",
+        "note": "已明确单任务模拟周期及执行顺序：软件回归工况：明确当前单任务周期与逐块拓扑顺序，非现场采集",
+        "at": "2026-11-05T12:22:31.161Z"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "name": "workflow.svg",
+      "text": "<svg cb-classname=\"ControlFunction\" cb-sheet-title=\"通用导入修复工况\" cb-task-id=\"1\"><g transform=\"translate(30 20)\"><g id=\"set\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"INPUT\" ><rect x=\"20\" y=\"30\" width=\"158\" height=\"94\"/></g><g id=\"reset\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"INPUT\" ><rect x=\"20\" y=\"260\" width=\"158\" height=\"94\"/></g><g id=\"instance\" cb-classname=\"ControlMacroReference\" cb-function-name=\"REVIEW_MEMORY\" cb-macro-crc=\"42\" cb-alg-in1=\"$set$cb-alg-out$\" cb-alg-in2=\"$reset$cb-alg-out$\"><rect x=\"370\" y=\"80\" width=\"158\" height=\"94\"/></g><g id=\"result\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"OUTPUT\" cb-alg-in=\"$instance$cb-alg-out$\"><rect x=\"720\" y=\"80\" width=\"158\" height=\"94\"/></g><g id=\"branch\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"NOT\" ><rect x=\"370\" y=\"350\" width=\"158\" height=\"94\"/></g></g></svg>\n"
+    },
+    {
+      "name": "memory.svg",
+      "text": "<svg cb-classname=\"ControlMacro\" cb-sheet-title=\"REVIEW_MEMORY\" cb-macro-crc=\"42\"><g id=\"s\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"INPUT\" cb-alg-out=\"IN1\"><rect x=\"0\" y=\"0\" width=\"158\" height=\"94\"/></g><g id=\"r\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"INPUT\" cb-alg-out=\"IN2\"><rect x=\"0\" y=\"160\" width=\"158\" height=\"94\"/></g><g id=\"memory\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"UNMAPPED_MEMORY\" cb-alg-set=\"$s$cb-alg-out$\" cb-alg-rset=\"$r$cb-alg-out$\" cb-alg-7f=\"17.25\"><rect x=\"260\" y=\"70\" width=\"158\" height=\"94\"/></g><g id=\"q\" cb-classname=\"ControlAlgorithm\" cb-function-name=\"OUTPUT\" cb-alg-in=\"$memory$cb-alg-out$\" cb-alg-tout=\"OUT\"><rect x=\"530\" y=\"70\" width=\"158\" height=\"94\"/></g></svg>\n"
+    }
+  ],
+  "execution": {
+    "model": "single-task-ordered-v1",
+    "mode": "topological",
+    "required": true,
+    "confirmation": {
+      "signature": "{\"dtUs\":100000,\"mode\":\"topological\",\"order\":[\"source-reset\",\"macro:source-instance:expansion-1:source-r\",\"source-set\",\"macro:source-instance:expansion-1:source-s\",\"macro:source-instance:expansion-1:source-memory\",\"macro:source-instance:expansion-1:source-q\",\"source-branch\",\"source-result\"],\"taskConstraints\":{\"schemaVersion\":1,\"taskGroups\":[{\"scope\":\"import\",\"tasks\":[{\"file\":\"workflow.svg\",\"objectId\":null,\"sourceClass\":\"ControlFunction\",\"taskId\":\"1\"}]},{\"scope\":\"macro:source-instance:expansion-1:import\",\"tasks\":[]}]},\"nodes\":[[\"macro:source-instance:expansion-1:source-memory\",\"FLIPFLOP\",[[[\"RSET\",\"boolean\"],[\"SET\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-q\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"macro:source-instance:expansion-1:source-r\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"macro:source-instance:expansion-1:source-s\",\"ASSIGN\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-branch\",\"NOT\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"source-reset\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"source-result\",\"OUTPUT\",[[[\"IN1\",\"boolean\"]],[]]],[\"source-set\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]]],\"edges\":[[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"macro:source-instance:expansion-1:source-q\",\"IN1\"],[\"macro:source-instance:expansion-1:source-memory\",\"OUT\",\"source-result\",\"IN1\"],[\"macro:source-instance:expansion-1:source-r\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"RSET\"],[\"macro:source-instance:expansion-1:source-s\",\"OUT\",\"macro:source-instance:expansion-1:source-memory\",\"SET\"],[\"source-reset\",\"OUT\",\"macro:source-instance:expansion-1:source-r\",\"IN1\"],[\"source-set\",\"OUT\",\"macro:source-instance:expansion-1:source-s\",\"IN1\"],[\"source-set\",\"OUT\",\"source-branch\",\"IN1\"]]}",
+      "note": "软件回归工况：明确当前单任务周期与逐块拓扑顺序，非现场采集",
+      "at": "2026-11-05T12:22:31.161Z"
+    }
+  },
+  "importMetadata": {
+    "file": "workflow.svg",
+    "kind": "ControlFunction",
+    "internalId": null,
+    "description": "通用导入修复工况",
+    "taskId": "1",
+    "sourceCycleKnown": false
+  },
+  "library": [
+    {
+      "id": "definition:memory.svg",
+      "name": "REVIEW_MEMORY",
+      "crc": "42",
+      "sourceFile": "memory.svg",
+      "graph": {
+        "schemaVersion": 2,
+        "engineVersion": "0.15.0",
+        "profile": "ref1100-2006-normal-v1",
+        "title": "REVIEW_MEMORY",
+        "dtUs": 100000,
+        "nodes": [
+          {
+            "id": "source-s",
+            "type": "INPUT",
+            "name": "INPUT s",
+            "x": 0,
+            "y": 0,
+            "params": {
+              "kind": null,
+              "wave": null
+            },
+            "initial": {},
+            "provenance": {
+              "origin": "import",
+              "sourceFile": "memory.svg",
+              "objectId": "s",
+              "svgObjectId": "s",
+              "svgSourceFile": "memory.svg",
+              "attributes": {
+                "id": "s",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN1"
+              },
+              "parameterSources": {},
+              "layoutMatched": true,
+              "layoutEvidence": "same-object-id",
+              "svgAttributes": {
+                "id": "s",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN1"
+              },
+              "fieldAudit": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-out",
+                  "value": "IN1",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-out"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "source-r",
+            "type": "INPUT",
+            "name": "INPUT r",
+            "x": 0,
+            "y": 160,
+            "params": {
+              "kind": null,
+              "wave": null
+            },
+            "initial": {},
+            "provenance": {
+              "origin": "import",
+              "sourceFile": "memory.svg",
+              "objectId": "r",
+              "svgObjectId": "r",
+              "svgSourceFile": "memory.svg",
+              "attributes": {
+                "id": "r",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN2"
+              },
+              "parameterSources": {},
+              "layoutMatched": true,
+              "layoutEvidence": "same-object-id",
+              "svgAttributes": {
+                "id": "r",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN2"
+              },
+              "fieldAudit": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-out",
+                  "value": "IN2",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-out"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "source-memory",
+            "type": "UNMAPPED_MEMORY",
+            "name": "UNMAPPED_MEMORY memory",
+            "x": 260,
+            "y": 70,
+            "params": {},
+            "initial": {},
+            "provenance": {
+              "origin": "import",
+              "sourceFile": "memory.svg",
+              "objectId": "memory",
+              "svgObjectId": "memory",
+              "svgSourceFile": "memory.svg",
+              "attributes": {
+                "id": "memory",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "UNMAPPED_MEMORY",
+                "cb-alg-set": "$s$cb-alg-out$",
+                "cb-alg-rset": "$r$cb-alg-out$",
+                "cb-alg-7f": "17.25"
+              },
+              "parameterSources": {},
+              "layoutMatched": true,
+              "layoutEvidence": "same-object-id",
+              "svgAttributes": {
+                "id": "memory",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "UNMAPPED_MEMORY",
+                "cb-alg-set": "$s$cb-alg-out$",
+                "cb-alg-rset": "$r$cb-alg-out$",
+                "cb-alg-7f": "17.25"
+              },
+              "fieldAudit": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-set",
+                  "value": "$s$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "unresolved",
+                  "evidence": []
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-rset",
+                  "value": "$r$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "unresolved",
+                  "evidence": []
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-7f",
+                  "value": "17.25",
+                  "role": "unclassified",
+                  "status": "unresolved",
+                  "evidence": []
+                }
+              ]
+            }
+          },
+          {
+            "id": "source-q",
+            "type": "OUTPUT",
+            "name": "OUTPUT q",
+            "x": 530,
+            "y": 70,
+            "params": {
+              "kind": null
+            },
+            "initial": {},
+            "provenance": {
+              "origin": "import",
+              "sourceFile": "memory.svg",
+              "objectId": "q",
+              "svgObjectId": "q",
+              "svgSourceFile": "memory.svg",
+              "attributes": {
+                "id": "q",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "OUTPUT",
+                "cb-alg-in": "$memory$cb-alg-out$",
+                "cb-alg-tout": "OUT"
+              },
+              "parameterSources": {},
+              "layoutMatched": true,
+              "layoutEvidence": "same-object-id",
+              "svgAttributes": {
+                "id": "q",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "OUTPUT",
+                "cb-alg-in": "$memory$cb-alg-out$",
+                "cb-alg-tout": "OUT"
+              },
+              "fieldAudit": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-in",
+                  "value": "$memory$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-in"
+                    }
+                  ]
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-tout",
+                  "value": "OUT",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-tout"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "source-s",
+            "fromPort": "OUT",
+            "to": "source-memory",
+            "toPort": "SET",
+            "provenance": {
+              "file": "memory.svg",
+              "attribute": "cb-alg-set",
+              "sourceValue": "$s$cb-alg-out$"
+            }
+          },
+          {
+            "from": "source-r",
+            "fromPort": "OUT",
+            "to": "source-memory",
+            "toPort": "RSET",
+            "provenance": {
+              "file": "memory.svg",
+              "attribute": "cb-alg-rset",
+              "sourceValue": "$r$cb-alg-out$"
+            }
+          },
+          {
+            "from": "source-memory",
+            "fromPort": "OUT",
+            "to": "source-q",
+            "toPort": "IN1",
+            "provenance": {
+              "file": "memory.svg",
+              "attribute": "cb-alg-in",
+              "sourceValue": "$memory$cb-alg-out$"
+            }
+          }
+        ],
+        "issues": [
+          {
+            "id": "import-1",
+            "code": "INPUT_SCENARIO_REQUIRED",
+            "message": "需要设置外部输入随时间变化的规律",
+            "nodeId": "source-s",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-2",
+            "code": "INPUT_SCENARIO_REQUIRED",
+            "message": "需要设置外部输入随时间变化的规律",
+            "nodeId": "source-r",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-3",
+            "code": "UNKNOWN_BLOCK",
+            "message": "未支持的控制块：UNMAPPED_MEMORY",
+            "nodeId": "source-memory",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-4",
+            "code": "OPAQUE_BINDINGS",
+            "message": "存在未解析的端口/参数字段：cb-alg-set, cb-alg-rset, cb-alg-7f",
+            "nodeId": "source-memory",
+            "severity": "error",
+            "resolved": false,
+            "sourceFile": "memory.svg",
+            "sourceNamespace": "svg",
+            "sourceFields": [
+              "cb-alg-set",
+              "cb-alg-rset",
+              "cb-alg-7f"
+            ]
+          },
+          {
+            "id": "import-5",
+            "code": "SVG_FIELDS_UNRESOLVED",
+            "message": "SVG字段尚未核实：cb-alg-set, cb-alg-rset, cb-alg-7f",
+            "nodeId": "source-memory",
+            "severity": "error",
+            "resolved": false,
+            "sourceFile": "memory.svg",
+            "sourceNamespace": "svg",
+            "sourceFields": [
+              "cb-alg-set",
+              "cb-alg-rset",
+              "cb-alg-7f"
+            ]
+          },
+          {
+            "id": "import-6",
+            "code": "SIGNAL_TYPE_REQUIRED",
+            "message": "需要明确外部接口的信号类型",
+            "nodeId": "source-s",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-7",
+            "code": "SIGNAL_TYPE_REQUIRED",
+            "message": "需要明确外部接口的信号类型",
+            "nodeId": "source-r",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-8",
+            "code": "SIGNAL_TYPE_REQUIRED",
+            "message": "需要明确外部接口的信号类型",
+            "nodeId": "source-q",
+            "severity": "error",
+            "resolved": false
+          },
+          {
+            "id": "import-9",
+            "code": "SCAN_CONFIGURATION_REQUIRED",
+            "message": "源文件未提供已核实扫描周期；请明确设置模拟周期",
+            "severity": "error",
+            "resolved": false
+          }
+        ],
+        "sources": [],
+        "execution": {
+          "model": "single-task-ordered-v1",
+          "mode": "topological",
+          "required": true,
+          "confirmation": null
+        },
+        "importMetadata": {
+          "file": "memory.svg",
+          "kind": "ControlMacro",
+          "internalId": null,
+          "description": "REVIEW_MEMORY",
+          "taskId": null,
+          "sourceCycleKnown": false
+        },
+        "library": [],
+        "executionConstraints": {
+          "schemaVersion": 1,
+          "taskGroups": [
+            {
+              "scope": "import",
+              "tasks": []
+            }
+          ]
+        },
+        "connectionCandidates": [],
+        "importAudit": {
+          "schemaVersion": 1,
+          "scope": "import-snapshot",
+          "target": "memory.svg",
+          "implementation": null,
+          "parameterFile": null,
+          "note": "导入时的逐对象/字段快照，不是准确性验收；后续人工处理见项目issues与connectionCandidates。对象清单包含逻辑、连接、参数接口及未知语义类，不含已分类图形/文字装饰。辅助XML仅保留结构，编译指令和位置参数未解释。",
+          "svgObjects": [
+            {
+              "instanceKey": "svg-object-1",
+              "objectId": "s",
+              "kind": "logic",
+              "className": "ControlAlgorithm",
+              "type": "INPUT",
+              "nodeId": "source-s",
+              "status": "associated",
+              "attributes": {
+                "id": "s",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN1"
+              },
+              "mappingEvidence": "same-object-id",
+              "fields": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-out",
+                  "value": "IN1",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-out"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "instanceKey": "svg-object-2",
+              "objectId": "r",
+              "kind": "logic",
+              "className": "ControlAlgorithm",
+              "type": "INPUT",
+              "nodeId": "source-r",
+              "status": "associated",
+              "attributes": {
+                "id": "r",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "INPUT",
+                "cb-alg-out": "IN2"
+              },
+              "mappingEvidence": "same-object-id",
+              "fields": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-out",
+                  "value": "IN2",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-out"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "instanceKey": "svg-object-3",
+              "objectId": "memory",
+              "kind": "logic",
+              "className": "ControlAlgorithm",
+              "type": "UNMAPPED_MEMORY",
+              "nodeId": "source-memory",
+              "status": "associated",
+              "attributes": {
+                "id": "memory",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "UNMAPPED_MEMORY",
+                "cb-alg-set": "$s$cb-alg-out$",
+                "cb-alg-rset": "$r$cb-alg-out$",
+                "cb-alg-7f": "17.25"
+              },
+              "mappingEvidence": "same-object-id",
+              "fields": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-set",
+                  "value": "$s$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "unresolved",
+                  "evidence": []
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-rset",
+                  "value": "$r$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "unresolved",
+                  "evidence": []
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-7f",
+                  "value": "17.25",
+                  "role": "unclassified",
+                  "status": "unresolved",
+                  "evidence": []
+                }
+              ]
+            },
+            {
+              "instanceKey": "svg-object-4",
+              "objectId": "q",
+              "kind": "logic",
+              "className": "ControlAlgorithm",
+              "type": "OUTPUT",
+              "nodeId": "source-q",
+              "status": "associated",
+              "attributes": {
+                "id": "q",
+                "cb-classname": "ControlAlgorithm",
+                "cb-function-name": "OUTPUT",
+                "cb-alg-in": "$memory$cb-alg-out$",
+                "cb-alg-tout": "OUT"
+              },
+              "mappingEvidence": "same-object-id",
+              "fields": [
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-in",
+                  "value": "$memory$cb-alg-out$",
+                  "role": "input-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-in"
+                    }
+                  ]
+                },
+                {
+                  "namespace": "svg",
+                  "file": "memory.svg",
+                  "attribute": "cb-alg-tout",
+                  "value": "OUT",
+                  "role": "symbol-binding",
+                  "status": "parsed",
+                  "evidence": [
+                    {
+                      "file": "memory.svg",
+                      "attribute": "cb-alg-tout"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "implementationObjects": [],
+          "tftGroups": [],
+          "auxiliaryDocuments": [],
+          "summary": {
+            "svgLogicTotal": 4,
+            "svgLogicAssociated": 4,
+            "svgConnectionsTotal": 0,
+            "svgConnectionsExplicit": 0,
+            "svgParameterInterfacesTotal": 0,
+            "tftRecordsTotal": 0,
+            "xmlDocumentsTotal": 0,
+            "xmlInstructionsTotal": 0,
+            "xmlArgumentsTotal": 0,
+            "fieldStatuses": {
+              "parsed": 4,
+              "unresolved": 3
+            }
+          },
+          "sheetSelection": {
+            "mode": "explicit",
+            "targetFile": "memory.svg",
+            "documents": [
+              {
+                "file": "memory.svg",
+                "kind": "ControlMacro",
+                "title": "REVIEW_MEMORY",
+                "role": "target"
+              }
+            ]
+          },
+          "sourceFiles": [
+            {
+              "instanceKey": "source-file-1",
+              "file": "memory.svg",
+              "uses": [
+                {
+                  "role": "target",
+                  "sheet": "memory.svg"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "inputs": [
+        {
+          "name": "IN1",
+          "nodeId": "source-s",
+          "kind": "unknown"
+        },
+        {
+          "name": "IN2",
+          "nodeId": "source-r",
+          "kind": "unknown"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "OUT",
+          "nodeId": "source-q",
+          "kind": "unknown"
+        }
+      ],
+      "parameters": [],
+      "unmappedParameters": []
+    }
+  ],
+  "executionConstraints": {
+    "schemaVersion": 1,
+    "taskGroups": [
+      {
+        "scope": "import",
+        "tasks": [
+          {
+            "file": "workflow.svg",
+            "objectId": null,
+            "sourceClass": "ControlFunction",
+            "taskId": "1"
+          }
+        ]
+      },
+      {
+        "scope": "macro:source-instance:expansion-1:import",
+        "tasks": []
+      }
+    ]
+  },
+  "connectionCandidates": [],
+  "importAudit": {
+    "schemaVersion": 1,
+    "scope": "import-snapshot",
+    "target": "workflow.svg",
+    "implementation": null,
+    "parameterFile": null,
+    "note": "导入时的逐对象/字段快照，不是准确性验收；后续人工处理见项目issues与connectionCandidates。对象清单包含逻辑、连接、参数接口及未知语义类，不含已分类图形/文字装饰。辅助XML仅保留结构，编译指令和位置参数未解释。",
+    "svgObjects": [
+      {
+        "instanceKey": "svg-object-1",
+        "objectId": "set",
+        "kind": "logic",
+        "className": "ControlAlgorithm",
+        "type": "INPUT",
+        "nodeId": "source-set",
+        "status": "associated",
+        "attributes": {
+          "id": "set",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "mappingEvidence": "same-object-id",
+        "fields": []
+      },
+      {
+        "instanceKey": "svg-object-2",
+        "objectId": "reset",
+        "kind": "logic",
+        "className": "ControlAlgorithm",
+        "type": "INPUT",
+        "nodeId": "source-reset",
+        "status": "associated",
+        "attributes": {
+          "id": "reset",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "INPUT"
+        },
+        "mappingEvidence": "same-object-id",
+        "fields": []
+      },
+      {
+        "instanceKey": "svg-object-3",
+        "objectId": "instance",
+        "kind": "logic",
+        "className": "ControlMacroReference",
+        "type": "REVIEW_MEMORY",
+        "nodeId": "source-instance",
+        "status": "associated",
+        "attributes": {
+          "id": "instance",
+          "cb-classname": "ControlMacroReference",
+          "cb-function-name": "REVIEW_MEMORY",
+          "cb-macro-crc": "42",
+          "cb-alg-in1": "$set$cb-alg-out$",
+          "cb-alg-in2": "$reset$cb-alg-out$"
+        },
+        "mappingEvidence": "same-object-id",
+        "fields": [
+          {
+            "namespace": "svg",
+            "file": "workflow.svg",
+            "attribute": "cb-macro-crc",
+            "value": "42",
+            "role": "macro-identity",
+            "status": "metadata",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "workflow.svg",
+            "attribute": "cb-alg-in1",
+            "value": "$set$cb-alg-out$",
+            "role": "input-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "workflow.svg",
+                "attribute": "cb-alg-in1"
+              }
+            ]
+          },
+          {
+            "namespace": "svg",
+            "file": "workflow.svg",
+            "attribute": "cb-alg-in2",
+            "value": "$reset$cb-alg-out$",
+            "role": "input-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "workflow.svg",
+                "attribute": "cb-alg-in2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "instanceKey": "svg-object-4",
+        "objectId": "result",
+        "kind": "logic",
+        "className": "ControlAlgorithm",
+        "type": "OUTPUT",
+        "nodeId": "source-result",
+        "status": "associated",
+        "attributes": {
+          "id": "result",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "OUTPUT",
+          "cb-alg-in": "$instance$cb-alg-out$"
+        },
+        "mappingEvidence": "same-object-id",
+        "fields": [
+          {
+            "namespace": "svg",
+            "file": "workflow.svg",
+            "attribute": "cb-alg-in",
+            "value": "$instance$cb-alg-out$",
+            "role": "input-binding",
+            "status": "parsed",
+            "evidence": [
+              {
+                "file": "workflow.svg",
+                "attribute": "cb-alg-in"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "instanceKey": "svg-object-5",
+        "objectId": "branch",
+        "kind": "logic",
+        "className": "ControlAlgorithm",
+        "type": "NOT",
+        "nodeId": "source-branch",
+        "status": "associated",
+        "attributes": {
+          "id": "branch",
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "NOT"
+        },
+        "mappingEvidence": "same-object-id",
+        "fields": []
+      }
+    ],
+    "implementationObjects": [],
+    "tftGroups": [],
+    "auxiliaryDocuments": [],
+    "summary": {
+      "svgLogicTotal": 5,
+      "svgLogicAssociated": 5,
+      "svgConnectionsTotal": 0,
+      "svgConnectionsExplicit": 0,
+      "svgParameterInterfacesTotal": 0,
+      "tftRecordsTotal": 0,
+      "xmlDocumentsTotal": 0,
+      "xmlInstructionsTotal": 0,
+      "xmlArgumentsTotal": 0,
+      "fieldStatuses": {
+        "metadata": 1,
+        "parsed": 3
+      }
+    },
+    "sheetSelection": {
+      "mode": "single-control-function",
+      "targetFile": "workflow.svg",
+      "documents": [
+        {
+          "file": "workflow.svg",
+          "kind": "ControlFunction",
+          "title": "通用导入修复工况",
+          "role": "target"
+        },
+        {
+          "file": "memory.svg",
+          "kind": "ControlMacro",
+          "title": "REVIEW_MEMORY",
+          "role": "macro-definition"
+        }
+      ]
+    },
+    "sourceFiles": [
+      {
+        "instanceKey": "source-file-1",
+        "file": "workflow.svg",
+        "uses": [
+          {
+            "role": "task-constraints",
+            "sheet": "workflow.svg"
+          },
+          {
+            "role": "target",
+            "sheet": "workflow.svg"
+          }
+        ]
+      },
+      {
+        "instanceKey": "source-file-2",
+        "file": "memory.svg",
+        "uses": [
+          {
+            "role": "macro-definition",
+            "sheet": "memory.svg"
+          }
+        ]
+      }
+    ]
+  },
+  "macroExpansions": [
+    {
+      "instanceId": "source-instance",
+      "scope": "macro:source-instance:expansion-1:",
+      "definitionId": "definition:memory.svg",
+      "originalNode": {
+        "id": "source-instance",
+        "type": "REVIEW_MEMORY",
+        "name": "REVIEW_MEMORY instance",
+        "x": 400,
+        "y": 100,
+        "params": {},
+        "initial": {},
+        "provenance": {
+          "origin": "import",
+          "sourceFile": "workflow.svg",
+          "objectId": "instance",
+          "svgObjectId": "instance",
+          "svgSourceFile": "workflow.svg",
+          "attributes": {
+            "id": "instance",
+            "cb-classname": "ControlMacroReference",
+            "cb-function-name": "REVIEW_MEMORY",
+            "cb-macro-crc": "42",
+            "cb-alg-in1": "$set$cb-alg-out$",
+            "cb-alg-in2": "$reset$cb-alg-out$"
+          },
+          "parameterSources": {},
+          "layoutMatched": true,
+          "layoutEvidence": "same-object-id",
+          "svgAttributes": {
+            "id": "instance",
+            "cb-classname": "ControlMacroReference",
+            "cb-function-name": "REVIEW_MEMORY",
+            "cb-macro-crc": "42",
+            "cb-alg-in1": "$set$cb-alg-out$",
+            "cb-alg-in2": "$reset$cb-alg-out$"
+          },
+          "fieldAudit": [
+            {
+              "namespace": "svg",
+              "file": "workflow.svg",
+              "attribute": "cb-macro-crc",
+              "value": "42",
+              "role": "macro-identity",
+              "status": "metadata",
+              "evidence": []
+            },
+            {
+              "namespace": "svg",
+              "file": "workflow.svg",
+              "attribute": "cb-alg-in1",
+              "value": "$set$cb-alg-out$",
+              "role": "input-binding",
+              "status": "parsed",
+              "evidence": [
+                {
+                  "file": "workflow.svg",
+                  "attribute": "cb-alg-in1"
+                }
+              ]
+            },
+            {
+              "namespace": "svg",
+              "file": "workflow.svg",
+              "attribute": "cb-alg-in2",
+              "value": "$reset$cb-alg-out$",
+              "role": "input-binding",
+              "status": "parsed",
+              "evidence": [
+                {
+                  "file": "workflow.svg",
+                  "attribute": "cb-alg-in2"
+                }
+              ]
+            }
+          ]
+        },
+        "macroReference": {
+          "name": "REVIEW_MEMORY",
+          "crc": "42",
+          "definitionId": "definition:memory.svg"
+        },
+        "macroPorts": {
+          "inputs": {
+            "IN1": "boolean",
+            "IN2": "boolean"
+          },
+          "outputs": {
+            "OUT": "boolean"
+          }
+        },
+        "macroOverrides": {}
+      },
+      "nodeMap": {
+        "source-s": "macro:source-instance:expansion-1:source-s",
+        "source-r": "macro:source-instance:expansion-1:source-r",
+        "source-memory": "macro:source-instance:expansion-1:source-memory",
+        "source-q": "macro:source-instance:expansion-1:source-q"
+      },
+      "overrides": {},
+      "note": "软件工况：IN1/IN2为数字置位/复位，OUT为数字输出；未定义参数稍后人工补齐",
+      "at": "2026-11-05T12:22:30.221Z"
+    }
+  ],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 239.16000000000003,
+      "y": 119.28981636060101,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"source-result\",\"values\",\"OUT\"]",
+        "[\"source-branch\",\"values\",\"OUT\"]",
+        "[\"macro:source-instance:expansion-1:source-memory\",\"states\",\"memory\"]"
+      ]
+    }
+  ]
+}

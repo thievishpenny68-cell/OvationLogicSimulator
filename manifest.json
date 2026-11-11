@@ -1,0 +1,1037 @@
+{
+  "version": "1.0.0",
+  "entry": "index.html",
+  "edition": "public-offline",
+  "files": [
+    {
+      "path": "docs/algorithm-support-matrix.md",
+      "bytes": 12723,
+      "sha256": "5a89b146a1003925aa16dd296d8d8ce67299d3c33d2352d76bcc7c8877a7fc63"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/01-first-run.png",
+      "bytes": 60582,
+      "sha256": "6dd9272b85dac8e5ce720f31a38de9cdff4bf48b06c40abebe690179c9a93771"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/02-wiring.png",
+      "bytes": 57118,
+      "sha256": "6b85aeaa3a12b8c212c2835b08406b70b1b17aaa8018a152c4df6fb898a0a911"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/03-input-wave.png",
+      "bytes": 51285,
+      "sha256": "85396742629593cdc0e9a01d1ad390867c70dc107b6af807381a313693532d50"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/04-workspace.png",
+      "bytes": 42714,
+      "sha256": "535acdff25c4dba07a0923a00501db4a3361914fc18005f28ffa2dbe170857b9"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/06-import-review.png",
+      "bytes": 37666,
+      "sha256": "25eb36606adbaa2435fb05bb3b0e2bc6bb0ae5bf979fa2de993519bf86a34e8e"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/07-recompute.png",
+      "bytes": 31828,
+      "sha256": "5edf9301f6efc2b5a8963fc80b3cb95ee4d50c71e8e2877d20f97f08710dcea0"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/08-compare.png",
+      "bytes": 30486,
+      "sha256": "41a5cb7f9d5a8d45ba812cd05779ea54cb4f62aea3a6e66f2240353a07c77319"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/09-issues.png",
+      "bytes": 43569,
+      "sha256": "0b03236c8231af078c74ee9fcde7e1781ddc0f78979d7401b1995f296a0aec33"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/10-paper-settings.png",
+      "bytes": 41890,
+      "sha256": "1a1ab041272d47c45e4346852839a4725bbad977b152097028b7e561a5092e8d"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/11-scope-four-channels.png",
+      "bytes": 34587,
+      "sha256": "b71bc51e171ead222775b86fe257f2de01cd0d8b6035047c4bf98b16a3f3a9be"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/12-output-overview.png",
+      "bytes": 65398,
+      "sha256": "b9d28fcbbfc382e5da830aa8354d91b77de19b4888d0beacf6fe717ffb2523a0"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/13-disabled.png",
+      "bytes": 70413,
+      "sha256": "e55f9ce020a67c68cfebd04864809603bfd8ed933779c8a2782b9a96b437b37e"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/14-forced-output.png",
+      "bytes": 68153,
+      "sha256": "de395f1ab29db31892b761e8302363d24b25a2bda228ee488868af3f82bfe6eb"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/15-drawing-tools.png",
+      "bytes": 11662,
+      "sha256": "882eb59f45d77507c845537f9db10ce3baed56f119537e798592d2fc5e9f6f24"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/15b-eraser.png",
+      "bytes": 13827,
+      "sha256": "f39dc1862d21ae86920c87b2f0ce8f07c439ac6f7c72816da49d58931a8755bb"
+    },
+    {
+      "path": "docs/images/guide/0.67.1/16-feedback.png",
+      "bytes": 87675,
+      "sha256": "1ace7fc6ca4fe7c7d997ea7c94a7a56275c4c81548388bd70c463478b2ad77dd"
+    },
+    {
+      "path": "docs/reference/automatic-port-mapping-and-routing.md",
+      "bytes": 718,
+      "sha256": "e2d42f771057cbfe860b3e565474e09c4183fbca73bc3ff558ce7ccb787c974c"
+    },
+    {
+      "path": "docs/reference/auxiliary-xml.md",
+      "bytes": 2759,
+      "sha256": "30ac06c35fd581ade5679712a7d29cf34792211d5bd64fc7a470ec56113518fd"
+    },
+    {
+      "path": "docs/reference/basic-blocks.md",
+      "bytes": 5690,
+      "sha256": "03561790ad64e97e88889eebab6c73ed6c15d69b2ba2d903252a7a213876fa09"
+    },
+    {
+      "path": "docs/reference/bcd.md",
+      "bytes": 2088,
+      "sha256": "4679ababc92676ae49eca1b0599144126331e9124c50c43526297a7e4a956d67"
+    },
+    {
+      "path": "docs/reference/canvas-tools.md",
+      "bytes": 2171,
+      "sha256": "8f7ca1e12849c3578b55a4d5dec4365458e69894bd4c4c4f9384d71d9b51192d"
+    },
+    {
+      "path": "docs/reference/dbequals-exact-check.md",
+      "bytes": 1865,
+      "sha256": "2a827efd1164edd85a42e18af0f2e1d0c1ebe33208e8bd5ac61b1753ad487dbb"
+    },
+    {
+      "path": "docs/reference/disabled-blocks.md",
+      "bytes": 3148,
+      "sha256": "d4cccf9905871a4038d2a510a3a4f43f20cd24ff54348c26a39fa1c91fee8d14"
+    },
+    {
+      "path": "docs/reference/display-controls.md",
+      "bytes": 2784,
+      "sha256": "08d9dad324cfdfb4e21d3c35f97b02bdf9a32f4ff3ed00fbe297e85bfa46c151"
+    },
+    {
+      "path": "docs/reference/edge-memory.md",
+      "bytes": 4140,
+      "sha256": "6df5f4bd4d0b0ce21b5d3149ca28358c1b92efc8f88e02cc88ed092e0370c01a"
+    },
+    {
+      "path": "docs/reference/edge-timer-state-machines.md",
+      "bytes": 6343,
+      "sha256": "c9cd22560d5aa8782ba75001d10d841b001c2604cf81956795137e3594814231"
+    },
+    {
+      "path": "docs/reference/elementary-blocks.md",
+      "bytes": 4956,
+      "sha256": "5b54b0d0b391cc37b58ae251a7c9ff16da0258ca8646b533f173de588baa677e"
+    },
+    {
+      "path": "docs/reference/error-feedback.md",
+      "bytes": 3364,
+      "sha256": "31936ee0558c4860f9410226120a52d3fbc5545de350e6097bfd48e41bcd2ea5"
+    },
+    {
+      "path": "docs/reference/exact-sum-check.md",
+      "bytes": 3649,
+      "sha256": "163a43f54dd6b3e0d2e9883de9d903cd9bf116d17319bb3cc7155715c465e2be"
+    },
+    {
+      "path": "docs/reference/excel-input-waveforms.md",
+      "bytes": 2258,
+      "sha256": "c0ad67524ac281d90eed3faa3dfb353b312ebb8f24c903c9d73576b28045f544"
+    },
+    {
+      "path": "docs/reference/firstout.md",
+      "bytes": 3898,
+      "sha256": "c5fd29caef55c1dcc08d51d88e4ab4775224e1e60fea3c9b7e7dd96c66f7e476"
+    },
+    {
+      "path": "docs/reference/function.md",
+      "bytes": 3414,
+      "sha256": "7db0793aa1af24eb503f8d04ca4b6ccbd4799fe96abdbafbe75c8e6b41ce34f1"
+    },
+    {
+      "path": "docs/reference/gainbias-source-options.md",
+      "bytes": 2574,
+      "sha256": "60ff81ae146e1b139034d996eac96d547a00b8322f086734bc48ed4a7616aa7b"
+    },
+    {
+      "path": "docs/reference/gate-inputs.md",
+      "bytes": 2338,
+      "sha256": "6910e28f8e58e28c646f9d8f2dedb0d9071105fe56e77d43e11c33b08f476226"
+    },
+    {
+      "path": "docs/reference/hysteresis-monitors.md",
+      "bytes": 4102,
+      "sha256": "e38c148dc322889a412541a25b725743835996d6ed38a34cb5bc34b6a461e0f5"
+    },
+    {
+      "path": "docs/reference/import-sheet-selection.md",
+      "bytes": 2233,
+      "sha256": "9103d7c181c6652228636a54c1bab3f6f7fe779f33a33ff9d48a5344ac75f8b6"
+    },
+    {
+      "path": "docs/reference/import-source-fields.md",
+      "bytes": 700,
+      "sha256": "a67d46d29b43194bd5801a10023017e04b206e95fccf2661240cec26f6867351"
+    },
+    {
+      "path": "docs/reference/imported-custom-macro-symbols.md",
+      "bytes": 2116,
+      "sha256": "9ef992aa847d079fef46d74169c8be551d3140312910b5a0ffd23db3fc69753a"
+    },
+    {
+      "path": "docs/reference/input-encoding.md",
+      "bytes": 2766,
+      "sha256": "27e4504049c14fa4439ae8a37f18802d17fda4dbfe7fc639060f317b50ebf00b"
+    },
+    {
+      "path": "docs/reference/input-output-tabs.md",
+      "bytes": 2626,
+      "sha256": "b5c3861336cecf3d7c4bf8c2a8ebf021b1cde8218bc9f0de00ffc097d3d88b13"
+    },
+    {
+      "path": "docs/reference/input-scenarios.md",
+      "bytes": 2996,
+      "sha256": "a781584703d5520a80817181a8329134325343e44560ea94ebe8a3ad7bf9a9eb"
+    },
+    {
+      "path": "docs/reference/input-wave-editor.md",
+      "bytes": 3917,
+      "sha256": "5115648544985d6b9521c851807b3d520957f7974b29683163456d51557a26cf"
+    },
+    {
+      "path": "docs/reference/io-orientation.md",
+      "bytes": 1770,
+      "sha256": "af4b54af76ac6a8b9eb2a743de8ef18c409133a9d4ca18501ceba710189143ab"
+    },
+    {
+      "path": "docs/reference/lookup-blocks.md",
+      "bytes": 4358,
+      "sha256": "f6f50ec6f4cbd30d47814dd556cd412f7c357b18dddb8a7049ca550c35f9f2fe"
+    },
+    {
+      "path": "docs/reference/manual-parameter-defaults.md",
+      "bytes": 2939,
+      "sha256": "c6cace2399ced3f9c8c184031208e3235e878b50bb4288d47a92ce1d12d1c435"
+    },
+    {
+      "path": "docs/reference/manual-symbols-and-scope-fifo.md",
+      "bytes": 3352,
+      "sha256": "93f5d1a7f9298e1c2bbd17ca10c1cd334c483a856991d9e2c17d90ec1e2b1bae"
+    },
+    {
+      "path": "docs/reference/manual-wire-tool.md",
+      "bytes": 2106,
+      "sha256": "e75b7552e745e380c8c83fd71f74549a3718873683305a9dbfe8164987cc732a"
+    },
+    {
+      "path": "docs/reference/mcr-connection-review.md",
+      "bytes": 3225,
+      "sha256": "336ad9b6958bddfc82640767c6a02980a77da2ffc5d8009572106e53202c015c"
+    },
+    {
+      "path": "docs/reference/module-names-and-selection.md",
+      "bytes": 2056,
+      "sha256": "03c60d0f2db486eba6dd38c657d44cd0a7b726087f489b0f18fcdb5b69ac2f73"
+    },
+    {
+      "path": "docs/reference/ondelay-state-machine.md",
+      "bytes": 6274,
+      "sha256": "b0af4f35449359aa9cdb22f0f26fab098efcd7ea1d95f9eb07c5766fef4b43a6"
+    },
+    {
+      "path": "docs/reference/oscilloscope-charts.md",
+      "bytes": 3662,
+      "sha256": "16a5a399853833be89df15266a12c95b7eac35fc38a1d357ace52791a19263a7"
+    },
+    {
+      "path": "docs/reference/output-forces.md",
+      "bytes": 3346,
+      "sha256": "8efc97750734f52d524ee65dc74bd7904fb631df24d2ce32c3aa6f23dbf5869f"
+    },
+    {
+      "path": "docs/reference/output-recovery.md",
+      "bytes": 2051,
+      "sha256": "dde249d4b831c8fb70f8bc32aa59b06b1313ebc2c3193508658e0f25de8ccc7a"
+    },
+    {
+      "path": "docs/reference/packed-interfaces.md",
+      "bytes": 1936,
+      "sha256": "3535c1c9ab58a2f053e5888c927b21074edd5aff373ea818143e6829e051fabc"
+    },
+    {
+      "path": "docs/reference/packed-pin-layout.md",
+      "bytes": 2701,
+      "sha256": "6690aacdfc73a4aaf0f32989b4c95e6387bc107c82abbec29527d8eac91d26a7"
+    },
+    {
+      "path": "docs/reference/packed-words.md",
+      "bytes": 4031,
+      "sha256": "60a695b8aefb88775337ab1b8afa00dd3c3394fafb39d28dc1611a03aa540529"
+    },
+    {
+      "path": "docs/reference/paper-and-wave-grid.md",
+      "bytes": 2127,
+      "sha256": "62ef9f31e40a38864359ea7e159b263f15250bf387677e127a506fee759b0ec2"
+    },
+    {
+      "path": "docs/reference/pin-layout-suggestions.md",
+      "bytes": 3350,
+      "sha256": "19ad5d68711dc9bf2fc0f02ba39dd786d09e4c8bcf50bae5211d1eff24846d5b"
+    },
+    {
+      "path": "docs/reference/point-record-types.md",
+      "bytes": 3891,
+      "sha256": "0a204777484ff16635a7bc84dbbe98c035900b09424153a0b532dd7a8590212d"
+    },
+    {
+      "path": "docs/reference/precision-validation.md",
+      "bytes": 6209,
+      "sha256": "9126603b0bc752fbb53c95eb3f56d86e7d9853127255b3f4a8c63a30ef586fb2"
+    },
+    {
+      "path": "docs/reference/problem-groups.md",
+      "bytes": 1346,
+      "sha256": "97c586cb429915fe93af6fdb0a4692de4e01934d32c737878b6e63777f416bda"
+    },
+    {
+      "path": "docs/reference/qaverage.md",
+      "bytes": 2249,
+      "sha256": "ae4de0bc65a2f2b4b652c985850259fdf05ca603fb20aa6cf65631a0afd7b836"
+    },
+    {
+      "path": "docs/reference/record-recompute.md",
+      "bytes": 4237,
+      "sha256": "7fc779dc874302f39f4a5fc9f7aa9e224898ed228888191fa6ad130edcd0783e"
+    },
+    {
+      "path": "docs/reference/recording-resources.md",
+      "bytes": 3527,
+      "sha256": "5a293ef71cd626f11a938e081f15747aacc1b8f2e694d4b4c529f0b1e0a52314"
+    },
+    {
+      "path": "docs/reference/reference-csv.md",
+      "bytes": 3834,
+      "sha256": "6082161911feafcc81fa3464ade5f8a1fe9204f329f9b42b04d46db997477b73"
+    },
+    {
+      "path": "docs/reference/run-record-format.md",
+      "bytes": 8014,
+      "sha256": "15280c094bfd7bc414fec073a6e7057ac872f1d7297eba5ee37bd66e23abc631"
+    },
+    {
+      "path": "docs/reference/scan-execution-model.md",
+      "bytes": 4454,
+      "sha256": "181feb965381c7e65dcf310f6ffcbb4be19fd6136620411af4903f08448550fd"
+    },
+    {
+      "path": "docs/reference/shared-macro-sources.md",
+      "bytes": 2791,
+      "sha256": "cd0a53ca8a68927f7962985cbafafd25136b0d57dda0f27b19a34abcef4b438b"
+    },
+    {
+      "path": "docs/reference/shared-signal-trunks-and-title-block.md",
+      "bytes": 2599,
+      "sha256": "6c3128e2ef80e803fbc0dbaacf240e70388a969170e59e7d5c783588a1ba7756"
+    },
+    {
+      "path": "docs/reference/simple-sources-storage.md",
+      "bytes": 2837,
+      "sha256": "dd7fd4d11ef5ccbf3cda5c06a3d957a359c7f857e2286464c13f3908983bf8b6"
+    },
+    {
+      "path": "docs/reference/smooth.md",
+      "bytes": 4358,
+      "sha256": "02102ecf926378a92b4a7b81fdcbb0fc03203efafe3a79d5383ed18cfa688abb"
+    },
+    {
+      "path": "docs/reference/source-object-inspection.md",
+      "bytes": 2356,
+      "sha256": "4ce679d1b86723c81806e4958ef54cb02f216ae338781a1b2dbc669f9e5ce3d6"
+    },
+    {
+      "path": "docs/reference/sum-four-inputs.md",
+      "bytes": 2523,
+      "sha256": "d01c64ab3a6e9b845adf63617c0830b3c0b913439bad2e5743261137483cec0e"
+    },
+    {
+      "path": "docs/reference/svg-connections.md",
+      "bytes": 800,
+      "sha256": "b0d6b287fad46e98ce32ec4c1240cdead541d209b05b90225c704c8db980dbbb"
+    },
+    {
+      "path": "docs/reference/temporary-drawing-tools.md",
+      "bytes": 3083,
+      "sha256": "748aded7c5a49d55ca6f92826e3c2761be3ec8e90c2cf02f7cac58ad00878e8b"
+    },
+    {
+      "path": "docs/reference/transport.md",
+      "bytes": 2610,
+      "sha256": "d63fead29aaecf24c743d2a3cdb6a7716eec59945226d0d9fa66f67fb2bea124"
+    },
+    {
+      "path": "docs/reference/unary-pin-layout.md",
+      "bytes": 2032,
+      "sha256": "25c0191ab6fa28f5fc625251b0710ffd86bd99ce067c4ca43dae41538eb3ede9"
+    },
+    {
+      "path": "docs/reference/wire-values.md",
+      "bytes": 1938,
+      "sha256": "c7ba8bcba0af29b3a671929d9ecec4a27a4dc9901cb7010bfe0d682d29283e6e"
+    },
+    {
+      "path": "docs/reference/workspace-panels.md",
+      "bytes": 2204,
+      "sha256": "49bfd02d81b3a6a3fa6b7ae02d695dfd8c6ce4b03f0439a5025333545fdc6ba9"
+    },
+    {
+      "path": "docs/user-guide.md",
+      "bytes": 17272,
+      "sha256": "f6b1781bfff46f31b67ad7cc1968fcb7cc33a4c8c0cb89fc57364f5169974d2c"
+    },
+    {
+      "path": "docs/validation/manual-acceptance.md",
+      "bytes": 764,
+      "sha256": "c9da95e4644a175e74de4741eaeeaaab5ddbab99c3919496214c34d3703c3f0d"
+    },
+    {
+      "path": "docs/validation/numeric-contract.md",
+      "bytes": 7153,
+      "sha256": "959f80ef72e275a17075541eb64e36ff26b6b45cefb290df08a3f13c10e09ef4"
+    },
+    {
+      "path": "examples/basic-blocks-reference.json",
+      "bytes": 2495,
+      "sha256": "1d0fbd80463735d0895585df95f3dc9ca3b35b442bddef4eb546a19058bbf15d"
+    },
+    {
+      "path": "examples/basic-blocks.json",
+      "bytes": 5836,
+      "sha256": "6b9d9066401b3dc1301a8a59ef23073e452ee4b8689af8232e190dbafa72f0a0"
+    },
+    {
+      "path": "examples/bcd-reference.json",
+      "bytes": 2222,
+      "sha256": "ac86f62b86cab1d98bc615767a93975e808882af8d156450c013427cecab0c5b"
+    },
+    {
+      "path": "examples/bcd.json",
+      "bytes": 4517,
+      "sha256": "adb66636bb05e0dcb17e2a8459690b429a4fd69434f0df290fc914ffcb29edbe"
+    },
+    {
+      "path": "examples/csv-comparison-reference.csv",
+      "bytes": 548,
+      "sha256": "6cfb3a0046c68abca50d0d25766fc8d64a088a0a2455fb77ba4e4710eb677bc0"
+    },
+    {
+      "path": "examples/csv-comparison.json",
+      "bytes": 1734,
+      "sha256": "a8c3f2a23fc4700898271c2bb3eca169c429d098698b568a832da9e4dd0de65e"
+    },
+    {
+      "path": "examples/edge-memory-reference.json",
+      "bytes": 2258,
+      "sha256": "10f87fd8988b69872cf1946163903f21289686239e69cd1b648a68618b933b63"
+    },
+    {
+      "path": "examples/edge-memory.json",
+      "bytes": 3776,
+      "sha256": "b4868e163fb0ac56fc891136fbe27d19cd8d7fbc3748d51e7b7369ec15be91c7"
+    },
+    {
+      "path": "examples/elementary-blocks-reference.json",
+      "bytes": 4226,
+      "sha256": "ee8a5e167d0632fc33ec4dc772e168da94442a5044becb5bbfe36eb76dfd0ded"
+    },
+    {
+      "path": "examples/elementary-blocks.json",
+      "bytes": 8849,
+      "sha256": "b40378e5ab59e7f1b5855251022db952884eed802f740e660f5ddca368f36f84"
+    },
+    {
+      "path": "examples/explicit-scan-order.json",
+      "bytes": 2336,
+      "sha256": "53ce7848b648b0219d246871bfb80ef59a15b4503b52be885a22a7f82931c13f"
+    },
+    {
+      "path": "examples/firstout-reference.json",
+      "bytes": 4015,
+      "sha256": "64a0ef87320d921f4ac14374bbb8d59868f4c72cfcb4bef70ff34d67ed8ae819"
+    },
+    {
+      "path": "examples/firstout.json",
+      "bytes": 5394,
+      "sha256": "3b856d62d1f0bb65f3423c4cd059f50a738de07e1f1160a4e54b25ceaa72dc17"
+    },
+    {
+      "path": "examples/function-reference.json",
+      "bytes": 3884,
+      "sha256": "04e7fc7bfd67c09c93f534675af49115de734b284883d400c95715b9211f6089"
+    },
+    {
+      "path": "examples/function.json",
+      "bytes": 13175,
+      "sha256": "321b1f7a5b97cb73d0a905deda3ebdd768551d3eeeb412bc6a9588af36e7c715"
+    },
+    {
+      "path": "examples/gainbias-source-options-reference.json",
+      "bytes": 1023,
+      "sha256": "1c4ac32058e680e947e3ac7902c8fbb68cde78132141b142be6e1b038ce75752"
+    },
+    {
+      "path": "examples/gainbias-source-options.json",
+      "bytes": 2078,
+      "sha256": "4e8cda06f9aebd92d532c55cb19a357e35051e060bc03d7555c4c12fe5f8f0af"
+    },
+    {
+      "path": "examples/gate-inputs.json",
+      "bytes": 3015,
+      "sha256": "c579582faaecc43c623f6f36d522b829bc0d281b063bbe2a66a064338ac4c52f"
+    },
+    {
+      "path": "examples/hysteresis-monitors.json",
+      "bytes": 2975,
+      "sha256": "1c57f4cec4a1a7a43c51bfbe22e4d9cb2d80ad7672205b56b1e9d479274654a6"
+    },
+    {
+      "path": "examples/import-review/manual-reference.json",
+      "bytes": 2644,
+      "sha256": "bef3f4ed13adebd1ccd80b86506b25180937188d160cb3ee5562b17a1db16d3e"
+    },
+    {
+      "path": "examples/import-review/memory.svg",
+      "bytes": 728,
+      "sha256": "2cef4d9f1af977e092e97914c1af909e37dfea5da5c88e42328d0e5e96ef320a"
+    },
+    {
+      "path": "examples/import-review/repaired-workflow.json",
+      "bytes": 63530,
+      "sha256": "8c9485ad177b4e08fb51ab8a0fb3ec3052ae3f162a89ee1b5ccccac14f74e9e2"
+    },
+    {
+      "path": "examples/import-review/workflow.svg",
+      "bytes": 873,
+      "sha256": "f7a4a1d7b654e41dc7525e396a94ad17d9f1147ccde8d9cc7fc39a181eb59257"
+    },
+    {
+      "path": "examples/input-waveform-trial-reference.csv",
+      "bytes": 173,
+      "sha256": "10d97f5ca0d966e7eb289c2b65c98784a4248a57242d56a4982d853725d520a3"
+    },
+    {
+      "path": "examples/input-waveform-trial.json",
+      "bytes": 1031,
+      "sha256": "a7ef9c794103464d55a5d1a62b845ee02423245e8bd0a20f550ed70ad6f421db"
+    },
+    {
+      "path": "examples/io-orientation.json",
+      "bytes": 1878,
+      "sha256": "3860615cca236748c036d392b19c5df2f2d7ebaf59687312a2dc2a3bf6bda743"
+    },
+    {
+      "path": "examples/lookup-blocks-reference.json",
+      "bytes": 3680,
+      "sha256": "a2fe372f8c2b20290806f81250b427d969aeca42f34a98425890c4aa3bc270a7"
+    },
+    {
+      "path": "examples/lookup-blocks.json",
+      "bytes": 6346,
+      "sha256": "4de3681d01866feacf13e5883f1d6435cf65bd47355d6c236ae0f08a14c07f95"
+    },
+    {
+      "path": "examples/manual-verified/F0-reference.json",
+      "bytes": 1360,
+      "sha256": "066e539a16fd7921e61cf3502498e28d67af938ea33986a4a80bd19ccfbe4336"
+    },
+    {
+      "path": "examples/manual-verified/F0.json",
+      "bytes": 2574,
+      "sha256": "67dcc3c13eef9b48165f30f9ef516d7602802e291aa86a4071e8b34973192ece"
+    },
+    {
+      "path": "examples/manual-verified/F1-reference.json",
+      "bytes": 1358,
+      "sha256": "eeb0a8337a23496cad1aa08eb3ecbe7ed68110526397596b97e1979d2510bd90"
+    },
+    {
+      "path": "examples/manual-verified/F1.json",
+      "bytes": 2574,
+      "sha256": "ba0328d9198059dae2b3637d551606bbb65e4ea065cfee2bdec9ab9c957cc12e"
+    },
+    {
+      "path": "examples/manual-verified/G01-reference.json",
+      "bytes": 705,
+      "sha256": "b1eb77dac154d528cfd470db20927e4364427c7a90f4bd54ed604de65ff396a6"
+    },
+    {
+      "path": "examples/manual-verified/G01.json",
+      "bytes": 1457,
+      "sha256": "250467365c1743210dbde1769c35e528c1a9a346206b1f926b59249671a839ee"
+    },
+    {
+      "path": "examples/manual-verified/G02-precision-stop.json",
+      "bytes": 1464,
+      "sha256": "e25cce4f341283419ee332d801aa659882991e325d2fc8efdad04e5d76c80931"
+    },
+    {
+      "path": "examples/manual-verified/H01-reference.json",
+      "bytes": 1522,
+      "sha256": "d18249219a05ab378ec06fa11716e3ed2a1d7cb34f980d222c289dc085337351"
+    },
+    {
+      "path": "examples/manual-verified/H01.json",
+      "bytes": 1740,
+      "sha256": "df16be8686a912e65ca28a9e8edced12f80ab66d7bd57f341d4b07145aa88da1"
+    },
+    {
+      "path": "examples/manual-verified/L01-reference.json",
+      "bytes": 1522,
+      "sha256": "78784b59c409b9d9f22bc6befc3a42c6f58a6fc1792134e23ec15fd795a3bf49"
+    },
+    {
+      "path": "examples/manual-verified/L01.json",
+      "bytes": 1741,
+      "sha256": "0ad3a60ba4b87374431f4c4e64b7ce99f82b1f31099b810c5c0ecae80751580a"
+    },
+    {
+      "path": "examples/manual-verified/README.md",
+      "bytes": 2505,
+      "sha256": "c19a7702cba364be82f30076e2f8f61025e2d8f2e69b2eb74b8bfc5bf1d5e321"
+    },
+    {
+      "path": "examples/manual-wire-branches.json",
+      "bytes": 3132,
+      "sha256": "aca2a5c311818a288d06de044e092d7cfe1fd0b3b8950aa93f3b8a7aaa8b45dc"
+    },
+    {
+      "path": "examples/mcr-connection-review.json",
+      "bytes": 20151,
+      "sha256": "a7f40861e235cabb7b96a7b40a9062bd40d90f9eeb0ba7db74dcd36bb037dd83"
+    },
+    {
+      "path": "examples/offdelay-oneshot-retrigger.json",
+      "bytes": 2933,
+      "sha256": "231726c0ad4b3091056b9fc1f91316c5a28b6bb229500d19417b32e9e9fb895a"
+    },
+    {
+      "path": "examples/ondelay-hold-reset.json",
+      "bytes": 2552,
+      "sha256": "10c239ff408576523f1159062547888b74f3fb4db2ddf2ea73f91ed1e2f65414"
+    },
+    {
+      "path": "examples/ondelay-retentive-pulses.json",
+      "bytes": 2541,
+      "sha256": "a2373040d299d907a00131d055dda9d989cf7b5fc823775188200914a5f6daff"
+    },
+    {
+      "path": "examples/oscilloscope-four-channels.json",
+      "bytes": 5482,
+      "sha256": "bacd8b4add04bc2882c40fbc76467eeeb8c643f1d110c07d8471919952b9f992"
+    },
+    {
+      "path": "examples/oscilloscopes.json",
+      "bytes": 2712,
+      "sha256": "193de0a9563c521650e4638a9ed7c93352dabf9972516988646b02c8f3436bcb"
+    },
+    {
+      "path": "examples/packed-words-reference.json",
+      "bytes": 1874,
+      "sha256": "06a096315490d2c3d7f44cc18c8862fc08b27a9e950cdb28964ebb11f7d76df1"
+    },
+    {
+      "path": "examples/packed-words.json",
+      "bytes": 8349,
+      "sha256": "7b38d1d183ed2680a74f048803ac3d5da03c1ed89952096e2740553b8d60b57f"
+    },
+    {
+      "path": "examples/paper-and-wave-grid.json",
+      "bytes": 1909,
+      "sha256": "568c1b9a4fc51d815e792e70f210f252b07974a857a0ea88f43be563c267b8b0"
+    },
+    {
+      "path": "examples/precision-sensitive-monitor.json",
+      "bytes": 1017,
+      "sha256": "c3860a017cf82e658580c1ff3ed532ce03e21b6afe645b56f99c875606337ca9"
+    },
+    {
+      "path": "examples/qaverage-reference.json",
+      "bytes": 1014,
+      "sha256": "cb0df9c4611d162264896ab2f39d04a1a6c133c2ac7e0a24d6eaf1cd5517ce10"
+    },
+    {
+      "path": "examples/qaverage.json",
+      "bytes": 3240,
+      "sha256": "8fe1b3ca330275b6191134428f7634c3aa941e5115041f9e617fc6b7804e3ca6"
+    },
+    {
+      "path": "examples/shared-signal-trunks.json",
+      "bytes": 2165,
+      "sha256": "f840916d38c2c145bb5e6f6183bd6ed6cac4cbdfd70eb4acd562c6a8ea53473b"
+    },
+    {
+      "path": "examples/simple-sources-storage-reference.json",
+      "bytes": 2122,
+      "sha256": "c0708a4b9bf21541e5ae63a7cfbc788b61bb2970900551b63779717ac91d0e1e"
+    },
+    {
+      "path": "examples/simple-sources-storage.json",
+      "bytes": 3709,
+      "sha256": "c48d3b952859c036fa028b4d84cd9b973ca694bc1e78d9f6b9d36610165be8a5"
+    },
+    {
+      "path": "examples/smooth-reference.json",
+      "bytes": 3466,
+      "sha256": "e594d2a22943ea756c64ff6b940351f072ec388b39e9b17e05735aea1c8ab9d0"
+    },
+    {
+      "path": "examples/smooth.json",
+      "bytes": 3770,
+      "sha256": "0e20fea8672b443c17b0c7df91ec077f574f46b36c73d25c03f1b250eb3173fa"
+    },
+    {
+      "path": "examples/sum-four-inputs-reference.json",
+      "bytes": 1278,
+      "sha256": "6b68a5e5484049cd6e142d8e79c7aee366d39c3cba9174e9ba10d6ae84037218"
+    },
+    {
+      "path": "examples/sum-four-inputs.json",
+      "bytes": 5168,
+      "sha256": "8f835b8ae0ca73d28256d3da9256cce954601ee854ebc8e8f1059e7abfbb147e"
+    },
+    {
+      "path": "examples/timer-manual-review-reference.json",
+      "bytes": 2667,
+      "sha256": "08f09e1f7419ef92f18762afd3d98d5a01722961cf954d8aa59d966225c9da99"
+    },
+    {
+      "path": "examples/timer-manual-review.json",
+      "bytes": 2171,
+      "sha256": "65c0e9edfd6bf91d1ad0c80ec1a629eb2cc48f0b8d1bb1ef017caae967b67cd2"
+    },
+    {
+      "path": "examples/transport-reference.json",
+      "bytes": 3932,
+      "sha256": "ecf6f60fca923960b031a066a3df3712c69ccb3c5335216912715f3bcda6785a"
+    },
+    {
+      "path": "examples/transport.json",
+      "bytes": 3897,
+      "sha256": "741ff5a396771dd41cceb4428c754f86ca10b751bbeda4d31afcc5bbce8ad25f"
+    },
+    {
+      "path": "examples/wire-values.json",
+      "bytes": 2789,
+      "sha256": "6c8c4bda54e7276c2cc7b57caf33afb160b4f7143ad3f3032e9b91a7aebb9a60"
+    },
+    {
+      "path": "guide.html",
+      "bytes": 29627,
+      "sha256": "6bbe261897dde51861b2ca11c8187f22073d1bd12ec6d84da96ababff5679d0e"
+    },
+    {
+      "path": "index.html",
+      "bytes": 28797,
+      "sha256": "05156486169fe66ba7ec4be44e08c1aced8c079730a8ab8b91f39a82502b96e0"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1457,
+      "sha256": "631e3e6851dad609d96383cb1869e67473915117ee3b29dcafd4dbbf2edf30da"
+    },
+    {
+      "path": "src/annotations.js",
+      "bytes": 15334,
+      "sha256": "8ec66903cf0a527f9923820cffa8586396d0e3cb4619112381761feb42e36b87"
+    },
+    {
+      "path": "src/app.js",
+      "bytes": 161623,
+      "sha256": "23a939cec0581755f523bdc13270a8eaca46bbab29a40992ca354b7d1f077246"
+    },
+    {
+      "path": "src/basic-analog.js",
+      "bytes": 6822,
+      "sha256": "5a7f6ab70c6010c2d7623c775985a57a526a4974a634a7475276606b6894c038"
+    },
+    {
+      "path": "src/bcd.js",
+      "bytes": 2477,
+      "sha256": "909b8c4023c2974d06dbfa1893bd246da94cd55d498334bf9f64ab52918f00ee"
+    },
+    {
+      "path": "src/bindings.js",
+      "bytes": 3078,
+      "sha256": "f174c83d412892c95ec2505c8b6180f5dea8a85bad043660faf58ea9297be9d9"
+    },
+    {
+      "path": "src/canvas-delete.js",
+      "bytes": 2521,
+      "sha256": "cf8ab2c02d993c154dee89175287b2b17b942d3adf64d4e0cc602ae2eaeaf0ee"
+    },
+    {
+      "path": "src/connection-evidence.js",
+      "bytes": 7733,
+      "sha256": "1d4cfee0a32b0cf49f5c9a4e372c712eb5d4d231fec593b23833dd3a6b762f0a"
+    },
+    {
+      "path": "src/core.js",
+      "bytes": 55716,
+      "sha256": "86e5ee7b07e592f0b7b6464e98e5161a6fa3a7d10de5394ad364d50ab8f39675"
+    },
+    {
+      "path": "src/declared-interfaces.js",
+      "bytes": 1423,
+      "sha256": "51d8495627032f02401bc718fff35a5368dd23d234c3821826ea141b42486643"
+    },
+    {
+      "path": "src/elementary-symbol-data.js",
+      "bytes": 38155,
+      "sha256": "6d07e99a9561f714ae856114c94670f060a868cd220a42c36b19758d831e2e72"
+    },
+    {
+      "path": "src/elementary.js",
+      "bytes": 16854,
+      "sha256": "a4987fe6e9bf79918674c61915acaf973b8b069ca936d77801da05708b84125c"
+    },
+    {
+      "path": "src/exact-math.js",
+      "bytes": 2389,
+      "sha256": "0950aa3e60687d96a813a6689b656363a67778cc0e55fd763e6e4b826c46a191"
+    },
+    {
+      "path": "src/feedback-report.js",
+      "bytes": 5035,
+      "sha256": "110f0f645f027c84733c46887d0f8c51fb036e26341badc6cb941044a1b39163"
+    },
+    {
+      "path": "src/feedback-ui.js",
+      "bytes": 8553,
+      "sha256": "d43b4ef5ed6ab5041048d371243ad544e3981808cc80f8e0d03b4d0b516adfc6"
+    },
+    {
+      "path": "src/firstout.js",
+      "bytes": 3445,
+      "sha256": "8d44fb2a7705983ce65be0016aa120a1cf13f2f1f41747ecde65258f32ebc2bb"
+    },
+    {
+      "path": "src/importer.js",
+      "bytes": 39023,
+      "sha256": "6819889145d9458e053002d147d23322ff3002d4eaf65c2c7e89eda7df780d68"
+    },
+    {
+      "path": "src/input-wave-editor.js",
+      "bytes": 17396,
+      "sha256": "c528c221dfd64d39f74805444eaf802a26c7abb2ce44e6ab3aa5e9a185a1ff4b"
+    },
+    {
+      "path": "src/input-wave-excel.js",
+      "bytes": 5540,
+      "sha256": "29c258e94fde7d2f62875397145b8c1bcbf37ab3ef7b7199e9a00da80471fa5d"
+    },
+    {
+      "path": "src/input-wave-template.js",
+      "bytes": 5456,
+      "sha256": "7afdc3d30ae4ff2dae2de288f351cf1d607e48df19c01b1663a49fa885241a86"
+    },
+    {
+      "path": "src/macro-symbols.js",
+      "bytes": 7006,
+      "sha256": "1132e3746e862021ff64d8d3c8d3b8b7a46ed8c2b7758a5398ae2f27c6f874cf"
+    },
+    {
+      "path": "src/macros.js",
+      "bytes": 13305,
+      "sha256": "dbf093b221a4afdf1e8d053102b948d72e3265f0412de6b6b75e659dd84f81a8"
+    },
+    {
+      "path": "src/manual-parameter-defaults.js",
+      "bytes": 8585,
+      "sha256": "efbdbb2a949120fa43f410a917852d6e28de6aad78f8e9eb6c5146deb612209d"
+    },
+    {
+      "path": "src/manual-symbol-data.js",
+      "bytes": 25433,
+      "sha256": "c18281f364bf4458fbeef6355a43ff2a958aed5a93570741d07baea6237b6aa1"
+    },
+    {
+      "path": "src/manual-wires.js",
+      "bytes": 1695,
+      "sha256": "69768fc5611c7cf9902a1c62fc23547388fbdc12c45a8825d17c732b27a6c114"
+    },
+    {
+      "path": "src/output-forces-ui.js",
+      "bytes": 5239,
+      "sha256": "724449f40cc73c32574f7561b9fc1c355a48720413bf00009c473039fc389955"
+    },
+    {
+      "path": "src/packed-words.js",
+      "bytes": 5436,
+      "sha256": "a6d23c53ddaab131e81ddc1b15ae83c5494ed9b9ed0d185f84a32acf66f43568"
+    },
+    {
+      "path": "src/paper.js",
+      "bytes": 1461,
+      "sha256": "08c8c969d87a34aeee115e0aabf3dd75696dae0fbc9b1006b15f170b1746bb30"
+    },
+    {
+      "path": "src/pin-record-data.js",
+      "bytes": 8544,
+      "sha256": "cc18de7c7ee3a457dbeb0dcfcd286916d820e6557c2d284abb70c3dda0665568"
+    },
+    {
+      "path": "src/point-records.js",
+      "bytes": 4834,
+      "sha256": "f38bae0eb9947b5b956ee703e01b44bf4aee54ded5727ef7970b6ae6d34e7211"
+    },
+    {
+      "path": "src/project-state.js",
+      "bytes": 3390,
+      "sha256": "e01ea3943166b49d1f926709c1498ca41ddfc1bfc4b7f7fb543cb89d1a47a783"
+    },
+    {
+      "path": "src/recompute.js",
+      "bytes": 7858,
+      "sha256": "5f13f95cab310b7b4f13e5aab75eac7bc4b37daba5c960ddc7cad0ec2445e44a"
+    },
+    {
+      "path": "src/reference-csv.js",
+      "bytes": 4953,
+      "sha256": "a475660bb87ff0076a00470d562d488afa26d5b17b906e4fd0bf0a0bc0c45102"
+    },
+    {
+      "path": "src/repair.js",
+      "bytes": 12080,
+      "sha256": "ac24204668b9d6e329b90a2cc6505c8414e396fc9094a372f51478ab3fe53038"
+    },
+    {
+      "path": "src/scopes.js",
+      "bytes": 18588,
+      "sha256": "637618d7a684ccd4ea30f5eb102a54e4df018779090e401c4bb37c6993369ce7"
+    },
+    {
+      "path": "src/sheet-title-block.js",
+      "bytes": 7909,
+      "sha256": "747ff8826d0fb9a0075f4f8bb59d73e968a39ce38fea800eff458ac791660aca"
+    },
+    {
+      "path": "src/signal-chart.js",
+      "bytes": 9146,
+      "sha256": "8931edfa789fafdd996ff63c1f625ff9d2a004d1cb0411177873e6a7ac5ba5cf"
+    },
+    {
+      "path": "src/source-preview.js",
+      "bytes": 12976,
+      "sha256": "1f5da61ea98f9db993c5995af943be822c642ee250b7bf24865c85b9c1aac8a5"
+    },
+    {
+      "path": "src/source-semantics.js",
+      "bytes": 10218,
+      "sha256": "31dcab6ba12c946e3d6cd0009c978bd76fe67aec8e5125d46e64304527390751"
+    },
+    {
+      "path": "src/style.css",
+      "bytes": 60399,
+      "sha256": "3e8f459fbd772a2a4aaf13193be9cf9354b05bd33662257ab831150b1a116ffa"
+    },
+    {
+      "path": "src/svg-auto-ports.js",
+      "bytes": 11036,
+      "sha256": "ef5994c9e3884bfbe21694dafeacc7017ce8c6340b934ccb10a18f202e324013"
+    },
+    {
+      "path": "src/svg-identity.js",
+      "bytes": 1956,
+      "sha256": "52174d9c5b8af823a8c54c17d740e45bdf7c72e4364e3a2f645cf2db9abe9387"
+    },
+    {
+      "path": "src/svg-port-names.js",
+      "bytes": 8535,
+      "sha256": "4f764117f3ad9946951a48aa1774c68ba70fc9c0b43a5c1dce1774f18e987b99"
+    },
+    {
+      "path": "src/svg-structure.js",
+      "bytes": 24289,
+      "sha256": "40b9bf5b7fd05f009e5a870abfbeff851d0e88a816ac6aa18f7ebb4b593567ce"
+    },
+    {
+      "path": "src/symbols.js",
+      "bytes": 10343,
+      "sha256": "d9fed7bfac42e7c5cd7b130ff25adc64f3ee29741ec579b2b3ba5c4352f91c81"
+    },
+    {
+      "path": "src/text-input.js",
+      "bytes": 2436,
+      "sha256": "00b657c01d91e0445077803c97c363e12024d81c01ca9d0af252d40e1b8dc31c"
+    },
+    {
+      "path": "src/theme.js",
+      "bytes": 567,
+      "sha256": "8b21545bf2931c4731f152394d4449207acb762b2aa810d283bacec51cbec833"
+    },
+    {
+      "path": "src/trace.js",
+      "bytes": 8435,
+      "sha256": "b248a564a34f88e87d43dca5da30fc446741b3faaee08c08a933cec0cad1b3dd"
+    },
+    {
+      "path": "src/transport.js",
+      "bytes": 2611,
+      "sha256": "d422c995ccf668fe54565683e6bd57a1e12b8aac96c88797688b83da5058355f"
+    },
+    {
+      "path": "src/vendor/xlsx.LICENSE.txt",
+      "bytes": 11355,
+      "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64"
+    },
+    {
+      "path": "src/vendor/xlsx.mini.min.js",
+      "bytes": 279523,
+      "sha256": "0cb353f830d7288385492c83d277b058ddeac664ca51cf1393aa1fd3e2b70939"
+    },
+    {
+      "path": "src/wire-display.js",
+      "bytes": 5520,
+      "sha256": "4f80edc51da49ab29502a3f50b835d0adef697317c2d4369c9f98a5de330b2f1"
+    },
+    {
+      "path": "src/wire-networks.js",
+      "bytes": 7093,
+      "sha256": "a22f7c9d7f1e7b6fcd964bee39f8732c397cb213d78f4572ecbc96fc31fceb9c"
+    },
+    {
+      "path": "src/workspace-layout.js",
+      "bytes": 3594,
+      "sha256": "4ed9000b775c3968f297c65e7c8d7ccf4f9a539164ad6dd60e625bff91239357"
+    },
+    {
+      "path": "templates/input-waveform.xlsx",
+      "bytes": 3862,
+      "sha256": "10c356e4efb31c96a315d7bc73dbd11b3124755294e1e26dade83b14f493382d"
+    },
+    {
+      "path": "THIRD-PARTY-NOTICES.md",
+      "bytes": 803,
+      "sha256": "8db5befdbe78607c225d6b17e2acaefb0a7c7b9490ed0e53eaa1a324f1fe74be"
+    }
+  ]
+}

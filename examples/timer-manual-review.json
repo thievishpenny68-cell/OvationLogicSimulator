@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.13.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "OFFDELAY / ONESHOT 手册重触发工况",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "pulse",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 160,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "off",
+      "type": "OFFDELAY",
+      "name": "OFFDELAY",
+      "x": 420,
+      "y": 40,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "one",
+      "type": "ONESHOT",
+      "name": "ONESHOT",
+      "x": 420,
+      "y": 400,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "off",
+      "toPort": "IN1"
+    },
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "one",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-t",
+      "name": "示波器 1",
+      "x": 840,
+      "y": 40,
+      "width": 430,
+      "height": 360,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"off\",\"values\",\"OUT\"]",
+        "[\"off\",\"values\",\"ACT\"]",
+        "[\"one\",\"values\",\"OUT\"]",
+        "[\"one\",\"values\",\"ACT\"]"
+      ]
+    }
+  ]
+}

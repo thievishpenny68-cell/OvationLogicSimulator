@@ -1,0 +1,126 @@
+{
+  "basis": "REF_1100 §4.17 p53–55 / §4.18 p56–58; independent literal vectors; not Ovation runtime",
+  "softwareTimeOrigin": "tick 0 is explicit software pre-scan outputs, not hardware startup",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "direct": {
+          "OUT": 0
+        },
+        "decoded": {
+          "OUT": 0
+        },
+        "inverse": {
+          "OUT": 0
+        },
+        "inverseDecoded": {
+          "OUT": 0
+        },
+        "window": {
+          "OUT": 61450
+        },
+        "windowRead": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "direct": {
+          "OUT": 25217
+        },
+        "decoded": {
+          "OUT": 6281
+        },
+        "inverse": {
+          "OUT": 40318
+        },
+        "inverseDecoded": {
+          "OUT": 6281
+        },
+        "window": {
+          "OUT": 62090
+        },
+        "windowRead": {
+          "OUT": 28
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "direct": {
+          "OUT": 40
+        },
+        "decoded": {
+          "OUT": 28
+        },
+        "inverse": {
+          "OUT": 65495
+        },
+        "inverseDecoded": {
+          "OUT": 28
+        },
+        "window": {
+          "OUT": 62090
+        },
+        "windowRead": {
+          "OUT": 28
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "direct": {
+          "OUT": 39321
+        },
+        "decoded": {
+          "OUT": 9999
+        },
+        "inverse": {
+          "OUT": 26214
+        },
+        "inverseDecoded": {
+          "OUT": 9999
+        },
+        "window": {
+          "OUT": 62090
+        },
+        "windowRead": {
+          "OUT": 28
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "direct": {
+          "OUT": 0
+        },
+        "decoded": {
+          "OUT": 0
+        },
+        "inverse": {
+          "OUT": 65535
+        },
+        "inverseDecoded": {
+          "OUT": 0
+        },
+        "window": {
+          "OUT": 62090
+        },
+        "windowRead": {
+          "OUT": 28
+        }
+      }
+    }
+  ]
+}

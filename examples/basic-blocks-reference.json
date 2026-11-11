@@ -1,0 +1,27 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "manual-derived-software-example-not-controller-scans",
+  "ovationRuntimeEvidence": false,
+  "caseId": "BASIC6",
+  "manual": {
+    "sum": "REF_1100 §4.112 p396–398",
+    "multiply": "REF_1100 §4.64 p249–251",
+    "divide": "REF_1100 §4.33 p151–153",
+    "hiselect": "REF_1100 §4.47 p188–192",
+    "loselect": "REF_1100 §4.58 p214–218",
+    "dbequals": "REF_1100 §4.25 p81"
+  },
+  "note": "对应basic-blocks.json；t0六项来自显式软件初态，9拍54项OUT由手册公式及既定输入独立推导，不从仿真运行结果生成。时间仅为软件示例安排，不是Ovation采集。0.4的Float32值固定为0.4000000059604645（3ecccccd）；其他期望均精确可表示。未声明现场模型或全模式验证。",
+  "trace": [
+    {"tick":0,"time":0,"values":{"sum":{"OUT":0},"multiply":{"OUT":0},"divide":{"OUT":0},"hiselect":{"OUT":0},"loselect":{"OUT":0},"dbequals":{"OUT":false}}},
+    {"tick":1,"time":0.1,"values":{"sum":{"OUT":5},"multiply":{"OUT":6},"divide":{"OUT":1.5},"hiselect":{"OUT":3},"loselect":{"OUT":2},"dbequals":{"OUT":false}}},
+    {"tick":2,"time":0.2,"values":{"sum":{"OUT":5},"multiply":{"OUT":6},"divide":{"OUT":1.5},"hiselect":{"OUT":3},"loselect":{"OUT":2},"dbequals":{"OUT":false}}},
+    {"tick":3,"time":0.3,"values":{"sum":{"OUT":5},"multiply":{"OUT":6},"divide":{"OUT":1.5},"hiselect":{"OUT":3},"loselect":{"OUT":2},"dbequals":{"OUT":false}}},
+    {"tick":4,"time":0.4,"values":{"sum":{"OUT":-2},"multiply":{"OUT":0},"divide":{"OUT":-10},"hiselect":{"OUT":0},"loselect":{"OUT":-2},"dbequals":{"OUT":false}}},
+    {"tick":5,"time":0.5,"values":{"sum":{"OUT":-2},"multiply":{"OUT":0},"divide":{"OUT":-10},"hiselect":{"OUT":0},"loselect":{"OUT":-2},"dbequals":{"OUT":false}}},
+    {"tick":6,"time":0.6,"values":{"sum":{"OUT":-2},"multiply":{"OUT":0},"divide":{"OUT":-10},"hiselect":{"OUT":0},"loselect":{"OUT":-2},"dbequals":{"OUT":false}}},
+    {"tick":7,"time":0.7,"values":{"sum":{"OUT":7},"multiply":{"OUT":10},"divide":{"OUT":0.4000000059604645},"hiselect":{"OUT":5},"loselect":{"OUT":2},"dbequals":{"OUT":true}}},
+    {"tick":8,"time":0.8,"values":{"sum":{"OUT":7},"multiply":{"OUT":10},"divide":{"OUT":0.4000000059604645},"hiselect":{"OUT":5},"loselect":{"OUT":2},"dbequals":{"OUT":true}}},
+    {"tick":9,"time":0.9,"values":{"sum":{"OUT":10},"multiply":{"OUT":10},"divide":{"OUT":1},"hiselect":{"OUT":5},"loselect":{"OUT":5},"dbequals":{"OUT":false}}}
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.25.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "SMOOTH：阶跃、衰减、初态和级联",
+  "dtUs": 1000000,
+  "nodes": [
+    {
+      "id": "source",
+      "type": "INPUT",
+      "name": "阶跃输入",
+      "x": 60,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              8
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              7,
+              8
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "constant",
+      "type": "INPUT",
+      "name": "稳态输入",
+      "x": 1080,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 8
+        }
+      },
+      "initial": {
+        "OUT": 8
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "direct",
+      "type": "SMOOTH",
+      "name": "零常数直通",
+      "x": 50,
+      "y": 260,
+      "params": {
+        "SMTH": 0
+      },
+      "initial": {
+        "OUT": 50
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "filtered",
+      "type": "SMOOTH",
+      "name": "平滑：初态0",
+      "x": 340,
+      "y": 260,
+      "params": {
+        "SMTH": 1.4426950216293335
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "warm",
+      "type": "SMOOTH",
+      "name": "平滑：初态4",
+      "x": 640,
+      "y": 260,
+      "params": {
+        "SMTH": 1.4426950216293335
+      },
+      "initial": {
+        "OUT": 4
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "cascade",
+      "type": "SMOOTH",
+      "name": "两级串联",
+      "x": 340,
+      "y": 560,
+      "params": {
+        "SMTH": 1.4426950216293335
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "steady",
+      "type": "SMOOTH",
+      "name": "普通常数稳态",
+      "x": 1080,
+      "y": 260,
+      "params": {
+        "SMTH": 1
+      },
+      "initial": {
+        "OUT": 8
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "direct",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "filtered",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "warm",
+      "toPort": "IN1"
+    },
+    {
+      "from": "filtered",
+      "fromPort": "OUT",
+      "to": "cascade",
+      "toPort": "IN1"
+    },
+    {
+      "from": "constant",
+      "fromPort": "OUT",
+      "to": "steady",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "输入、滤波与级联",
+      "x": 30,
+      "y": 880,
+      "width": 650,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"source\",\"values\",\"OUT\"]",
+        "[\"filtered\",\"values\",\"OUT\"]",
+        "[\"cascade\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "初态、直通与稳态",
+      "x": 750,
+      "y": 880,
+      "width": 560,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"warm\",\"values\",\"OUT\"]",
+        "[\"direct\",\"values\",\"OUT\"]",
+        "[\"steady\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

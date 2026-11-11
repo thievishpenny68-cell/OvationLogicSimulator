@@ -1,0 +1,226 @@
+{
+  "basis": {
+    "kind": "manual",
+    "document": "REF_1100（2006-05）§4.41 p170～173",
+    "scope": "全GOOD、无跟踪；独立字面计算49项执行OUT及7项显式初态。界面输入时间是软件工况，不是现场采集。",
+    "duplicate": "精确命中按首个Y；同Y重复点可插值；不同Y的相邻插值不在本例执行范围。"
+  },
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "identity": {
+          "OUT": 0
+        },
+        "piecewise": {
+          "OUT": 0
+        },
+        "gained": {
+          "OUT": 0
+        },
+        "negative": {
+          "OUT": 0
+        },
+        "twelve": {
+          "OUT": 0
+        },
+        "duplicate": {
+          "OUT": 0
+        },
+        "equal": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "identity": {
+          "OUT": -100
+        },
+        "piecewise": {
+          "OUT": 4
+        },
+        "gained": {
+          "OUT": 10
+        },
+        "negative": {
+          "OUT": 0
+        },
+        "twelve": {
+          "OUT": 0
+        },
+        "duplicate": {
+          "OUT": 0
+        },
+        "equal": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "identity": {
+          "OUT": -100
+        },
+        "piecewise": {
+          "OUT": 4
+        },
+        "gained": {
+          "OUT": 10
+        },
+        "negative": {
+          "OUT": 0
+        },
+        "twelve": {
+          "OUT": 0
+        },
+        "duplicate": {
+          "OUT": 10
+        },
+        "equal": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "identity": {
+          "OUT": -50
+        },
+        "piecewise": {
+          "OUT": 2
+        },
+        "gained": {
+          "OUT": 15
+        },
+        "negative": {
+          "OUT": 10
+        },
+        "twelve": {
+          "OUT": 1
+        },
+        "duplicate": {
+          "OUT": 20
+        },
+        "equal": {
+          "OUT": 5
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "identity": {
+          "OUT": 0
+        },
+        "piecewise": {
+          "OUT": 0
+        },
+        "gained": {
+          "OUT": 20
+        },
+        "negative": {
+          "OUT": 20
+        },
+        "twelve": {
+          "OUT": 10
+        },
+        "duplicate": {
+          "OUT": 0
+        },
+        "equal": {
+          "OUT": 10
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "identity": {
+          "OUT": 25
+        },
+        "piecewise": {
+          "OUT": 1
+        },
+        "gained": {
+          "OUT": 10
+        },
+        "negative": {
+          "OUT": 15
+        },
+        "twelve": {
+          "OUT": 21
+        },
+        "duplicate": {
+          "OUT": 20
+        },
+        "equal": {
+          "OUT": 15
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "identity": {
+          "OUT": 100
+        },
+        "piecewise": {
+          "OUT": 2
+        },
+        "gained": {
+          "OUT": 0
+        },
+        "negative": {
+          "OUT": 10
+        },
+        "twelve": {
+          "OUT": 22
+        },
+        "duplicate": {
+          "OUT": 10
+        },
+        "equal": {
+          "OUT": 20
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "identity": {
+          "OUT": 100
+        },
+        "piecewise": {
+          "OUT": 2
+        },
+        "gained": {
+          "OUT": 0
+        },
+        "negative": {
+          "OUT": 10
+        },
+        "twelve": {
+          "OUT": 22
+        },
+        "duplicate": {
+          "OUT": 0
+        },
+        "equal": {
+          "OUT": 20
+        }
+      }
+    }
+  ]
+}

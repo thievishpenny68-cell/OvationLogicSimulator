@@ -1,0 +1,65 @@
+{
+  "basis": "REF_1100 §4.80 p297; independent arithmetic literal expectations; all connected inputs GOOD and updated per scan, not Ovation runtime",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "mean": {
+          "OUT": 0
+        },
+        "one": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "mean": {
+          "OUT": 2
+        },
+        "one": {
+          "OUT": 2
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "mean": {
+          "OUT": 5
+        },
+        "one": {
+          "OUT": 5
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "mean": {
+          "OUT": 8
+        },
+        "one": {
+          "OUT": 8
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "mean": {
+          "OUT": -4
+        },
+        "one": {
+          "OUT": -4
+        }
+      }
+    }
+  ]
+}

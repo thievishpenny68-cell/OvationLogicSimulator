@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.12.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "基本块 · 算术、比较与高低选",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "x",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 140,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              3
+            ],
+            [
+              0.4,
+              -2
+            ],
+            [
+              0.7,
+              2
+            ],
+            [
+              0.9,
+              5
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "y",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 470,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              2
+            ],
+            [
+              0.4,
+              0
+            ],
+            [
+              0.7,
+              5
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "sum",
+      "type": "SUM",
+      "name": "SUM",
+      "x": 330,
+      "y": 40,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 10,
+        "BTSC": -10,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "multiply",
+      "type": "MULTIPLY",
+      "name": "MULTIPLY",
+      "x": 330,
+      "y": 310,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 10,
+        "BTSC": -10,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "divide",
+      "type": "DIVIDE",
+      "name": "DIVIDE",
+      "x": 330,
+      "y": 580,
+      "params": {
+        "NUMG": 1,
+        "NUMB": 0,
+        "DENG": 1,
+        "DENB": 0,
+        "TPSC": 10,
+        "BTSC": -10,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "hiselect",
+      "type": "HISELECT",
+      "name": "HISELECT",
+      "x": 700,
+      "y": 40,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 10,
+        "BTSC": -10,
+        "TRAT": 2.5,
+        "QUAL": "WORSE"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "loselect",
+      "type": "LOSELECT",
+      "name": "LOSELECT",
+      "x": 700,
+      "y": 310,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 10,
+        "BTSC": -10,
+        "TRAT": 2.5,
+        "QUAL": "WORSE"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "dbequals",
+      "type": "DBEQUALS",
+      "name": "DBEQUALS",
+      "x": 700,
+      "y": 580,
+      "params": {
+        "DBND": 2,
+        "RTRN": 1
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "sum",
+      "toPort": "IN2"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "multiply",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "multiply",
+      "toPort": "IN2"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "divide",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "divide",
+      "toPort": "IN2"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "hiselect",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "hiselect",
+      "toPort": "IN2"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "loselect",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "loselect",
+      "toPort": "IN2"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "dbequals",
+      "toPort": "IN1"
+    },
+    {
+      "from": "y",
+      "fromPort": "OUT",
+      "to": "dbequals",
+      "toPort": "IN2"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "算术结果",
+      "x": 1100,
+      "y": 30,
+      "width": 420,
+      "height": 400,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"sum\",\"values\",\"OUT\"]",
+        "[\"multiply\",\"values\",\"OUT\"]",
+        "[\"divide\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "选择与差值",
+      "x": 1100,
+      "y": 470,
+      "width": 420,
+      "height": 400,
+      "windowSeconds": 1,
+      "channels": [
+        "[\"hiselect\",\"values\",\"OUT\"]",
+        "[\"loselect\",\"values\",\"OUT\"]",
+        "[\"dbequals\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

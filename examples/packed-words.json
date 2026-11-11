@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.17.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "共享LP字 · 两写者与中间/末尾解包",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "b0",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 40,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b1",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 210,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b2",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 380,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b15",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 550,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "packA",
+      "type": "PACK16",
+      "name": "PACK16",
+      "x": 380,
+      "y": 40,
+      "params": {},
+      "initial": {
+        "POUT": 16384
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "packedPoint": "WORD"
+    },
+    {
+      "id": "packB",
+      "type": "PACK16",
+      "name": "PACK16",
+      "x": 380,
+      "y": 650,
+      "params": {},
+      "initial": {
+        "POUT": 16384
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "packedPoint": "WORD"
+    },
+    {
+      "id": "early",
+      "type": "UNPACK16",
+      "name": "UNPACK16",
+      "x": 800,
+      "y": 40,
+      "params": {},
+      "initial": {
+        "D0": false,
+        "D1": false,
+        "D2": false,
+        "D3": false,
+        "D4": false,
+        "D5": false,
+        "D6": false,
+        "D7": false,
+        "D8": false,
+        "D9": false,
+        "D10": false,
+        "D11": false,
+        "D12": false,
+        "D13": false,
+        "D14": false,
+        "D15": false
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "packedPoint": "WORD"
+    },
+    {
+      "id": "late",
+      "type": "UNPACK16",
+      "name": "UNPACK16",
+      "x": 1200,
+      "y": 40,
+      "params": {},
+      "initial": {
+        "D0": false,
+        "D1": false,
+        "D2": false,
+        "D3": false,
+        "D4": false,
+        "D5": false,
+        "D6": false,
+        "D7": false,
+        "D8": false,
+        "D9": false,
+        "D10": false,
+        "D11": false,
+        "D12": false,
+        "D13": false,
+        "D14": false,
+        "D15": false
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "packedPoint": "WORD"
+    }
+  ],
+  "edges": [
+    {
+      "from": "b0",
+      "fromPort": "OUT",
+      "to": "packA",
+      "toPort": "D0"
+    },
+    {
+      "from": "b15",
+      "fromPort": "OUT",
+      "to": "packA",
+      "toPort": "D15"
+    },
+    {
+      "from": "b1",
+      "fromPort": "OUT",
+      "to": "packB",
+      "toPort": "D1"
+    },
+    {
+      "from": "b2",
+      "fromPort": "OUT",
+      "to": "packB",
+      "toPort": "D2"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "packedPoints": [
+    {
+      "id": "WORD",
+      "initial": 16384
+    }
+  ],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 1640,
+      "y": 30,
+      "width": 480,
+      "height": 550,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"packA\",\"values\",\"POUT\"]",
+        "[\"early\",\"values\",\"D1\"]",
+        "[\"early\",\"values\",\"D2\"]",
+        "[\"late\",\"values\",\"D1\"]",
+        "[\"late\",\"values\",\"D2\"]",
+        "[\"late\",\"values\",\"D14\"]"
+      ]
+    }
+  ],
+  "execution": {
+    "model": "single-task-ordered-v1",
+    "mode": "explicit",
+    "required": true,
+    "order": [
+      "b0",
+      "b1",
+      "b2",
+      "b15",
+      "packA",
+      "early",
+      "packB",
+      "late"
+    ],
+    "confirmation": {
+      "signature": "{\"dtUs\":100000,\"mode\":\"explicit\",\"order\":[\"b0\",\"b1\",\"b2\",\"b15\",\"packA\",\"early\",\"packB\",\"late\"],\"taskConstraints\":null,\"packedPoints\":[{\"id\":\"WORD\",\"initial\":16384}],\"packedBindings\":[[\"packA\",\"WORD\"],[\"packB\",\"WORD\"],[\"early\",\"WORD\"],[\"late\",\"WORD\"]],\"nodes\":[[\"b0\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"b1\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"b15\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"b2\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]],[\"early\",\"UNPACK16\",[[[\"PIN\",\"packed16\"]],[[\"D0\",\"boolean\"],[\"D1\",\"boolean\"],[\"D10\",\"boolean\"],[\"D11\",\"boolean\"],[\"D12\",\"boolean\"],[\"D13\",\"boolean\"],[\"D14\",\"boolean\"],[\"D15\",\"boolean\"],[\"D2\",\"boolean\"],[\"D3\",\"boolean\"],[\"D4\",\"boolean\"],[\"D5\",\"boolean\"],[\"D6\",\"boolean\"],[\"D7\",\"boolean\"],[\"D8\",\"boolean\"],[\"D9\",\"boolean\"]]]],[\"late\",\"UNPACK16\",[[[\"PIN\",\"packed16\"]],[[\"D0\",\"boolean\"],[\"D1\",\"boolean\"],[\"D10\",\"boolean\"],[\"D11\",\"boolean\"],[\"D12\",\"boolean\"],[\"D13\",\"boolean\"],[\"D14\",\"boolean\"],[\"D15\",\"boolean\"],[\"D2\",\"boolean\"],[\"D3\",\"boolean\"],[\"D4\",\"boolean\"],[\"D5\",\"boolean\"],[\"D6\",\"boolean\"],[\"D7\",\"boolean\"],[\"D8\",\"boolean\"],[\"D9\",\"boolean\"]]]],[\"packA\",\"PACK16\",[[[\"D0\",\"boolean\"],[\"D1\",\"boolean\"],[\"D10\",\"boolean\"],[\"D11\",\"boolean\"],[\"D12\",\"boolean\"],[\"D13\",\"boolean\"],[\"D14\",\"boolean\"],[\"D15\",\"boolean\"],[\"D2\",\"boolean\"],[\"D3\",\"boolean\"],[\"D4\",\"boolean\"],[\"D5\",\"boolean\"],[\"D6\",\"boolean\"],[\"D7\",\"boolean\"],[\"D8\",\"boolean\"],[\"D9\",\"boolean\"]],[[\"POUT\",\"packed16\"]]]],[\"packB\",\"PACK16\",[[[\"D0\",\"boolean\"],[\"D1\",\"boolean\"],[\"D10\",\"boolean\"],[\"D11\",\"boolean\"],[\"D12\",\"boolean\"],[\"D13\",\"boolean\"],[\"D14\",\"boolean\"],[\"D15\",\"boolean\"],[\"D2\",\"boolean\"],[\"D3\",\"boolean\"],[\"D4\",\"boolean\"],[\"D5\",\"boolean\"],[\"D6\",\"boolean\"],[\"D7\",\"boolean\"],[\"D8\",\"boolean\"],[\"D9\",\"boolean\"]],[[\"POUT\",\"packed16\"]]]]],\"edges\":[[\"b0\",\"OUT\",\"packA\",\"D0\"],[\"b1\",\"OUT\",\"packB\",\"D1\"],[\"b15\",\"OUT\",\"packA\",\"D15\"],[\"b2\",\"OUT\",\"packB\",\"D2\"]]}",
+      "note": "WORD先由packA写D0/D15，early读取，再由packB写D1/D2，late读取；未写D14始终保持",
+      "at": "2026-11-05T15:45:23.265Z"
+    }
+  }
+}

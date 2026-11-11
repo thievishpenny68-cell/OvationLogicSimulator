@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.8.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "示例 · 精度分歧停止诊断",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "i",
+      "type": "INPUT",
+      "name": "复位边界输入",
+      "x": 100,
+      "y": 140,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 0.9999998807907104
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "high",
+      "type": "HIGHMON",
+      "name": "精度敏感高限监视",
+      "x": 390,
+      "y": 140,
+      "params": {
+        "HISP": 1,
+        "HIDB": 8.940696716308594e-8
+      },
+      "initial": {
+        "OUT": true
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "i",
+      "fromPort": "OUT",
+      "to": "high",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

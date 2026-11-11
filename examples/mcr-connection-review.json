@@ -1,0 +1,626 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.9.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "MCR连接交叉核对（软件夹具）",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "source-ms",
+      "type": "INPUT",
+      "name": "INPUT ms",
+      "x": 80,
+      "y": 90,
+      "params": {
+        "kind": "boolean",
+        "wave": null
+      },
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "mcr-cross-check.mcr",
+        "objectId": "ms",
+        "svgObjectId": "s",
+        "svgSourceFile": "mcr-cross-check.svg",
+        "attributes": {
+          "cb-classname": "ExternalPointInterface",
+          "cb-function-name": "INPUT",
+          "id": "ms",
+          "cb-alg-out": "FLAG"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "type-and-output-symbol",
+        "svgAttributes": {
+          "cb-classname": "ExternalPointInterface",
+          "cb-function-name": "INPUT",
+          "id": "s",
+          "cb-alg-out": "FLAG"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "FLAG",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "mcr-cross-check.svg",
+            "attribute": "cb-alg-out",
+            "value": "FLAG",
+            "role": "symbol-binding",
+            "status": "confirmed",
+            "evidence": [
+              {
+                "file": "mcr-cross-check.mcr",
+                "attribute": "cb-alg-out",
+                "sourceValue": "FLAG"
+              }
+            ],
+            "expected": "FLAG"
+          }
+        ],
+        "typeInference": {
+          "kind": "boolean",
+          "evidence": "confirmed-edge-type-constraints",
+          "constraints": [
+            {
+              "nodeId": "source-md",
+              "port": "IN1",
+              "direction": "input",
+              "kind": "boolean",
+              "basis": "REF_1100 §4.68，p256～257；固定BASE/TARG、显式用户初态。扫描约定：普通目标首次/恢复当拍ACT不增加，暂停当拍保持上一拍ACT；因此仅持续一拍的IN1脉冲可能不累计。手册未给出这些边界的逐拍相位，不能据此预测实际控制器短脉冲累计。扫描计时模型v2，精度分歧时停止，未实机对照"
+            },
+            {
+              "nodeId": "source-md",
+              "port": "ENBL",
+              "direction": "input",
+              "kind": "boolean",
+              "basis": "REF_1100 §4.68，p256～257；固定BASE/TARG、显式用户初态。扫描约定：普通目标首次/恢复当拍ACT不增加，暂停当拍保持上一拍ACT；因此仅持续一拍的IN1脉冲可能不累计。手册未给出这些边界的逐拍相位，不能据此预测实际控制器短脉冲累计。扫描计时模型v2，精度分歧时停止，未实机对照"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "source-md",
+      "type": "ONDELAY",
+      "name": "DELAY",
+      "x": 450,
+      "y": 90,
+      "params": {},
+      "initial": {},
+      "provenance": {
+        "origin": "import",
+        "sourceFile": "mcr-cross-check.mcr",
+        "objectId": "md",
+        "svgObjectId": "d",
+        "svgSourceFile": "mcr-cross-check.svg",
+        "attributes": {
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "ONDELAY",
+          "id": "md",
+          "cb-alg-alg": "DELAY",
+          "cb-alg-in1": "$ms$cb-alg-out$",
+          "cb-alg-enbl": "$ms$cb-alg-out$",
+          "cb-alg-out": "RESULT"
+        },
+        "parameterSources": {},
+        "layoutMatched": true,
+        "layoutEvidence": "algorithm-record-name",
+        "svgAttributes": {
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "ONDELAY",
+          "id": "d",
+          "cb-macro-alg": "DELAY"
+        },
+        "fieldAudit": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-alg",
+            "value": "DELAY",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-in1",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-enbl",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "RESULT",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "mcr-cross-check.svg",
+            "attribute": "cb-macro-alg",
+            "value": "DELAY",
+            "role": "symbol-binding",
+            "status": "confirmed",
+            "evidence": [
+              {
+                "file": "mcr-cross-check.mcr",
+                "attribute": "cb-alg-alg",
+                "sourceValue": "DELAY"
+              }
+            ],
+            "expected": "DELAY"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "source-ms",
+      "fromPort": "OUT",
+      "to": "source-md",
+      "toPort": "IN1",
+      "provenance": {
+        "file": "mcr-cross-check.mcr",
+        "attribute": "cb-alg-in1",
+        "sourceValue": "$ms$cb-alg-out$"
+      }
+    },
+    {
+      "from": "source-ms",
+      "fromPort": "OUT",
+      "to": "source-md",
+      "toPort": "ENBL",
+      "provenance": {
+        "file": "mcr-cross-check.mcr",
+        "attribute": "cb-alg-enbl",
+        "sourceValue": "$ms$cb-alg-out$"
+      }
+    }
+  ],
+  "issues": [
+    {
+      "id": "import-1",
+      "code": "INPUT_SCENARIO_REQUIRED",
+      "message": "需要设置外部输入随时间变化的规律",
+      "nodeId": "source-ms",
+      "severity": "error",
+      "resolved": false
+    },
+    {
+      "id": "import-2",
+      "code": "SVG_REFERENCE_UNRESOLVED",
+      "message": "无法唯一解析目标针脚引用：$opaque-one$",
+      "severity": "error",
+      "resolved": false,
+      "sourceFile": "mcr-cross-check.svg",
+      "sourceObjectId": "c1",
+      "sourceInstanceKey": "connection-1",
+      "sourceConnectionInstanceKey": "connection-1"
+    },
+    {
+      "id": "import-3",
+      "code": "SVG_REFERENCE_UNRESOLVED",
+      "message": "无法唯一解析目标针脚引用：$opaque-two$",
+      "severity": "error",
+      "resolved": false,
+      "sourceFile": "mcr-cross-check.svg",
+      "sourceObjectId": "c2",
+      "sourceInstanceKey": "connection-2",
+      "sourceConnectionInstanceKey": "connection-2"
+    },
+    {
+      "id": "import-4",
+      "code": "CONNECTION_REVIEW_REQUIRED",
+      "message": "存在 2 个待确认连接候选；它们不参与仿真",
+      "severity": "warning",
+      "resolved": false
+    },
+    {
+      "id": "import-5",
+      "code": "SCAN_CONFIGURATION_REQUIRED",
+      "message": "源文件未提供已核实扫描周期；请明确设置模拟周期",
+      "severity": "error",
+      "resolved": false
+    }
+  ],
+  "sources": [
+    {
+      "name": "mcr-cross-check.svg",
+      "text": "<svg cb-classname=\"ControlMacro\"><g cb-classname=\"ExternalPointInterface\" cb-function-name=\"INPUT\" id=\"s\" cb-alg-out=\"FLAG\"><ellipse cx=\"40\" cy=\"60\" rx=\"20\" ry=\"20\"/><g cb-classname=\"ControlPin\" cb-pin-name=\"opaque-so\" id=\"so\"><line x1=\"60\" x2=\"80\" y1=\"60\" y2=\"60\"/><g cb-classname=\"SignalSegment\"><line id=\"w1\" x1=\"80\" y1=\"60\" x2=\"180\" y2=\"60\"/><g cb-classname=\"SignalConnection\" id=\"c1\" cb-input-pin=\"$opaque-one$\" cb-graphic-line=\"$w1$\"/><line id=\"w2\" x1=\"80\" y1=\"60\" x2=\"180\" y2=\"80\"/><g cb-classname=\"SignalConnection\" id=\"c2\" cb-input-pin=\"$opaque-two$\" cb-graphic-line=\"$w2$\"/></g></g></g><g cb-classname=\"ControlAlgorithm\" cb-function-name=\"ONDELAY\" id=\"d\" cb-macro-alg=\"DELAY\"><rect x=\"200\" y=\"40\" width=\"60\" height=\"100\"/><g cb-classname=\"ControlPin\" cb-pin-name=\"opaque-di1\" id=\"di1\"><line x1=\"180\" x2=\"200\" y1=\"60\" y2=\"60\"/></g><g cb-classname=\"ControlPin\" cb-pin-name=\"opaque-di2\" id=\"di2\"><line x1=\"180\" x2=\"200\" y1=\"80\" y2=\"80\"/></g><g cb-classname=\"ControlPin\" cb-pin-name=\"opaque-do\" id=\"do\"><line x1=\"260\" x2=\"280\" y1=\"60\" y2=\"60\"/></g></g></svg>"
+    },
+    {
+      "name": "mcr-cross-check.mcr",
+      "text": "<svg cb-classname=\"MacroImplementation\"><g cb-classname=\"ExternalPointInterface\" cb-function-name=\"INPUT\" id=\"ms\" cb-alg-out=\"FLAG\"/><g cb-classname=\"ControlAlgorithm\" cb-function-name=\"ONDELAY\" id=\"md\" cb-alg-alg=\"DELAY\" cb-alg-in1=\"$ms$cb-alg-out$\" cb-alg-enbl=\"$ms$cb-alg-out$\" cb-alg-out=\"RESULT\"/></svg>"
+    }
+  ],
+  "execution": {
+    "model": "single-task-ordered-v1",
+    "mode": "topological",
+    "required": true,
+    "confirmation": null
+  },
+  "importMetadata": {
+    "file": "mcr-cross-check.svg",
+    "kind": "ControlMacro",
+    "internalId": null,
+    "description": null,
+    "taskId": null,
+    "sourceCycleKnown": false
+  },
+  "library": [],
+  "executionConstraints": {
+    "schemaVersion": 1,
+    "taskGroups": [
+      {
+        "scope": "import",
+        "tasks": []
+      }
+    ]
+  },
+  "connectionCandidates": [
+    {
+      "id": "candidate-1",
+      "sourceObjectId": "s",
+      "sourcePort": null,
+      "destinationObjectId": "d",
+      "destinationPort": null,
+      "sourcePinId": "so",
+      "destinationPinId": "di1",
+      "connectionId": "c1",
+      "connectionInstanceKey": "connection-1",
+      "sourcePortSuggestion": {
+        "pinId": "so",
+        "ownerId": "s",
+        "port": "OUT",
+        "direction": "output",
+        "algorithm": "INPUT",
+        "profile": "cb-symbol-pin-layout-v1",
+        "basis": "single-interface-pin",
+        "order": 1,
+        "observedInputs": 0,
+        "observedOutputs": 1,
+        "requiresReview": true
+      },
+      "destinationPortSuggestion": {
+        "pinId": "di1",
+        "ownerId": "d",
+        "port": "IN1",
+        "direction": "input",
+        "algorithm": "ONDELAY",
+        "profile": "cb-symbol-pin-layout-v1",
+        "basis": "symbol-side-and-vertical-order",
+        "order": 1,
+        "observedInputs": 2,
+        "observedOutputs": 1,
+        "requiresReview": true
+      },
+      "requiresConfirmation": true,
+      "evidence": "coincident-graphic-endpoint-only",
+      "sourceConnectionInstanceKey": "connection-1",
+      "from": "source-ms",
+      "fromPort": null,
+      "to": "source-md",
+      "toPort": null,
+      "status": "pending",
+      "sourceFile": "mcr-cross-check.svg"
+    },
+    {
+      "id": "candidate-2",
+      "sourceObjectId": "s",
+      "sourcePort": null,
+      "destinationObjectId": "d",
+      "destinationPort": null,
+      "sourcePinId": "so",
+      "destinationPinId": "di2",
+      "connectionId": "c2",
+      "connectionInstanceKey": "connection-2",
+      "sourcePortSuggestion": {
+        "pinId": "so",
+        "ownerId": "s",
+        "port": "OUT",
+        "direction": "output",
+        "algorithm": "INPUT",
+        "profile": "cb-symbol-pin-layout-v1",
+        "basis": "single-interface-pin",
+        "order": 1,
+        "observedInputs": 0,
+        "observedOutputs": 1,
+        "requiresReview": true
+      },
+      "destinationPortSuggestion": {
+        "pinId": "di2",
+        "ownerId": "d",
+        "port": "ENBL",
+        "direction": "input",
+        "algorithm": "ONDELAY",
+        "profile": "cb-symbol-pin-layout-v1",
+        "basis": "symbol-side-and-vertical-order",
+        "order": 2,
+        "observedInputs": 2,
+        "observedOutputs": 1,
+        "requiresReview": true
+      },
+      "requiresConfirmation": true,
+      "evidence": "coincident-graphic-endpoint-only",
+      "sourceConnectionInstanceKey": "connection-2",
+      "from": "source-ms",
+      "fromPort": null,
+      "to": "source-md",
+      "toPort": null,
+      "status": "pending",
+      "sourceFile": "mcr-cross-check.svg"
+    }
+  ],
+  "importAudit": {
+    "schemaVersion": 1,
+    "scope": "import-snapshot",
+    "target": "mcr-cross-check.svg",
+    "implementation": "mcr-cross-check.mcr",
+    "parameterFile": null,
+    "note": "导入时的逐对象/字段快照，不是准确性验收；后续人工处理见项目issues与connectionCandidates。对象清单包含逻辑、连接、参数接口及未知语义类，不含已分类图形/文字装饰。辅助XML仅保留结构，编译指令和位置参数未解释。",
+    "svgObjects": [
+      {
+        "instanceKey": "svg-object-1",
+        "objectId": "s",
+        "kind": "logic",
+        "className": "ExternalPointInterface",
+        "type": "INPUT",
+        "nodeId": "source-ms",
+        "status": "associated",
+        "attributes": {
+          "cb-classname": "ExternalPointInterface",
+          "cb-function-name": "INPUT",
+          "id": "s",
+          "cb-alg-out": "FLAG"
+        },
+        "mappingEvidence": "type-and-output-symbol",
+        "fields": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "FLAG",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "mcr-cross-check.svg",
+            "attribute": "cb-alg-out",
+            "value": "FLAG",
+            "role": "symbol-binding",
+            "status": "confirmed",
+            "evidence": [
+              {
+                "file": "mcr-cross-check.mcr",
+                "attribute": "cb-alg-out",
+                "sourceValue": "FLAG"
+              }
+            ],
+            "expected": "FLAG"
+          }
+        ]
+      },
+      {
+        "instanceKey": "svg-object-2",
+        "objectId": "c1",
+        "kind": "connection",
+        "className": "SignalConnection",
+        "type": null,
+        "nodeId": null,
+        "status": "candidate",
+        "attributes": {
+          "cb-classname": "SignalConnection",
+          "id": "c1",
+          "cb-input-pin": "$opaque-one$",
+          "cb-graphic-line": "$w1$"
+        },
+        "connectionInstanceKey": "connection-1"
+      },
+      {
+        "instanceKey": "svg-object-3",
+        "objectId": "c2",
+        "kind": "connection",
+        "className": "SignalConnection",
+        "type": null,
+        "nodeId": null,
+        "status": "candidate",
+        "attributes": {
+          "cb-classname": "SignalConnection",
+          "id": "c2",
+          "cb-input-pin": "$opaque-two$",
+          "cb-graphic-line": "$w2$"
+        },
+        "connectionInstanceKey": "connection-2"
+      },
+      {
+        "instanceKey": "svg-object-4",
+        "objectId": "d",
+        "kind": "logic",
+        "className": "ControlAlgorithm",
+        "type": "ONDELAY",
+        "nodeId": "source-md",
+        "status": "associated",
+        "attributes": {
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "ONDELAY",
+          "id": "d",
+          "cb-macro-alg": "DELAY"
+        },
+        "mappingEvidence": "algorithm-record-name",
+        "fields": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-alg",
+            "value": "DELAY",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-in1",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-enbl",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "RESULT",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "svg",
+            "file": "mcr-cross-check.svg",
+            "attribute": "cb-macro-alg",
+            "value": "DELAY",
+            "role": "symbol-binding",
+            "status": "confirmed",
+            "evidence": [
+              {
+                "file": "mcr-cross-check.mcr",
+                "attribute": "cb-alg-alg",
+                "sourceValue": "DELAY"
+              }
+            ],
+            "expected": "DELAY"
+          }
+        ]
+      }
+    ],
+    "implementationObjects": [
+      {
+        "instanceKey": "implementation-object-1",
+        "objectId": "ms",
+        "type": "INPUT",
+        "nodeId": "source-ms",
+        "attributes": {
+          "cb-classname": "ExternalPointInterface",
+          "cb-function-name": "INPUT",
+          "id": "ms",
+          "cb-alg-out": "FLAG"
+        },
+        "fields": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "FLAG",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          }
+        ]
+      },
+      {
+        "instanceKey": "implementation-object-2",
+        "objectId": "md",
+        "type": "ONDELAY",
+        "nodeId": "source-md",
+        "attributes": {
+          "cb-classname": "ControlAlgorithm",
+          "cb-function-name": "ONDELAY",
+          "id": "md",
+          "cb-alg-alg": "DELAY",
+          "cb-alg-in1": "$ms$cb-alg-out$",
+          "cb-alg-enbl": "$ms$cb-alg-out$",
+          "cb-alg-out": "RESULT"
+        },
+        "fields": [
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-alg",
+            "value": "DELAY",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-in1",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-enbl",
+            "value": "$ms$cb-alg-out$",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          },
+          {
+            "namespace": "implementation",
+            "file": "mcr-cross-check.mcr",
+            "attribute": "cb-alg-out",
+            "value": "RESULT",
+            "role": "declared-binding",
+            "status": "parsed",
+            "evidence": []
+          }
+        ]
+      }
+    ],
+    "tftGroups": [],
+    "auxiliaryDocuments": [],
+    "summary": {
+      "svgLogicTotal": 2,
+      "svgLogicAssociated": 2,
+      "svgConnectionsTotal": 2,
+      "svgConnectionsExplicit": 0,
+      "svgParameterInterfacesTotal": 0,
+      "tftRecordsTotal": 0,
+      "xmlDocumentsTotal": 0,
+      "xmlInstructionsTotal": 0,
+      "xmlArgumentsTotal": 0,
+      "fieldStatuses": {
+        "parsed": 5,
+        "confirmed": 2
+      }
+    }
+  }
+}

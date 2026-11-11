@@ -1,0 +1,65 @@
+{
+  "basis": "REF_1100 §4.42 p174–177; literal normal GOOD gain/bias/limit expectations; PROQ ON/OFF both GOOD in this scope, no tracking or non-GOOD evidence",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "on": {
+          "OUT": 0
+        },
+        "off": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "on": {
+          "OUT": 19
+        },
+        "off": {
+          "OUT": 19
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "on": {
+          "OUT": 39
+        },
+        "off": {
+          "OUT": 39
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "on": {
+          "OUT": 0
+        },
+        "off": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "on": {
+          "OUT": 100
+        },
+        "off": {
+          "OUT": 100
+        }
+      }
+    }
+  ]
+}

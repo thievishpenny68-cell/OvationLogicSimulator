@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "输入波形与扫描采样试用",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "trial-in",
+      "type": "INPUT",
+      "name": "0.35秒置位",
+      "x": 100,
+      "y": 90,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.35,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "trial-out",
+      "type": "OUTPUT",
+      "name": "试用输出点",
+      "x": 490,
+      "y": 90,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "trial-in",
+      "fromPort": "OUT",
+      "to": "trial-out",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "INPUT / OUTPUT 四种图形方向",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "a",
+      "type": "INPUT",
+      "name": "左侧开关输入",
+      "x": 60,
+      "y": 50,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "constant",
+          "value": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "ioOrientation": "horizontal"
+    },
+    {
+      "id": "t",
+      "type": "INPUT",
+      "name": "上部模拟输入",
+      "x": 700,
+      "y": 50,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "step",
+          "at": 0.5,
+          "before": 1.25,
+          "after": 2.5
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "ioOrientation": "vertical"
+    },
+    {
+      "id": "r",
+      "type": "OUTPUT",
+      "name": "右侧开关输出",
+      "x": 360,
+      "y": 50,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "ioOrientation": "horizontal"
+    },
+    {
+      "id": "b",
+      "type": "OUTPUT",
+      "name": "底部模拟输出",
+      "x": 700,
+      "y": 340,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      },
+      "ioOrientation": "vertical"
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "r",
+      "toPort": "IN1"
+    },
+    {
+      "from": "t",
+      "fromPort": "OUT",
+      "to": "b",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

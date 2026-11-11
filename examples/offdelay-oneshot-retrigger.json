@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "profile": "ref1100-2006-normal-v1",
+  "title": "OFFDELAY / ONESHOT · 同一输入的重触发对照",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "pulse",
+      "type": "INPUT",
+      "name": "共同脉冲输入",
+      "x": 70,
+      "y": 180,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              1.2,
+              true
+            ],
+            [
+              1.3,
+              false
+            ],
+            [
+              1.8,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "off",
+      "type": "OFFDELAY",
+      "name": "断开延时",
+      "x": 360,
+      "y": 70,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "shot",
+      "type": "ONESHOT",
+      "name": "单次脉冲",
+      "x": 360,
+      "y": 300,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "off-act",
+      "type": "OUTPUT",
+      "name": "OFFDELAY ACT",
+      "x": 690,
+      "y": 130,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "shot-act",
+      "type": "OUTPUT",
+      "name": "ONESHOT ACT",
+      "x": 690,
+      "y": 370,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "off",
+      "toPort": "IN1"
+    },
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "shot",
+      "toPort": "IN1"
+    },
+    {
+      "from": "off",
+      "fromPort": "ACT",
+      "to": "off-act",
+      "toPort": "IN1"
+    },
+    {
+      "from": "shot",
+      "fromPort": "ACT",
+      "to": "shot-act",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

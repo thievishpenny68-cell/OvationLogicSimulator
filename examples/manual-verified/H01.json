@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.12.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "H01 · 手册明确工况",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "input-IN1",
+      "type": "INPUT",
+      "name": "IN1 测试输入",
+      "x": 40,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              7
+            ],
+            [
+              0.1,
+              7
+            ],
+            [
+              0.2,
+              10
+            ],
+            [
+              0.3,
+              10.5
+            ],
+            [
+              0.4,
+              8
+            ],
+            [
+              0.5,
+              7.5
+            ],
+            [
+              0.6,
+              10
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "algorithm",
+      "type": "HIGHMON",
+      "name": "HIGHMON",
+      "x": 330,
+      "y": 90,
+      "params": {
+        "HISP": 10,
+        "HIDB": 2
+      },
+      "initial": {
+        "OUT": true
+      },
+      "provenance": {
+        "origin": "manual",
+        "ruleReference": "REF_1100 §4.46 p187"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input-IN1",
+      "fromPort": "OUT",
+      "to": "algorithm",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "H01 OUT",
+      "x": 570,
+      "y": 30,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"algorithm\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

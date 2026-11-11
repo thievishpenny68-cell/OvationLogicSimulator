@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.19.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "BCD直接/反向与局部字写入（手册示例）",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "src",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 70,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              6281
+            ],
+            [
+              0.2,
+              28
+            ],
+            [
+              0.3,
+              9999
+            ],
+            [
+              0.4,
+              0
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "direct",
+      "type": "BCDNOUT",
+      "name": "BCDNOUT",
+      "x": 270,
+      "y": 70,
+      "params": {
+        "BITP": 0,
+        "NDIG": 4,
+        "CNTL": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "decoded",
+      "type": "BCDNIN",
+      "name": "BCDNIN",
+      "x": 500,
+      "y": 70,
+      "params": {
+        "BITP": 0,
+        "NDIG": 4,
+        "CNTL": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "inverse",
+      "type": "BCDNOUT",
+      "name": "BCDNOUT",
+      "x": 270,
+      "y": 350,
+      "params": {
+        "BITP": 0,
+        "NDIG": 4,
+        "CNTL": 1
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "inverseDecoded",
+      "type": "BCDNIN",
+      "name": "BCDNIN",
+      "x": 500,
+      "y": 350,
+      "params": {
+        "BITP": 0,
+        "NDIG": 4,
+        "CNTL": 1
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "small",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 820,
+      "y": 70,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 28
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "window",
+      "type": "BCDNOUT",
+      "name": "BCDNOUT",
+      "x": 1050,
+      "y": 70,
+      "params": {
+        "BITP": 4,
+        "NDIG": 2,
+        "CNTL": 0
+      },
+      "initial": {
+        "OUT": 61450
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "windowRead",
+      "type": "BCDNIN",
+      "name": "BCDNIN",
+      "x": 1280,
+      "y": 70,
+      "params": {
+        "BITP": 4,
+        "NDIG": 2,
+        "CNTL": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "src",
+      "fromPort": "OUT",
+      "to": "direct",
+      "toPort": "IN"
+    },
+    {
+      "from": "direct",
+      "fromPort": "OUT",
+      "to": "decoded",
+      "toPort": "IN"
+    },
+    {
+      "from": "src",
+      "fromPort": "OUT",
+      "to": "inverse",
+      "toPort": "IN"
+    },
+    {
+      "from": "inverse",
+      "fromPort": "OUT",
+      "to": "inverseDecoded",
+      "toPort": "IN"
+    },
+    {
+      "from": "small",
+      "fromPort": "OUT",
+      "to": "window",
+      "toPort": "IN"
+    },
+    {
+      "from": "window",
+      "fromPort": "OUT",
+      "to": "windowRead",
+      "toPort": "IN"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "直接与反向解码",
+      "x": 810,
+      "y": 410,
+      "width": 470,
+      "height": 300,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"decoded\",\"values\",\"OUT\"]",
+        "[\"inverseDecoded\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "局部写入保留窗外位",
+      "x": 1320,
+      "y": 410,
+      "width": 420,
+      "height": 300,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"window\",\"values\",\"OUT\"]",
+        "[\"windowRead\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

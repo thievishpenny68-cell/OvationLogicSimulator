@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.8.1",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "连线状态与数值 · 数字/模拟",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "b",
+      "type": "INPUT",
+      "name": "开关量",
+      "x": 50,
+      "y": 80,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.6,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "n",
+      "type": "NOT",
+      "name": "取反后的开关量",
+      "x": 340,
+      "y": 80,
+      "params": {},
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "bout",
+      "type": "OUTPUT",
+      "name": "数字观察",
+      "x": 650,
+      "y": 80,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "a",
+      "type": "INPUT",
+      "name": "模拟斜坡",
+      "x": 50,
+      "y": 290,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "linear",
+          "points": [
+            [
+              0,
+              -0.123456789
+            ],
+            [
+              1,
+              0.123456789
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "abs",
+      "type": "ABSVALUE",
+      "name": "绝对值",
+      "x": 340,
+      "y": 290,
+      "params": {},
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "aout",
+      "type": "OUTPUT",
+      "name": "模拟观察",
+      "x": 650,
+      "y": 290,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "b",
+      "fromPort": "OUT",
+      "to": "n",
+      "toPort": "IN1"
+    },
+    {
+      "from": "n",
+      "fromPort": "OUT",
+      "to": "bout",
+      "toPort": "IN1"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "abs",
+      "toPort": "IN1"
+    },
+    {
+      "from": "abs",
+      "fromPort": "OUT",
+      "to": "aout",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

@@ -1,0 +1,148 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "manual-rule-and-declared-scan-discretization-not-controller-scans",
+  "ovationRuntimeEvidence": false,
+  "note": "REF1100 §4.67/4.69；手册触发/保持/停止规则配合显式零时刻采样，ACT为Float32。逐拍值独立填写；不是Ovation实机相位采集。",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "off": {
+          "OUT": false,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": false,
+          "ACT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "off": {
+          "OUT": false,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": false,
+          "ACT": 0
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0.10000000149011612
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0.20000000298023224
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0.10000000149011612
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0.10000000149011612
+        },
+        "one": {
+          "OUT": true,
+          "ACT": 0.20000000298023224
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 0.8,
+      "values": {
+        "off": {
+          "OUT": true,
+          "ACT": 0.20000000298023224
+        },
+        "one": {
+          "OUT": false,
+          "ACT": 0.30000001192092896
+        }
+      }
+    },
+    {
+      "tick": 9,
+      "time": 0.9,
+      "values": {
+        "off": {
+          "OUT": false,
+          "ACT": 0.30000001192092896
+        },
+        "one": {
+          "OUT": false,
+          "ACT": 0.30000001192092896
+        }
+      }
+    }
+  ]
+}

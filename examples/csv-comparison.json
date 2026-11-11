@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "CSV参考：模拟、数字、LP和内部状态",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "a.b",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 80,
+      "y": 80,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "step",
+          "at": 0.2,
+          "before": 1,
+          "after": 2
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "bit",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 80,
+      "y": 300,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.2,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "ff",
+      "type": "FLIPFLOP",
+      "name": "FLIPFLOP",
+      "x": 450,
+      "y": 280,
+      "params": {
+        "TYPE": 1
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "p",
+      "type": "PACK16",
+      "name": "PACK16",
+      "x": 780,
+      "y": 80,
+      "params": {},
+      "initial": {
+        "POUT": 65535
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "bit",
+      "fromPort": "OUT",
+      "to": "ff",
+      "toPort": "SET"
+    },
+    {
+      "from": "bit",
+      "fromPort": "OUT",
+      "to": "ff",
+      "toPort": "RSET"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": []
+}

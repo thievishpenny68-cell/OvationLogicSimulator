@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.22.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "SUM四路独立增益偏置与旧两路兼容",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "s1",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 30,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              1
+            ],
+            [
+              0.2,
+              2
+            ],
+            [
+              0.3,
+              -1
+            ],
+            [
+              0.4,
+              50
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "s2",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 290,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              2
+            ],
+            [
+              0.2,
+              4
+            ],
+            [
+              0.3,
+              -2
+            ],
+            [
+              0.4,
+              50
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "s3",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 550,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              3
+            ],
+            [
+              0.2,
+              6
+            ],
+            [
+              0.3,
+              -3
+            ],
+            [
+              0.4,
+              50
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "s4",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 810,
+      "y": 30,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              4
+            ],
+            [
+              0.2,
+              8
+            ],
+            [
+              0.3,
+              -4
+            ],
+            [
+              0.4,
+              50
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "full",
+      "type": "SUM",
+      "name": "SUM",
+      "x": 130,
+      "y": 340,
+      "params": {
+        "IN1G": 2,
+        "IN1B": 1,
+        "IN2G": -1,
+        "IN2B": 2,
+        "IN3G": 3,
+        "IN3B": -1,
+        "IN4G": 0.5,
+        "IN4B": 4,
+        "TPSC": 100,
+        "BTSC": -100,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "legacy",
+      "type": "SUM",
+      "name": "SUM",
+      "x": 490,
+      "y": 340,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 100,
+        "BTSC": -100,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "skip3",
+      "type": "SUM",
+      "name": "SUM",
+      "x": 850,
+      "y": 340,
+      "params": {
+        "IN1G": 1,
+        "IN1B": 0,
+        "IN2G": 1,
+        "IN2B": 0,
+        "TPSC": 100,
+        "BTSC": -100,
+        "TRAT": 2.5,
+        "IN4G": 0.5,
+        "IN4B": 4
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "s1",
+      "fromPort": "OUT",
+      "to": "full",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s2",
+      "fromPort": "OUT",
+      "to": "full",
+      "toPort": "IN2"
+    },
+    {
+      "from": "s3",
+      "fromPort": "OUT",
+      "to": "full",
+      "toPort": "IN3"
+    },
+    {
+      "from": "s4",
+      "fromPort": "OUT",
+      "to": "full",
+      "toPort": "IN4"
+    },
+    {
+      "from": "s1",
+      "fromPort": "OUT",
+      "to": "legacy",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s2",
+      "fromPort": "OUT",
+      "to": "legacy",
+      "toPort": "IN2"
+    },
+    {
+      "from": "s1",
+      "fromPort": "OUT",
+      "to": "skip3",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s2",
+      "fromPort": "OUT",
+      "to": "skip3",
+      "toPort": "IN2"
+    },
+    {
+      "from": "s4",
+      "fromPort": "OUT",
+      "to": "skip3",
+      "toPort": "IN4"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "四路/两路/跳过IN3",
+      "x": 1200,
+      "y": 220,
+      "width": 450,
+      "height": 390,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"full\",\"values\",\"OUT\"]",
+        "[\"legacy\",\"values\",\"OUT\"]",
+        "[\"skip3\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

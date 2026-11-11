@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "profile": "ref1100-2006-normal-v1",
+  "title": "双示波器 · 输出与计时过程",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "pulse",
+      "type": "INPUT",
+      "name": "共同脉冲输入",
+      "x": 70,
+      "y": 180,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              1.2,
+              true
+            ],
+            [
+              1.3,
+              false
+            ],
+            [
+              1.8,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "off",
+      "type": "OFFDELAY",
+      "name": "断开延时",
+      "x": 360,
+      "y": 70,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "shot",
+      "type": "ONESHOT",
+      "name": "单次脉冲",
+      "x": 360,
+      "y": 300,
+      "params": {
+        "BASE": 1,
+        "TARG": 0.25
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0,
+        "previousIN1": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "off",
+      "toPort": "IN1"
+    },
+    {
+      "from": "pulse",
+      "fromPort": "OUT",
+      "to": "shot",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "数字输出对照",
+      "x": 620,
+      "y": 40,
+      "width": 420,
+      "height": 290,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"off\",\"values\",\"OUT\"]",
+        "[\"shot\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "计时ACT过程",
+      "x": 620,
+      "y": 360,
+      "width": 420,
+      "height": 290,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"off\",\"values\",\"ACT\"]",
+        "[\"shot\",\"values\",\"ACT\"]"
+      ]
+    }
+  ]
+}

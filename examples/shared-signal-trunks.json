@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "共享主线与分叉",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "s",
+      "type": "INPUT",
+      "name": "共享输入",
+      "x": 60,
+      "y": 80,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.2,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "o1",
+      "type": "OUTPUT",
+      "name": "OUTPUT",
+      "x": 840,
+      "y": 80,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "o2",
+      "type": "OUTPUT",
+      "name": "OUTPUT",
+      "x": 860,
+      "y": 400,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "n",
+      "type": "NOT",
+      "name": "NOT",
+      "x": 500,
+      "y": 260,
+      "params": {},
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "t",
+      "type": "ONDELAY",
+      "name": "ONDELAY",
+      "x": 480,
+      "y": 520,
+      "params": {
+        "BASE": 1,
+        "TARG": 0
+      },
+      "initial": {
+        "OUT": false,
+        "ACT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "o1",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "o2",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "n",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "t",
+      "toPort": "IN1"
+    },
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "t",
+      "toPort": "ENBL"
+    }
+  ],
+  "issues": [],
+  "sources": []
+}

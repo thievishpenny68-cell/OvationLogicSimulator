@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.7.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "监视块 · 动态高限与固定低限",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "x",
+      "type": "INPUT",
+      "name": "被监视输入",
+      "x": 60,
+      "y": 80,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              9
+            ],
+            [
+              0.9,
+              13
+            ],
+            [
+              1,
+              9
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "limit",
+      "type": "INPUT",
+      "name": "动态高限",
+      "x": 60,
+      "y": 310,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              10
+            ],
+            [
+              0.2,
+              8
+            ],
+            [
+              0.4,
+              10
+            ],
+            [
+              0.6,
+              11
+            ],
+            [
+              0.8,
+              12
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "high",
+      "type": "HIGHMON",
+      "name": "HIGHMON",
+      "x": 390,
+      "y": 80,
+      "params": {
+        "HIDB": 2
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "low",
+      "type": "LOWMON",
+      "name": "LOWMON",
+      "x": 390,
+      "y": 310,
+      "params": {
+        "LOSP": 10,
+        "LODB": 2
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "high",
+      "toPort": "IN1"
+    },
+    {
+      "from": "x",
+      "fromPort": "OUT",
+      "to": "low",
+      "toPort": "IN1"
+    },
+    {
+      "from": "limit",
+      "fromPort": "OUT",
+      "to": "high",
+      "toPort": "HISP"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "监视输出与记忆",
+      "x": 710,
+      "y": 30,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"high\",\"values\",\"OUT\"]",
+        "[\"low\",\"values\",\"OUT\"]",
+        "[\"high\",\"states\",\"memory\"]",
+        "[\"low\",\"states\",\"memory\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "输入与高限",
+      "x": 710,
+      "y": 410,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"x\",\"values\",\"OUT\"]",
+        "[\"limit\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

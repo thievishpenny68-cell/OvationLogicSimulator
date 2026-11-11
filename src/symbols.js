@@ -1,0 +1,51 @@
+(function(root,factory){const node=typeof module==='object'&&module.exports,api=factory(node?require('./manual-symbol-data'):root.LogicSymbolData,node?require('./elementary-symbol-data'):root.LogicElementarySymbolData,node?require('./macro-symbols'):root.LogicMacroSymbols);if(node)module.exports=api;else root.LogicSymbols=api;})(typeof globalThis!=='undefined'?globalThis:this,function(profiles,elementary,MS){
+ 'use strict';
+ profiles={...profiles,...elementary};
+ const normals={left:[-1,0],right:[1,0],top:[0,-1],bottom:[0,1]},round=v=>Math.round(v*1000)/1000;
+ function terminal(kind,point){const{x,y}=point;
+  if(kind==='boolean')return{tag:'rect',shape:'square',attrs:{x:x-5,y:y-5,width:10,height:10}};
+  if(kind==='analog')return{tag:'circle',shape:'circle',attrs:{cx:x,cy:y,r:5}};
+  const packed=kind==='packed16',points=packed?[[x-6,y],[x-3,y-5],[x+3,y-5],[x+6,y],[x+3,y+5],[x-3,y+5]]:[[x,y-6],[x+6,y],[x,y+6],[x-6,y]];
+  return{tag:'polygon',shape:packed?'hexagon':'diamond',attrs:{points:points.map(p=>p.join(',')).join(' ')}};
+ }
+ function nativePath(items,xy){let d='',last=null;for(const item of items){const points=item.slice(1).map(xy),start=points[0];if(!last||Math.abs(last.x-start.x)+Math.abs(last.y-start.y)>.03)d+=' M'+start.x+' '+start.y;if(item[0]==='l')d+=' L'+points[1].x+' '+points[1].y;else if(item[0]==='c')d+=' C'+points.slice(1).map(p=>p.x+' '+p.y).join(' ');last=points.at(-1);}return d;}
+ function fallback(n,ps){const height=Math.max(92,58+Math.max(Object.keys(ps.inputs).length,Object.keys(ps.outputs).length)*21),ports={inputs:{},outputs:{}};for(const[dir,map]of Object.entries(ps))Object.keys(map).forEach((name,i)=>{const right=dir==='outputs';ports[dir][name]={name,x:right?158:0,y:48+i*21,nx:right?1:-1,ny:0,side:right?'right':'left',label:{x:right?147:11,y:51+i*21,anchor:right?'end':'start',text:name}};});return{manual:false,width:158,height,ports,inactivePins:[],outlines:[{tag:'rect',attrs:{x:0,y:0,width:158,height,rx:7}}],marks:[],strokes:[],leaders:[],source:null,shape:'software-or-placeholder'};}
+ function ioGeometry(n,ps){
+  const input=n.type==='INPUT',vertical=n.ioOrientation==='vertical',cx=90,cy=vertical?85:77,r=27;
+  const bar=vertical?{x:cx-r,y:input?cy-r-20:cy+r,width:54,height:20}:{x:input?cx-r-20:cx+r,y:cy-r,width:20,height:54};
+  const side=vertical?(input?'bottom':'top'):(input?'right':'left'),[nx,ny]=normals[side],attach={x:cx+nx*r,y:cy+ny*r},contact={x:attach.x+nx*27,y:attach.y+ny*27},name=input?'OUT':'IN1';
+  const label=vertical?{x:contact.x+(input?12:-12),y:contact.y+4,anchor:input?'start':'end',text:name}:{x:contact.x+(input?10:-8),y:contact.y-12,anchor:input?'end':'start',text:name};
+  const ports={inputs:{},outputs:{}};if(Object.hasOwn(ps[input?'outputs':'inputs'],name))ports[input?'outputs':'inputs'][name]={name,...contact,nx,ny,side,label};
+  const divider=vertical?[{x:cx,y:bar.y},{x:cx,y:bar.y+bar.height}]:[{x:bar.x,y:cy},{x:bar.x+bar.width,y:cy}];
+  const arrows=[];if(!input){const ux=-nx,uy=-ny;arrows.push(`M${attach.x} ${attach.y} L${attach.x-ux*6-uy*3} ${attach.y-uy*6+ux*3} L${attach.x-ux*6+uy*3} ${attach.y-uy*6-ux*3} Z`);}
+  return{manual:false,io:true,shape:input?'io-input':'io-output',orientation:vertical?'vertical':'horizontal',width:180,height:vertical?188:156,ports,inactivePins:[],outlines:[{tag:'circle',attrs:{cx,cy,r}},{tag:'rect',attrs:bar}],marks:[],strokes:[divider,[attach,contact]],leaders:[],arrows,source:null};
+ }
+ function geometry(n,ps){const macro=MS.geometry(n,ps);if(macro)return macro;if(!n.macroReference&&['INPUT','OUTPUT'].includes(n.type))return ioGeometry(n,ps);let p=!n.macroReference&&profiles[n.type];if(!p)return fallback(n,ps);
+  const gate=['AND','OR'].includes(n.type),count=Object.keys(ps.inputs).length;
+  const indexed=n.type==='TRNSFINDX',outputCount=Object.keys(ps.outputs).length,packed=n.type==='PACK16'||n.type==='UNPACK16',h=n.type==='FIRSTOUT'?360:indexed?Math.max(120,42+20*(outputCount-1)):packed?336:gate?44+12*Math.max(0,count-2):n.type==='DIGCOUNT'?280:['COMPARE','COUNTER','SELECTOR'].includes(n.type)?120:n.type==='ONESHOT'?108:['ONDELAY','OFFDELAY','FLIPFLOP'].includes(n.type)?90:60,w=h*p.aspect,ports={inputs:{},outputs:{}},raw=[],bounds=[[0,0],[w,h]];
+  if(gate){let index=0;p={...p,pins:p.pins.filter(pin=>pin.direction==='output'||Object.hasOwn(ps.inputs,pin.name)).map(pin=>{if(pin.direction==='output')return pin;const y=count===1?.5:.12+.76*index++/(count-1);return{...pin,xy:[pin.xy[0],y],labelXY:[-(Math.min(27,w*.32)+24)/w,y]};})};if(p.bus)p.bus=[[p.bus[0][0],.04],[p.bus[0][0],.96]];}
+  if(indexed){let index=0;p={...p,pins:p.pins.filter(pin=>pin.direction==='input'||Object.hasOwn(ps.outputs,pin.name)).map(pin=>{if(pin.direction==='input')return pin;const y=outputCount===1?.3:outputCount<=4?.3+.4*index++/(outputCount-1):.05+.9*index++/(outputCount-1);return{...pin,xy:[1,y],labelXY:[1+60/w,y]};})};}
+  const xy=point=>({x:round(point[0]*w),y:round(point[1]*h)}),include=(point,padX=0,padY=0)=>{bounds.push([point.x-padX,point.y-padY],[point.x+padX,point.y+padY]);};
+  for(const pin of p.pins){const direction=pin.direction==='output'?'outputs':'inputs',active=Object.hasOwn(ps[direction],pin.name),item={...pin,xy:[...pin.xy],labelXY:[...pin.labelXY]};
+   if(packed&&/^D\d+$/.test(pin.name)){const y=.03+Number(pin.name.slice(1))*.94/15;item.xy[1]=y;item.labelXY[1]=y;}
+   const normal=normals[item.side],attach=xy(item.xy),lead=item.lead?item.lead.map(xy):[attach,{x:round(attach.x+normal[0]*Math.min(27,w*.32)),y:round(attach.y+normal[1]*Math.min(27,h*.46))}];
+   const terminal=item.lead?(item.direction==='input'?lead[0]:lead.at(-1)):lead.at(-1),contact=active&&item.direction==='output'?{x:terminal.x+normal[0]*9,y:terminal.y+normal[1]*9}:terminal,label=xy(item.labelXY),text=item.printedLabel||item.name,status=active?'active':item.software==='parameter'?'parameter':item.software==='connectable'?'unselected':'unsupported';
+   include(contact,6,6);include(label,item.labelRotation?8:text.length*2.8,item.labelRotation?text.length*2.8:8);lead.forEach(v=>include(v));raw.push({...item,kind:active?(ps[direction][pin.name]==='boolean'?'digital':ps[direction][pin.name]):item.kind,active,status,attach,lead,terminal,contact,label:{...label,text,anchor:'middle'},nx:normal[0],ny:normal[1]});
+  }
+  for(const item of p.items||[])for(const point of item.slice(1))include(xy(point));for(const point of p.bus||[])include(xy(point));
+  const minX=Math.min(...bounds.map(v=>v[0])),maxX=Math.max(...bounds.map(v=>v[0])),minY=Math.min(...bounds.map(v=>v[1])),maxY=Math.max(...bounds.map(v=>v[1])),dx=12-minX,dy=32-minY,move=point=>({x:round(point.x+dx),y:round(point.y+dy)}),transform=point=>move(xy(point)),width=Math.max(158,Math.ceil(maxX-minX+24)),height=Math.ceil(maxY-minY+78),outlines=[],strokes=[];
+  if(p.shape==='rectangle')outlines.push({tag:'rect',attrs:{x:dx,y:dy,width:w,height:h}});else if(p.shape==='ellipse')outlines.push({tag:'ellipse',attrs:{cx:dx+w/2,cy:dy+h/2,rx:w/2,ry:h/2}});else outlines.push({tag:'path',attrs:{d:nativePath(p.items,transform),fill:'none'}});
+  if(p.bus)strokes.push(p.bus.map(transform));for(const line of p.strokes||[])strokes.push(line.map(transform));
+  const leaders=[],inactivePins=[];for(const item of raw){const terminal=move(item.contact),label={...move(item.label),text:item.label.text,anchor:item.label.anchor,rotation:item.labelRotation||0},pin={name:item.name,...terminal,nx:item.nx,ny:item.ny,side:item.side,label,kind:item.kind};if(item.active)ports[item.direction==='output'?'outputs':'inputs'][item.name]=pin;else inactivePins.push({...pin,status:item.status});const points=item.lead.map(move);if(item.active&&item.direction==='output')points.push(terminal);const from=item.direction==='input'?(Math.hypot(item.lead[0].x-item.attach.x,item.lead[0].y-item.attach.y)<.03?item.lead[1]:item.lead.at(-2)):item.lead.at(-2);leaders.push({name:item.name,direction:item.direction,active:item.active,status:item.status,kind:item.kind,arrowSolid:!!item.arrowSolid,points,arrowFrom:move(from),arrowAt:move(item.direction==='input'?item.attach:item.terminal),label});}
+  const marks=p.marks.map(mark=>({...transform(mark.xy),text:mark.text,size:Math.min(22,h*(mark.fontRatio||(['ONDELAY','OFFDELAY'].includes(n.type)?.14:.22))),anchor:mark.align==='center'?'middle':'start'}));
+  return{manual:true,shape:p.shape,width,height,body:{x:dx,y:dy,width:w,height:h},ports,inactivePins,outlines,marks,strokes,leaders,source:{document:'REF_1100 (2006-05)',page:p.page}};
+ }
+ function render(group,g,svg){const add=(tag,attrs,text)=>{const item=svg(tag,attrs,text);group.append(item);return item;};
+  for(const item of g.outlines)add(item.tag,{...item.attrs,class:'node-body'+(g.manual?' manual-body':'')});
+  for(const line of g.strokes)add('path',{d:line.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' '),class:'manual-symbol-stroke'});
+  for(const d of g.arrows||[])add('path',{d,class:'io-input-arrow'});
+  for(const m of g.marks)add('text',{x:m.x,y:m.y,'text-anchor':m.anchor,'dominant-baseline':'central','font-size':m.size,class:'manual-symbol-mark'},m.text);
+  for(const l of g.leaders){const cls=l.active?'active':l.status==='parameter'?'parameter':'inactive';add('path',{d:l.points.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' '),class:'manual-pin-lead '+cls});const target=l.arrowAt,other=l.arrowFrom,dx=target.x-other.x,dy=target.y-other.y,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len,size=5;add('path',{d:`M${target.x} ${target.y} L${target.x-ux*size-uy*2.6} ${target.y-uy*size+ux*2.6} L${target.x-ux*size+uy*2.6} ${target.y-uy*size-ux*2.6} Z`,class:'manual-pin-arrow '+cls+(l.arrowSolid?' manual-solid':'')+(l.kind==='digital'?' digital':l.kind==='analog'?' analog':l.kind==='packed16'?' packed16':' unknown')});if(!l.active){const text=add('text',{x:l.label.x,y:l.label.y,'text-anchor':l.label.anchor,'dominant-baseline':'central',class:'manual-pin-label '+cls,'data-manual-inactive':l.name,...(l.label.rotation?{transform:'rotate('+l.label.rotation+' '+l.label.x+' '+l.label.y+')'}:{})},l.label.text);text.append(svg('title',{},l.status==='parameter'?'固定参数 '+l.name+'；在属性中配置，不是当前可接线端':l.status==='unselected'?'未选用 '+l.name:'当前未支持 '+l.name+'，不能作为仿真针脚'));}}
+ }
+ return{profiles,geometry,render,terminal};
+});

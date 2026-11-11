@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.23.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "GAINBIAS来源选项（无跟踪/全GOOD）",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "input",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 100,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              10
+            ],
+            [
+              0.2,
+              20
+            ],
+            [
+              0.3,
+              -5
+            ],
+            [
+              0.4,
+              100
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "on",
+      "type": "GAINBIAS",
+      "name": "GAINBIAS",
+      "x": 400,
+      "y": 50,
+      "params": {
+        "GAIN": 2,
+        "BIAS": -1,
+        "BTSC": 0,
+        "TPSC": 100,
+        "TRAT": 2.5,
+        "PROQ": 1
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "off",
+      "type": "GAINBIAS",
+      "name": "GAINBIAS",
+      "x": 400,
+      "y": 380,
+      "params": {
+        "GAIN": 2,
+        "BIAS": -1,
+        "BTSC": 0,
+        "TPSC": 100,
+        "TRAT": 100,
+        "PROQ": 0
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input",
+      "fromPort": "OUT",
+      "to": "on",
+      "toPort": "IN1"
+    },
+    {
+      "from": "input",
+      "fromPort": "OUT",
+      "to": "off",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "全GOOD下ON/OFF正常OUT",
+      "x": 850,
+      "y": 160,
+      "width": 480,
+      "height": 350,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"on\",\"values\",\"OUT\"]",
+        "[\"off\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

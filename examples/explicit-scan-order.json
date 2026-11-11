@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "profile": "ref1100-2006-normal-v1",
+  "title": "明确扫描顺序与上拍回读",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "s",
+      "type": "INPUT",
+      "name": "输入：0.1秒变TRUE",
+      "x": 80,
+      "y": 90,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "step",
+          "at": 0.1,
+          "before": false,
+          "after": true
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "a",
+      "type": "NOT",
+      "name": "NOT A",
+      "x": 360,
+      "y": 90,
+      "params": {},
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "b",
+      "type": "NOT",
+      "name": "NOT B",
+      "x": 640,
+      "y": 90,
+      "params": {},
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "s",
+      "fromPort": "OUT",
+      "to": "a",
+      "toPort": "IN1"
+    },
+    {
+      "from": "a",
+      "fromPort": "OUT",
+      "to": "b",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "execution": {
+    "model": "single-task-ordered-v1",
+    "mode": "explicit",
+    "required": false,
+    "order": [
+      "b",
+      "a",
+      "s"
+    ],
+    "confirmation": {
+      "signature": "{\"dtUs\":100000,\"mode\":\"explicit\",\"order\":[\"b\",\"a\",\"s\"],\"taskConstraints\":null,\"nodes\":[[\"a\",\"NOT\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"b\",\"NOT\",[[[\"IN1\",\"boolean\"]],[[\"OUT\",\"boolean\"]]]],[\"s\",\"INPUT\",[[],[[\"OUT\",\"boolean\"]]]]],\"edges\":[[\"a\",\"OUT\",\"b\",\"IN1\"],[\"s\",\"OUT\",\"a\",\"IN1\"]]}",
+      "note": "软件教学工况：明确逐块B、A、INPUT，每拍回读尚未执行源的上拍输出，非Ovation现场采集",
+      "at": "2026-11-01T04:45:16.480Z"
+    }
+  },
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "观察顺序与初态",
+      "x": 80,
+      "y": 310,
+      "width": 420,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"s\",\"values\",\"OUT\"]",
+        "[\"a\",\"values\",\"OUT\"]",
+        "[\"b\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

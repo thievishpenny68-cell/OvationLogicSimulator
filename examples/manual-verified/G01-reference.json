@@ -1,0 +1,29 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "manual-reviewed-steady-cases-not-controller-scans",
+  "ovationRuntimeEvidence": false,
+  "caseId": "G01",
+  "manual": "REF_1100 §4.42 p177",
+  "note": "t0来自显式软件初态；后续OUT来自既有独立手册期望。步间0.1秒为本软件演示安排，不是控制器采集时刻；未声明现场扫描/精度模型。",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "algorithm": {
+          "OUT": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "observationId": "G01.1",
+      "values": {
+        "algorithm": {
+          "OUT": 1.25
+        }
+      }
+    }
+  ]
+}

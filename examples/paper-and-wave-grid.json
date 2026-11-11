@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.28.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "多列切换节点与画纸",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "source",
+      "type": "INPUT",
+      "name": "周期切换输入",
+      "x": 80,
+      "y": 100,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.6,
+              true
+            ],
+            [
+              0.8,
+              false
+            ],
+            [
+              1,
+              true
+            ],
+            [
+              1.2,
+              false
+            ],
+            [
+              1.4,
+              true
+            ],
+            [
+              1.6,
+              false
+            ],
+            [
+              1.8,
+              true
+            ],
+            [
+              2,
+              false
+            ],
+            [
+              2.2,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "out",
+      "type": "OUTPUT",
+      "name": "开关输出",
+      "x": 620,
+      "y": 100,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "out",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "paper": {
+    "x": 0,
+    "y": 0,
+    "width": 1200,
+    "height": 800,
+    "showBorder": true,
+    "borderStyle": "dashed"
+  }
+}

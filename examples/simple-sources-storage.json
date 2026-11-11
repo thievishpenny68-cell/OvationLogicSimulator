@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.16.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "基础常数与索引存储 · 手册参考",
+  "dtUs": 250000,
+  "nodes": [
+    {
+      "id": "value",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 40,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              10
+            ],
+            [
+              0.25,
+              20
+            ],
+            [
+              0.5,
+              30
+            ],
+            [
+              0.75,
+              40
+            ],
+            [
+              1,
+              50
+            ],
+            [
+              1.25,
+              60
+            ],
+            [
+              1.5,
+              70
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "index",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 40,
+      "y": 300,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              1
+            ],
+            [
+              0.25,
+              2
+            ],
+            [
+              0.5,
+              3
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              1.25,
+              1
+            ],
+            [
+              1.5,
+              2
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "analog",
+      "type": "AVALGEN",
+      "name": "AVALGEN",
+      "x": 420,
+      "y": 350,
+      "params": {
+        "VALU": -2.5
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "digital",
+      "type": "DVALGEN",
+      "name": "DVALGEN",
+      "x": 420,
+      "y": 560,
+      "params": {
+        "VALU": -2
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "store",
+      "type": "TRNSFINDX",
+      "name": "TRNSFINDX",
+      "x": 420,
+      "y": 60,
+      "params": {
+        "NMIN": 3
+      },
+      "initial": {
+        "O01": -1,
+        "O02": -2,
+        "O03": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "value",
+      "fromPort": "OUT",
+      "to": "store",
+      "toPort": "IN1"
+    },
+    {
+      "from": "index",
+      "fromPort": "OUT",
+      "to": "store",
+      "toPort": "IN2"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 830,
+      "y": 30,
+      "width": 460,
+      "height": 360,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"store\",\"values\",\"O01\"]",
+        "[\"store\",\"values\",\"O02\"]",
+        "[\"store\",\"values\",\"O03\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "示波器 2",
+      "x": 830,
+      "y": 430,
+      "width": 460,
+      "height": 280,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"analog\",\"values\",\"OUT\"]",
+        "[\"digital\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

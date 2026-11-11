@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.20.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "TRANSPORT五种初始化与两拍采样",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "source",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 550,
+      "y": 10,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              8
+            ],
+            [
+              0.1,
+              10
+            ],
+            [
+              0.3,
+              20
+            ],
+            [
+              0.5,
+              30
+            ],
+            [
+              0.7,
+              40
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init0",
+      "type": "TRANSPORT",
+      "name": "TRANSPORT",
+      "x": 260,
+      "y": 200,
+      "params": {
+        "TSAM": 0.2,
+        "NSAM": 2,
+        "INIT": 0
+      },
+      "initial": {
+        "OUT": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init1",
+      "type": "TRANSPORT",
+      "name": "TRANSPORT",
+      "x": 480,
+      "y": 200,
+      "params": {
+        "TSAM": 0.2,
+        "NSAM": 2,
+        "INIT": 1
+      },
+      "initial": {
+        "OUT": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init2",
+      "type": "TRANSPORT",
+      "name": "TRANSPORT",
+      "x": 700,
+      "y": 200,
+      "params": {
+        "TSAM": 0.2,
+        "NSAM": 2,
+        "INIT": 2
+      },
+      "initial": {
+        "OUT": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init3",
+      "type": "TRANSPORT",
+      "name": "TRANSPORT",
+      "x": 920,
+      "y": 200,
+      "params": {
+        "TSAM": 0.2,
+        "NSAM": 2,
+        "INIT": 3
+      },
+      "initial": {
+        "OUT": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "init4",
+      "type": "TRANSPORT",
+      "name": "TRANSPORT",
+      "x": 1140,
+      "y": 200,
+      "params": {
+        "TSAM": 0.2,
+        "NSAM": 2,
+        "INIT": 4
+      },
+      "initial": {
+        "OUT": -3
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "init0",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "init1",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "init2",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "init3",
+      "toPort": "IN1"
+    },
+    {
+      "from": "source",
+      "fromPort": "OUT",
+      "to": "init4",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "五种INIT的输出",
+      "x": 290,
+      "y": 510,
+      "width": 550,
+      "height": 390,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"init0\",\"values\",\"OUT\"]",
+        "[\"init1\",\"values\",\"OUT\"]",
+        "[\"init2\",\"values\",\"OUT\"]",
+        "[\"init3\",\"values\",\"OUT\"]",
+        "[\"init4\",\"values\",\"OUT\"]"
+      ]
+    },
+    {
+      "id": "scope-2",
+      "name": "延迟线与采样相位",
+      "x": 900,
+      "y": 510,
+      "width": 460,
+      "height": 330,
+      "windowSeconds": 5,
+      "channels": [
+        "[\"init4\",\"states\",\"S01\"]",
+        "[\"init4\",\"states\",\"phase\"]"
+      ]
+    }
+  ]
+}

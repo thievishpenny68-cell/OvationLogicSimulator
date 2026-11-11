@@ -1,0 +1,16 @@
+tick,time_s,node_id,section,field,kind,value
+0,0,a.b,values,OUT,analog,1
+0,0,bit,values,OUT,boolean,FALSE
+0,0,ff,values,OUT,boolean,FALSE
+0,0,ff,states,memory,boolean,FALSE
+0,0,p,values,POUT,packed16,0xFFFF
+1,0.1,a.b,values,OUT,analog,1
+1,0.1,bit,values,OUT,boolean,FALSE
+1,0.1,ff,values,OUT,boolean,FALSE
+1,0.1,ff,states,memory,boolean,FALSE
+1,0.1,p,values,POUT,packed16,0xFFFF
+2,0.2,a.b,values,OUT,analog,2
+2,0.2,bit,values,OUT,boolean,TRUE
+2,0.2,ff,values,OUT,boolean,TRUE
+2,0.2,ff,states,memory,boolean,TRUE
+2,0.2,p,values,POUT,packed16,0xFFFF

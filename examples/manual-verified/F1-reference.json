@@ -1,0 +1,69 @@
+{
+  "format": "manual-verified-software-reference-v1",
+  "basis": "manual-reviewed-steady-cases-not-controller-scans",
+  "ovationRuntimeEvidence": false,
+  "caseId": "F1",
+  "manual": "REF_1100 §4.40 p168–169",
+  "note": "t0来自显式软件初态；后续OUT来自既有独立手册期望。步间0.1秒为本软件演示安排，不是控制器采集时刻；未声明现场扫描/精度模型。",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "algorithm": {
+          "OUT": true
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "observationId": "F1.1",
+      "values": {
+        "algorithm": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "observationId": "F1.2",
+      "values": {
+        "algorithm": {
+          "OUT": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "observationId": "F1.3",
+      "values": {
+        "algorithm": {
+          "OUT": true
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "observationId": "F1.4",
+      "values": {
+        "algorithm": {
+          "OUT": true
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "observationId": "F1.5",
+      "values": {
+        "algorithm": {
+          "OUT": false
+        }
+      }
+    }
+  ]
+}
