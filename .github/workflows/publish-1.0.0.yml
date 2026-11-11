@@ -1,0 +1,79 @@
+name: Publish 1.0.0 offline release
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-1.0.0.yml]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-1.0.0
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify public files and build offline ZIP
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json, zipfile
+          root = Path.cwd()
+          manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
+          assert manifest['version'] == '1.0.0'
+          files = sorted([item['path'] for item in manifest['files']] + ['manifest.json'])
+          assert len(files) == 207 and len(set(files)) == 207
+          for item in manifest['files']:
+              path = (root / item['path']).resolve()
+              assert path.is_relative_to(root)
+              data = path.read_bytes()
+              assert len(data) == item['bytes']
+              assert hashlib.sha256(data).hexdigest() == item['sha256'], item['path']
+          output = root / '.publish'
+          output.mkdir()
+          name = 'ovation-logic-lab-1.0.0'
+          archive = output / (name + '.zip')
+          with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as release:
+              for filename in files:
+                  item = zipfile.ZipInfo(name + '/' + filename)
+                  item.compress_type = zipfile.ZIP_DEFLATED
+                  item.external_attr = 0o100644 << 16
+                  release.writestr(item, (root / filename).read_bytes(), compresslevel=9)
+          with zipfile.ZipFile(archive) as release:
+              assert release.testzip() is None
+              for filename in files:
+                  assert release.read(name + '/' + filename) == (root / filename).read_bytes()
+          digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+          (output / 'SHA256SUMS.txt').write_text(digest + '  ' + archive.name + '\n', encoding='ascii')
+          print('Verified', len(files), 'offline files; SHA256', digest)
+          PY
+      - name: Create version tag and publish download assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > "$RUNNER_TEMP/release-notes.md" <<'EOF'
+          首个1.0.0离线发行版。完整解压后，用Chrome或Edge打开index.html，无需安装运行环境。
+
+          - 52种手册算法、拖放组态、类型化引脚与正交分支连线。
+          - SVG自动映射及明确诊断；自定义宏仅恢复接口和连线。
+          - 输入波形编辑与Excel导入；四路示波器、历史游标及FIFO显示。
+          - 禁用、溯源恢复、临时强制输出、绘图标注与图文错误反馈。
+          - 完整图文使用说明、通用示例和第三方许可。
+
+          已排除原始工程资料、映射表、本机路径、开发依赖和内部日志。
+          发布前验证：Edge 9项、Chrome 7项离线检查通过；38个通用示例的146份快照与开发版本一致。
+          内核0.30.0，已支持范围及数值规则见包内说明；尚无Ovation逐扫描现场运行对照。
+          EOF
+          if gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "v1.0.0 already exists; refusing to overwrite an existing release."
+            exit 1
+          fi
+          gh release create v1.0.0 .publish/ovation-logic-lab-1.0.0.zip .publish/SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "Ovation Logic Lab 1.0.0" --notes-file "$RUNNER_TEMP/release-notes.md" --latest
