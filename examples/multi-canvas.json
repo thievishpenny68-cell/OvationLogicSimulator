@@ -1,0 +1,249 @@
+{
+  "documentType": "ovation-logic-engineering-project",
+  "formatVersion": 1,
+  "title": "多画布 · 本拍传递与上一拍反馈",
+  "dtUs": 100000,
+  "canvases": [
+    {
+      "id": "c1",
+      "name": "1 信号产生与反馈读取",
+      "project": {
+        "schemaVersion": 2,
+        "engineVersion": "0.35.0",
+        "profile": "ref1100-2006-normal-v1",
+        "title": "未命名逻辑",
+        "dtUs": 100000,
+        "nodes": [
+          {
+            "id": "i",
+            "type": "INPUT",
+            "name": "外部启停指令",
+            "x": 100,
+            "y": 130,
+            "params": {
+              "kind": "boolean",
+              "wave": {
+                "mode": "step",
+                "at": 0.2,
+                "before": false,
+                "after": true
+              }
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "o",
+            "type": "OUTPUT",
+            "name": "RUN_CMD",
+            "x": 600,
+            "y": 130,
+            "params": {
+              "kind": "boolean"
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "previous",
+            "type": "INPUT",
+            "name": "FEEDBACK",
+            "x": 100,
+            "y": 360,
+            "params": {
+              "kind": "boolean",
+              "wave": {
+                "mode": "constant",
+                "value": false
+              }
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "prior",
+            "type": "OUTPUT",
+            "name": "PREVIOUS_FEEDBACK",
+            "x": 600,
+            "y": 360,
+            "params": {
+              "kind": "boolean"
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "i",
+            "fromPort": "OUT",
+            "to": "o",
+            "toPort": "IN1"
+          },
+          {
+            "from": "previous",
+            "fromPort": "OUT",
+            "to": "prior",
+            "toPort": "IN1"
+          }
+        ],
+        "issues": [],
+        "sources": []
+      }
+    },
+    {
+      "id": "c2",
+      "name": "2 反相逻辑",
+      "project": {
+        "schemaVersion": 2,
+        "engineVersion": "0.35.0",
+        "profile": "ref1100-2006-normal-v1",
+        "title": "未命名逻辑",
+        "dtUs": 100000,
+        "nodes": [
+          {
+            "id": "i",
+            "type": "INPUT",
+            "name": "RUN_CMD",
+            "x": 100,
+            "y": 130,
+            "params": {
+              "kind": "boolean",
+              "wave": {
+                "mode": "constant",
+                "value": false
+              }
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "not",
+            "type": "NOT",
+            "name": "NOT",
+            "x": 350,
+            "y": 130,
+            "params": {},
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "o",
+            "type": "OUTPUT",
+            "name": "RUN_INVERTED",
+            "x": 600,
+            "y": 130,
+            "params": {
+              "kind": "boolean"
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "i",
+            "fromPort": "OUT",
+            "to": "not",
+            "toPort": "IN1"
+          },
+          {
+            "from": "not",
+            "fromPort": "OUT",
+            "to": "o",
+            "toPort": "IN1"
+          }
+        ],
+        "issues": [],
+        "sources": []
+      }
+    },
+    {
+      "id": "c3",
+      "name": "3 反馈发布",
+      "project": {
+        "schemaVersion": 2,
+        "engineVersion": "0.35.0",
+        "profile": "ref1100-2006-normal-v1",
+        "title": "未命名逻辑",
+        "dtUs": 100000,
+        "nodes": [
+          {
+            "id": "i",
+            "type": "INPUT",
+            "name": "RUN_INVERTED",
+            "x": 100,
+            "y": 130,
+            "params": {
+              "kind": "boolean",
+              "wave": {
+                "mode": "constant",
+                "value": false
+              }
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          },
+          {
+            "id": "o",
+            "type": "OUTPUT",
+            "name": "FEEDBACK",
+            "x": 600,
+            "y": 130,
+            "params": {
+              "kind": "boolean"
+            },
+            "initial": {
+              "OUT": false
+            },
+            "provenance": {
+              "origin": "manual"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "i",
+            "fromPort": "OUT",
+            "to": "o",
+            "toPort": "IN1"
+          }
+        ],
+        "issues": [],
+        "sources": []
+      }
+    }
+  ]
+}

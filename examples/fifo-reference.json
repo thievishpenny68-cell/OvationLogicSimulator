@@ -1,0 +1,165 @@
+{
+  "basis": "REF_1100 4.38 hand-calculated; no simultaneous enqueue and rotate",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "fifo": {
+          "OUT": 0,
+          "FLAG": false
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [],
+          "depth": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "fifo": {
+          "OUT": 0,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            9
+          ],
+          "depth": 1
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "fifo": {
+          "OUT": 0,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            9,
+            1,
+            16
+          ],
+          "depth": 3
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "fifo": {
+          "OUT": 9,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            1,
+            16
+          ],
+          "depth": 2
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "fifo": {
+          "OUT": 9,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            1,
+            16
+          ],
+          "depth": 2
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "fifo": {
+          "OUT": 1,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            16
+          ],
+          "depth": 1
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 0.6,
+      "values": {
+        "fifo": {
+          "OUT": 1,
+          "FLAG": true
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [
+            16
+          ],
+          "depth": 1
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 0.7,
+      "values": {
+        "fifo": {
+          "OUT": 16,
+          "FLAG": false
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [],
+          "depth": 0
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 0.8,
+      "values": {
+        "fifo": {
+          "OUT": 0,
+          "FLAG": false
+        }
+      },
+      "states": {
+        "fifo": {
+          "queue": [],
+          "depth": 0
+        }
+      }
+    }
+  ]
+}

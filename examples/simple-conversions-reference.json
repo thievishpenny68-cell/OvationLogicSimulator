@@ -1,0 +1,173 @@
+{
+  "basis": "manual formulas and integer conversion; hand-calculated; not Ovation runtime capture",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "steam": {
+          "OUT": 0
+        },
+        "encode": {
+          "PACK": 0
+        },
+        "decode": {
+          "OUT": 0
+        },
+        "antilog": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 0
+        },
+        "exp-result": {
+          "OUT": 0
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "values": {
+        "steam": {
+          "OUT": 6
+        },
+        "encode": {
+          "PACK": 6
+        },
+        "decode": {
+          "OUT": 6
+        },
+        "antilog": {
+          "OUT": 10,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 6
+        },
+        "exp-result": {
+          "OUT": 10
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "values": {
+        "steam": {
+          "OUT": 6
+        },
+        "encode": {
+          "PACK": 6
+        },
+        "decode": {
+          "OUT": 6
+        },
+        "antilog": {
+          "OUT": 10,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 6
+        },
+        "exp-result": {
+          "OUT": 10
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "values": {
+        "steam": {
+          "OUT": 4
+        },
+        "encode": {
+          "PACK": 4
+        },
+        "decode": {
+          "OUT": 4
+        },
+        "antilog": {
+          "OUT": 10,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 4
+        },
+        "exp-result": {
+          "OUT": 10
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 0.4,
+      "values": {
+        "steam": {
+          "OUT": 4
+        },
+        "encode": {
+          "PACK": 4
+        },
+        "decode": {
+          "OUT": 4
+        },
+        "antilog": {
+          "OUT": 100,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 4
+        },
+        "exp-result": {
+          "OUT": 100
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 0.5,
+      "values": {
+        "steam": {
+          "OUT": 4
+        },
+        "encode": {
+          "PACK": 4
+        },
+        "decode": {
+          "OUT": 4
+        },
+        "antilog": {
+          "OUT": 100,
+          "FOUT": false
+        },
+        "result": {
+          "OUT": 4
+        },
+        "exp-result": {
+          "OUT": 100
+        },
+        "range-result": {
+          "OUT": false
+        }
+      }
+    }
+  ]
+}

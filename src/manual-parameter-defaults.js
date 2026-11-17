@@ -3,6 +3,10 @@
  // REF_1100 parameter tables, audited separately in docs/reference/manual-parameter-defaults.md.
  // These are import defaults; the editor's runnable examples remain separate.
  const definitions={
+ "RATELIMIT":{"file":"REF_1100 §4.83","section":"4.83","parameters":{"RALM":[0,2,303],"TPSC":[100,2,303],"BTSC":[0,2,303],"TRAT":[2.5,2,303]}},
+ "TIMECHANGE":{"file":"REF_1100 §4.115","section":"4.115","parameters":{}},
+ "TIMEDETECT":{"file":"REF_1100 §4.116","section":"4.116","parameters":{"SHF1":[0,1,403],"SHF2":[0,1,403],"SHF3":[0,1,403],"WEEK":[0,1,403]}},
+ "FIFO":{"file":"REF_1100 §4.38","section":"4.38","parameters":{}},
  "AND":{"file":"REF_1100 §4.7","section":"4.7","parameters":{}},
  "OR":{"file":"REF_1100 §4.70","section":"4.70","parameters":{}},
  "NOT":{"file":"REF_1100 §4.66","section":"4.66","parameters":{}},
@@ -54,7 +58,13 @@
  "FIRSTOUT":{"file":"REF_1100 §4.39","section":"4.39","parameters":{"MCFG":[0,4,166]}},
  "BCDNIN":{"file":"REF_1100 §4.17","section":"4.17","parameters":{"NDIG":[1,1,53],"CNTL":[0,2,54]}},
  "BCDNOUT":{"file":"REF_1100 §4.18","section":"4.18","parameters":{"BITP":[0,1,56],"NDIG":[1,1,56],"CNTL":[0,2,57]}},
- "TRANSPORT":{"file":"REF_1100 §4.120","section":"4.120","parameters":{"TSAM":[0,1,415],"NSAM":[0,1,415],"INIT":[2,2,416]}}
+ "TRANSPORT":{"file":"REF_1100 §4.120","section":"4.120","parameters":{"TSAM":[0,1,415],"NSAM":[0,1,415],"INIT":[2,2,416]}},
+ "STEAMFLOW":{"file":"REF_1100 §4.109","section":"4.109","parameters":{"TYPE":["DELTAP",1,386],"SCAL":[1,1,386],"BASE":[1,1,386],"GAIN":[1,1,386]}},
+ "SPTOSA":{"file":"REF_1100 §4.105","section":"4.105","parameters":{}},
+ "SATOSP":{"file":"REF_1100 §4.92","section":"4.92","parameters":{}},
+ "ANTILOG":{"file":"REF_1100 §4.9","section":"4.9","parameters":{"BASE":[0,2,40],"SCAL":[0,2,40]}},
+ "RATEMON":{"file":"REF_1100 §4.84","section":"4.84","parameters":{"PRAT":[0,1,305],"PDB":[0,1,305],"NRAT":[0,2,306],"NDB":[0,2,306]}},
+ "RATECHANGE":{"file":"REF_1100 §4.82","section":"4.82","parameters":{"SMTH":[0,2,301]}}
  };
  function apply(node,{attributes=[],records=[],fields={},aliases={},blocked=false}={}){
   const d=definitions[node.type],adopted=[];if(!d||node.macroReference||blocked)return adopted;

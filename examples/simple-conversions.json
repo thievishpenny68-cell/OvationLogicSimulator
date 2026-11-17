@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.31.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "四种基础转换与补偿",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "demand",
+      "type": "INPUT",
+      "name": "差压 / 流量",
+      "x": 40,
+      "y": 100,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "step",
+          "at": 0.3,
+          "before": 9,
+          "after": 4
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "volume",
+      "type": "INPUT",
+      "name": "比容",
+      "x": 40,
+      "y": 320,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "constant",
+          "value": 1
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "exponent",
+      "type": "INPUT",
+      "name": "指数输入",
+      "x": 40,
+      "y": 580,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "step",
+          "at": 0.4,
+          "before": 1,
+          "after": 2
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "steam",
+      "type": "STEAMFLOW",
+      "name": "流量补偿",
+      "x": 410,
+      "y": 130,
+      "params": {
+        "TYPE": "DELTAP",
+        "SCAL": 1,
+        "BASE": 4,
+        "GAIN": 1
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "encode",
+      "type": "SATOSP",
+      "name": "编码",
+      "x": 740,
+      "y": 130,
+      "params": {},
+      "initial": {
+        "PACK": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "decode",
+      "type": "SPTOSA",
+      "name": "解码",
+      "x": 1040,
+      "y": 130,
+      "params": {},
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "result",
+      "type": "OUTPUT",
+      "name": "转换后数值",
+      "x": 1350,
+      "y": 130,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "antilog",
+      "type": "ANTILOG",
+      "name": "10底反对数",
+      "x": 410,
+      "y": 590,
+      "params": {
+        "BASE": 1,
+        "SCAL": 1
+      },
+      "initial": {
+        "OUT": 0,
+        "FOUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "exp-result",
+      "type": "OUTPUT",
+      "name": "指数结果",
+      "x": 740,
+      "y": 590,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "range-result",
+      "type": "OUTPUT",
+      "name": "范围标志",
+      "x": 740,
+      "y": 820,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "demand",
+      "fromPort": "OUT",
+      "to": "steam",
+      "toPort": "IN1"
+    },
+    {
+      "from": "volume",
+      "fromPort": "OUT",
+      "to": "steam",
+      "toPort": "IN2"
+    },
+    {
+      "from": "steam",
+      "fromPort": "OUT",
+      "to": "encode",
+      "toPort": "IN"
+    },
+    {
+      "from": "encode",
+      "fromPort": "PACK",
+      "to": "decode",
+      "toPort": "PACK"
+    },
+    {
+      "from": "decode",
+      "fromPort": "OUT",
+      "to": "result",
+      "toPort": "IN1"
+    },
+    {
+      "from": "exponent",
+      "fromPort": "OUT",
+      "to": "antilog",
+      "toPort": "IN1"
+    },
+    {
+      "from": "antilog",
+      "fromPort": "OUT",
+      "to": "exp-result",
+      "toPort": "IN1"
+    },
+    {
+      "from": "antilog",
+      "fromPort": "FOUT",
+      "to": "range-result",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "转换与指数观察",
+      "x": 1040,
+      "y": 550,
+      "width": 540,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"steam\",\"values\",\"OUT\"]",
+        "[\"encode\",\"values\",\"PACK\"]",
+        "[\"decode\",\"values\",\"OUT\"]",
+        "[\"antilog\",\"values\",\"OUT\"]"
+      ]
+    }
+  ]
+}

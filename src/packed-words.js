@@ -9,13 +9,13 @@
  function pack(initial,inputs){let value=word(initial);for(const [pin,bit]of Object.entries(inputs)){if(!bits.includes(pin)||typeof bit!=='boolean')throw Error('PACK16需要D0～D15布尔输入');const mask=1<<Number(pin.slice(1));value=bit?value|mask:value&~mask;}return word(value);}
  function unpack(value){word(value);return Object.fromEntries(bits.map((pin,i)=>[pin,!!(value&(1<<i))]));}
  function ports(n){return n.type==='PACK16'?{inputs:digital(),outputs:{POUT:'packed16'}}:{inputs:{PIN:'packed16'},outputs:digital()};}
- const output=n=>n.type==='BCDNOUT'?'OUT':n.type==='FIRSTOUT'?'MNTR':n.type==='PACK16'?'POUT':n.type==='ASSIGN'&&n.params?.kind==='packed16'?'OUT':null;
+ const output=n=>n.type==='SATOSP'?'PACK':n.type==='BCDNOUT'?'OUT':n.type==='FIRSTOUT'?'MNTR':n.type==='PACK16'?'POUT':n.type==='ASSIGN'&&n.params?.kind==='packed16'?'OUT':null;
  function inspect(project,allPorts,analysis){
   const issues=[],points=new Map(),bindings=new Map(),nodes=(project.nodes||[]).filter(Boolean),add=(code,message,nodeId)=>issues.push({code,message,nodeId,severity:'error'});
   if(project.packedPoints!==undefined&&!Array.isArray(project.packedPoints)){add('PACKED_POINTS','LP共享字配置须为数组');return{issues,points,bindings};}
   for(const p of project.packedPoints||[]){if(!p||typeof p.id!=='string'||!p.id.trim()||p.id!==p.id.trim()||points.has(p.id)||Object.keys(p).some(k=>!['id','initial'].includes(k))){add('PACKED_POINTS','LP共享字名称无效/重复，或含未支持字段');continue;}try{word(p.initial);points.set(p.id,{...p});}catch(e){add('PACKED_INITIAL_REQUIRED',e.message);}}
   for(const n of nodes){if(n.macroReference)continue;const at=n.provenance?.attributes||{},port=output(n),raw=port&&(at['cb-alg-'+port.toLowerCase()]??at['cb-alg-pbpt']??at['cb-macro-'+port.toLowerCase()]??at['cb-macro-pbpt']);if(typeof raw==='string'&&raw.startsWith('$'))add('PACKED_REFERENCE_REVIEW','LP输出引用尚未解释，不能用独立字或手填绑定代替原引用：'+raw,n.id);const bound=Object.hasOwn(n,'packedPoint');if(!bound)continue;
-   if(!(output(n)||n.type==='UNPACK16')){add('PACKED_BINDING','只有PACK16、FIRSTOUT、BCDNOUT、UNPACK16或LP模式ASSIGN可绑定共享字',n.id);continue;}
+   if(!(output(n)||n.type==='UNPACK16')){add('PACKED_BINDING','只有PACK16、FIRSTOUT、BCDNOUT、SATOSP、UNPACK16或LP模式ASSIGN可绑定共享字',n.id);continue;}
    if(typeof n.packedPoint!=='string'||!points.has(n.packedPoint)){add('PACKED_BINDING','LP共享字不存在或未明确初值：'+String(n.packedPoint),n.id);continue;}
    bindings.set(n.id,n.packedPoint);if(port&&n.initial?.[port]!==points.get(n.packedPoint).initial)add('PACKED_INITIAL_CONFLICT','共享字 '+n.packedPoint+' 与 '+port+' 初态不一致，请明确统一初值',n.id);
    if(n.type==='UNPACK16'&&(project.edges||[]).some(e=>e?.to===n.id&&e.toPort==='PIN'))add('PACKED_INPUT_CONFLICT','PIN不能同时由连线和命名共享字驱动',n.id);

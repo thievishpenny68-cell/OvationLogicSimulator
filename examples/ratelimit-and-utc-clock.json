@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.34.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "模拟量限速与UTC午夜脉冲",
+  "dtUs": 250000,
+  "nodes": [
+    {
+      "id": "input",
+      "type": "INPUT",
+      "name": "INPUT",
+      "x": 70,
+      "y": 100,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              20
+            ],
+            [
+              0.5,
+              20
+            ],
+            [
+              0.75,
+              6
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              1.25,
+              4
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "limit",
+      "type": "RATELIMIT",
+      "name": "RATELIMIT",
+      "x": 470,
+      "y": 100,
+      "params": {
+        "RALM": 8,
+        "TPSC": 100,
+        "BTSC": -10,
+        "TRAT": 2.5
+      },
+      "initial": {
+        "OUT": 0,
+        "FOUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "change",
+      "type": "TIMECHANGE",
+      "name": "TIMECHANGE",
+      "x": 70,
+      "y": 460,
+      "params": {},
+      "initial": {
+        "HCHG": false,
+        "MCHG": false,
+        "SCHG": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "detect",
+      "type": "TIMEDETECT",
+      "name": "TIMEDETECT",
+      "x": 420,
+      "y": 460,
+      "params": {
+        "SHF1": 0,
+        "SHF2": 8,
+        "SHF3": 16,
+        "WEEK": 1
+      },
+      "initial": {
+        "DCHG": false,
+        "SHFT": false,
+        "WCHG": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "input",
+      "fromPort": "OUT",
+      "to": "limit",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "utcStart": "2026-11-14T23:59:59.500Z",
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "示波器 1",
+      "x": 900,
+      "y": 145,
+      "width": 540,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"limit\",\"values\",\"OUT\"]",
+        "[\"limit\",\"values\",\"FOUT\"]",
+        "[\"change\",\"values\",\"SCHG\"]",
+        "[\"detect\",\"values\",\"WCHG\"]"
+      ]
+    }
+  ]
+}

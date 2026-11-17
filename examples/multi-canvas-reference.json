@@ -1,0 +1,45 @@
+{
+  "description": "人工按100ms、A→B→C推导；t=0不求值。前向本拍，反馈下一拍可见。软件约定，非Ovation实机采集。",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "outputs": {
+        "RUN_CMD": false,
+        "RUN_INVERTED": false,
+        "FEEDBACK": false,
+        "PREVIOUS_FEEDBACK": false
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.1,
+      "outputs": {
+        "RUN_CMD": false,
+        "RUN_INVERTED": true,
+        "FEEDBACK": true,
+        "PREVIOUS_FEEDBACK": false
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.2,
+      "outputs": {
+        "RUN_CMD": true,
+        "RUN_INVERTED": false,
+        "FEEDBACK": false,
+        "PREVIOUS_FEEDBACK": true
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.3,
+      "outputs": {
+        "RUN_CMD": true,
+        "RUN_INVERTED": false,
+        "FEEDBACK": false,
+        "PREVIOUS_FEEDBACK": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.32.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "变化率与双侧回差",
+  "dtUs": 250000,
+  "nodes": [
+    {
+      "id": "signal",
+      "type": "INPUT",
+      "name": "被监视输入",
+      "x": 100,
+      "y": 100,
+      "params": {
+        "kind": "analog",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              1.25
+            ],
+            [
+              0.5,
+              2.25
+            ],
+            [
+              0.75,
+              3
+            ],
+            [
+              1,
+              3.5
+            ],
+            [
+              1.25,
+              2.25
+            ],
+            [
+              1.5,
+              1.25
+            ],
+            [
+              1.75,
+              0.5
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "monitor",
+      "type": "RATEMON",
+      "name": "变化率越限",
+      "x": 550,
+      "y": 100,
+      "params": {
+        "PRAT": 4,
+        "PDB": 1,
+        "NRAT": 4,
+        "NDB": 1
+      },
+      "initial": {
+        "OUT": false,
+        "previousIN1": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "rate",
+      "type": "RATECHANGE",
+      "name": "每秒变化率",
+      "x": 550,
+      "y": 500,
+      "params": {
+        "SMTH": 0
+      },
+      "initial": {
+        "OUT": 0,
+        "previousIN1": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "alarm",
+      "type": "OUTPUT",
+      "name": "变化率报警",
+      "x": 950,
+      "y": 100,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "value",
+      "type": "OUTPUT",
+      "name": "变化率读数",
+      "x": 950,
+      "y": 500,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "signal",
+      "fromPort": "OUT",
+      "to": "monitor",
+      "toPort": "IN1"
+    },
+    {
+      "from": "signal",
+      "fromPort": "OUT",
+      "to": "rate",
+      "toPort": "IN1"
+    },
+    {
+      "from": "monitor",
+      "fromPort": "OUT",
+      "to": "alarm",
+      "toPort": "IN1"
+    },
+    {
+      "from": "rate",
+      "fromPort": "OUT",
+      "to": "value",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "输入 / 变化率 / 报警",
+      "x": 1300,
+      "y": 160,
+      "width": 540,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"signal\",\"values\",\"OUT\"]",
+        "[\"rate\",\"values\",\"OUT\"]",
+        "[\"monitor\",\"values\",\"OUT\"]",
+        "[\"rate\",\"states\",\"previousIN1\"]"
+      ]
+    }
+  ]
+}

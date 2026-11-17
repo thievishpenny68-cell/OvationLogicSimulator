@@ -23,12 +23,31 @@
  entry('SMOOTH','指数平滑 / 低通滤波',104,'363～364',{SMTH:0},{group:'状态',stateful:true,model:'ref1100-2006-smooth-v2',sourceFields:{SMTH:'R1'}});
  catalog.SMOOTH.source+='SMTH为固定秒制常数，0直通，负值涉及BAD质量而拒绝。t=0采用显式OUT初态，每扫描以旧OUT递推；不推断控制器重启初值。';
  entry('FUNCTION','十二点分段线性函数',41,'170～173',{GAIN:1,BIAS:0,TPSC:100,BTSC:0,TRAT:2.5,BPTS:2,...Object.fromEntries(Array.from({length:12},(_,i)=>[['X'+(i+1),i===0?-100:i===1?100:0],['Y'+(i+1),i===0?-100:i===1?100:0]]).flat())},{unsupportedInputs:['TRIN'],unsupportedOutputs:['TOUT'],optionalParameters:Array.from({length:10},(_,i)=>['X'+(i+3),'Y'+(i+3)]).flat(),parameterAliases:Object.fromEntries(Array.from({length:12},(_,i)=>[['X-'+(i+1),'X'+(i+1)],['Y-'+(i+1),'Y'+(i+1)]]).flat()),sourceFields:{GAIN:'T7',BIAS:'T8',TPSC:'T9',BTSC:'U1',TRAT:'U2',BPTS:'X1',...Object.fromEntries(Array.from({length:12},(_,i)=>[['X'+(i+1),i<9?'R'+(i+1):'S'+(i-8)],['Y'+(i+1),i<6?'S'+(i+4):'T'+(i-5)]]).flat())}});
+ entry('RATEMON','变化率监视 / 回差',84,'305～306',{PRAT:0,PDB:0,NRAT:0,NDB:0},{group:'状态',stateful:true,rateState:true,initialStateTypes:{previousIN1:'analog'},stateTypes:{previousIN1:'analog'},selectableInputs:{PRAT:'PRAT',NRAT:'NRAT'},sourceFields:{PRAT:'R1',PDB:'R2',NRAT:'R3',NDB:'R4'},numericScope:'变化率与限值按单位/秒；严格越限置位、进入双侧回差范围复位，等号保持。首拍使用显式上一拍IN1。'});
+ entry('RATELIMIT','每拍限速 / 超限标志',83,'302～304',{RALM:0,TPSC:100,BTSC:0,TRAT:2.5},{
+  group:'状态',stateful:true,model:'ow360-r1100-ratelimit-plr-v1',
+  sourceFields:{RALM:'R1',TPSC:'R2',BTSC:'R3',TRAT:'R4'},selectableInputs:{RALM:'RALM'},
+  unsupportedInputs:['TRIN'],unsupportedOutputs:['TOUT'],
+  numericScope:'采用OW360-R1100的每拍增量PLR。当前支持无跟踪模式，达到限速边界时FOUT置位。'
+ });
+ entry('RATECHANGE','变化率 / 无平滑',82,'300～301',{SMTH:0},{group:'状态',stateful:true,rateState:true,initialStateTypes:{previousIN1:'analog'},stateTypes:{previousIN1:'analog'},selectableInputs:{SMTH:'SMTH'},sourceFields:{SMTH:'R1'},numericScope:'仅支持SMTH=0；OUT为每秒变化率，首拍使用显式上一拍IN1。非零SMTH不参与本拍计算，明确报错。'});
+ entry('STEAMFLOW','蒸汽流量补偿',109,'386～387',{TYPE:'DELTAP',SCAL:1,BASE:1,GAIN:1},{paramChoices:{TYPE:['DELTAP','FLOW']},sourceFields:{TYPE:'X1',SCAL:'R1',BASE:'R2',GAIN:'R3'}});
+ entry('SPTOSA','有符号打包字转模拟量',105,364,{}, {numericScope:'不接受未核定的0x8000；其他16位补码转换为有符号整数。'});
+ entry('SATOSP','模拟量转有符号打包字',92,331,{}, {primaryOutput:'PACK',numericScope:'限幅−32767～32767；负半整数舍入分支未核定，遇到时停止本拍。'});
+ entry('ANTILOG','反对数 / 指数',9,'39～40',{BASE:0,SCAL:0},{sourceFields:{BASE:'X1',SCAL:'R1'},numericScope:'基础指数范围：e底−80～80，10底−34～34；超出范围停止，未模拟饱和；范围内FOUT为FALSE。'});
  catalog.QAVERAGE.model='ref1100-2006-qaverage-v2';catalog.POLYNOMIAL.model='ref1100-2006-polynomial-v2';
  catalog.FUNCTION.source+='当前仅无跟踪/全GOOD；X须非递减。重复X精确命中取首个Y；不同Y重复点相邻插值未核实时明确停止。TPSC/BTSC/TRAT保留为跟踪配置，正常OUT按正文直接取函数值。';
  catalog.QAVERAGE.source+='当前仅全部已接输入GOOD且每扫描更新；BAD/FAIR/未更新剔除和质量传播未实现。';
  function count(ps,max){return Number.isInteger(ps.NMIN)&&ps.NMIN>=1&&ps.NMIN<=max?ps.NMIN:1;}
  function ports(n){let inputs={IN1:'analog'},outputs={OUT:'analog'};const ps=n.params||{};
   switch(n.type){
+   case'RATEMON':inputs={IN1:'analog',PRAT:'analog',NRAT:'analog'};outputs={OUT:'boolean'};break;
+   case'RATELIMIT':inputs={IN1:'analog',RALM:'analog'};outputs={OUT:'analog',FOUT:'boolean'};break;
+   case'RATECHANGE':inputs={IN1:'analog',SMTH:'analog'};break;
+   case'STEAMFLOW':inputs={IN1:'analog',IN2:'analog'};break;
+   case'SPTOSA':inputs={PACK:'packed16'};break;
+   case'SATOSP':inputs={IN:'analog'};outputs={PACK:'packed16'};break;
+   case'ANTILOG':outputs={OUT:'analog',FOUT:'boolean'};break;
    case'QAVERAGE':inputs=Object.fromEntries(catalog.QAVERAGE.optionalInputs.map(pin=>[pin,'analog']));break;
    case'AVALGEN':inputs={};break;
    case'DVALGEN':inputs={};outputs={OUT:'boolean'};break;
@@ -45,6 +64,13 @@
   }return{inputs,outputs};
  }
  function validate(n,typed,wired){const ps=n.params,d=catalog[n.type];for(const k of Object.keys(d.defaults))if(!d.paramChoices?.[k]&&!(d.selectableInputs?.[k]&&wired.has(n.id+'\0'+k))&&!(d.optionalParameters?.includes(k)&&!Object.hasOwn(ps,k)))typed(ps[k],'analog');
+  if(n.type==='RATELIMIT'){
+   if(!wired.has(n.id+'\0RALM')&&ps.RALM<0)throw Error('RATELIMIT RALM须为非负每秒速率');
+   if(ps.BTSC>ps.TPSC)throw Error('RATELIMIT BTSC不得大于TPSC');
+  }
+  if(n.type==='RATECHANGE'&&!wired.has(n.id+'\0SMTH')&&ps.SMTH!==0)throw Error('RATECHANGE当前仅支持SMTH=0，非零平滑模式尚未实现');
+  if(n.type==='RATEMON')for(const key of ['PRAT','PDB','NRAT','NDB'])if(!(catalog.RATEMON.selectableInputs[key]&&wired.has(n.id+'\0'+key))&&ps[key]<0)throw Error('RATEMON '+key+'必须为非负绝对值');
+  if(n.type==='ANTILOG'&&(!Number.isInteger(ps.BASE)||ps.BASE<0||ps.BASE>255))throw Error('ANTILOG BASE须为0～255的字节整数；0=e，正整数=10');
   for(const[key,choices]of Object.entries(d.paramChoices||{}))if(!choices.includes(ps[key]))throw Error(key+'不在手册已支持的选项中：'+choices.join('/'));
   if(n.type==='QAVERAGE'&&!d.optionalInputs.some(pin=>wired.has(n.id+'\0'+pin)))throw Error('QAVERAGE至少需要一路明确的GOOD模拟量输入；未接端不当作零参与平均');
   if(n.type==='SMOOTH'&&ps.SMTH<0)throw Error('SMOOTH的负SMTH会产生BAD质量，当前GOOD范围不支持；SMTH=0为直通');
@@ -59,6 +85,19 @@
  }
  function evaluate(n,ins,previous,typed,check,dtUs){const p=n.params,f=v=>typed(v,'analog'),get=k=>f(Object.hasOwn(ins,k)?ins[k]:p[k]),clamp=v=>Math.max(f(p.BTSC),Math.min(f(p.TPSC),v)),agree=(label,a,b)=>check(n.type+' '+label,a,b),pair=(a,b)=>f(agree('OUT',f(a),f(b)));
   switch(n.type){
+   case'RATELIMIT':{
+    const rate=get('RALM'),old=previous.OUT,input=ins.IN1;
+    if(rate<0)throw Error('RATELIMIT RALM须为非负每秒速率');
+    const seconds=dtUs/1e6,step=f(rate*f(seconds)),difference=f(input-old);
+    const limited=Math.abs(difference)>=step;
+    const out=f(clamp(limited?f(old+(difference>0?step:-step)):input));
+    const exact=X.rateLimit32(input,old,rate,dtUs,f(p.BTSC),f(p.TPSC));
+    return{OUT:agree('OUT 精确限速核对',out,f(exact.OUT)),FOUT:agree('FOUT 精确限速核对',limited,exact.FOUT)};
+   }
+   case'STEAMFLOW':{const scal=f(p.SCAL),base=f(p.BASE),gain=f(p.GAIN),denominator=f(ins.IN2*gain),wideDenominator=ins.IN2*gain;if(denominator===0||wideDenominator===0)throw Error('STEAMFLOW比容与GAIN的乘积不能为0，本拍未提交');const ratio=f(base/denominator),wideRatio=base/wideDenominator,radicand=p.TYPE==='DELTAP'?f(ins.IN1*ratio):ratio,wideRadicand=p.TYPE==='DELTAP'?ins.IN1*wideRatio:wideRatio;if(radicand<0||wideRadicand<0)throw Error('STEAMFLOW根号内为负数，无效实数/质量分支尚未支持，本拍未提交');const root=f(Math.sqrt(radicand)),out=p.TYPE==='DELTAP'?f(scal*root):f(f(scal*ins.IN1)*root),wide=p.TYPE==='DELTAP'?scal*Math.sqrt(wideRadicand):scal*ins.IN1*Math.sqrt(wideRadicand);return{OUT:pair(out,wide)};}
+   case'SPTOSA':{const word=typed(ins.PACK,'packed16')||0;if(word===0x8000)throw Error('SPTOSA的0x8000与手册−32767范围存在未核定边界，本拍未提交');return{OUT:word>=0x8000?word-0x10000:word};}
+   case'SATOSP':{const value=Math.max(-32767,Math.min(32767,ins.IN));if(value<0&&Math.abs(value)%1===.5)throw Error('SATOSP负半整数的舍入方向尚未核定，本拍未提交');const rounded=value<0?-Math.floor(-value+.5):Math.floor(value+.5);return{PACK:typed(rounded===0?0:rounded<0?rounded+0x10000:rounded,'packed16')};}
+   case'ANTILOG':{const x=f(ins.IN1*f(p.SCAL)),wide=ins.IN1*f(p.SCAL),limit=p.BASE===0?80:34;if(Math.abs(x)>limit||Math.abs(wide)>limit)throw Error('ANTILOG超出当前基础指数范围±'+limit+'，饱和限幅及FOUT阈值尚未核定，本拍未提交');const exp=v=>p.BASE===0?Math.exp(v):10**v;return{OUT:pair(f(exp(x)),exp(wide)),FOUT:false};}
    case'SMOOTH':{const smth=f(p.SMTH);if(smth===0)return{OUT:ins.IN1};const seconds=dtUs/1e6,beta=f(Math.exp(f(-f(seconds)/smth))),alpha=f(1-beta),staged=f(f(alpha*ins.IN1)+f(beta*previous.OUT)),wideBeta=Math.exp(-seconds/smth),wide=(1-wideBeta)*ins.IN1+wideBeta*previous.OUT,agreed=pair(staged,wide),stable=-Math.expm1(-seconds/smth)*ins.IN1+wideBeta*previous.OUT;return{OUT:f(agree('OUT 消减误差核对',agreed,f(stable)))};}
    case'QAVERAGE':{const values=catalog.QAVERAGE.optionalInputs.filter(pin=>Object.hasOwn(ins,pin)).map(pin=>ins[pin]);let sum=values[0],wide=values[0];for(const value of values.slice(1)){sum=f(sum+value);wide+=value;}return{OUT:f(agree('OUT 精确均值核对',pair(sum/values.length,wide/values.length),f(X.mean32(values))))};}
    case'FUNCTION':{const xs=Array.from({length:p.BPTS},(_,i)=>f(p['X'+(i+1)])),ys=Array.from({length:p.BPTS},(_,i)=>f(p['Y'+(i+1)]));const lookup=(x,staged)=>{const exact=xs.indexOf(x);if(exact>=0)return ys[exact];if(x<xs[0])return ys[0];if(x>xs.at(-1))return ys[xs.indexOf(xs.at(-1))];const upper=xs.findIndex(v=>v>x),lower=upper-1;for(const index of [lower,upper])if(xs.some((v,i)=>v===xs[index]&&ys[i]!==ys[index]))throw Error('FUNCTION重复X对应不同Y的相邻区间插值尚未核实；精确命中按手册取首个Y，本拍未提交');if(!staged)return ys[lower]+(ys[upper]-ys[lower])*((x-xs[lower])/(xs[upper]-xs[lower]));const dy=f(ys[upper]-ys[lower]),fraction=f(f(x-xs[lower])/f(xs[upper]-xs[lower]));return f(ys[lower]+f(dy*fraction));};const x=f(f(ins.IN1*f(p.GAIN))+f(p.BIAS)),wide=ins.IN1*f(p.GAIN)+f(p.BIAS);return{OUT:pair(lookup(x,true),lookup(wide,false))};}
@@ -81,6 +120,22 @@
    default:{const fn={ARCCOSINE:Math.acos,ARCSINE:Math.asin,ARCTANGENT:Math.atan,COSINE:Math.cos,SINE:Math.sin,TANGENT:Math.tan}[n.type];if(!fn)throw Error('未支持的基本运算 '+n.type);if(['ARCCOSINE','ARCSINE'].includes(n.type)&&Math.abs(ins.IN1)>1)throw Error('反三角函数输入须在[-1,1]内；手册的无效数/报警路径尚未模拟');return{OUT:f(fn(ins.IN1))};}
   }
  }
+ // Inputs and history are already binary32. Keep candidates separate until the final decision.
+ function rateStep(n,ins,previous,state,typed,check,dtUs){
+  const f=value=>typed(value,'analog'),old=f(state.previousIN1),input=f(ins.IN1),seconds=dtUs/1e6,rate=f(f(input-old)/f(seconds)),wide=(input-old)/seconds,get=key=>f(Object.hasOwn(ins,key)?ins[key]:n.params[key]);
+  let out;
+  if(n.type==='RATECHANGE'){
+   if(get('SMTH')!==0)throw Error('RATECHANGE当前仅支持SMTH=0，非零平滑模式尚未实现');
+   out=f(check('RATECHANGE OUT 精度',rate,f(wide)));out=f(check('RATECHANGE OUT 精确变化率',out,f(X.rate32(input,old,dtUs))));
+  }else{
+   const prat=get('PRAT'),nrat=get('NRAT'),pdb=get('PDB'),ndb=get('NDB');
+   for(const [key,value]of Object.entries({PRAT:prat,NRAT:nrat,PDB:pdb,NDB:ndb}))if(value<0)throw Error('RATEMON '+key+'必须为非负绝对值');
+   const decide=(r,upper,lower)=>r>prat||r< -nrat?true:r<upper&&r>lower?false:previous.OUT;
+   const staged=decide(rate,f(prat-pdb),-f(nrat-ndb)),wider=decide(wide,prat-pdb,-(nrat-ndb));
+   out=check('RATEMON 回差精度',staged,wider);out=check('RATEMON 精确变化率决定',out,X.rateMonitor(input,old,dtUs,prat,nrat,pdb,ndb,previous.OUT));
+  }
+  return{values:{OUT:out},state:{previousIN1:input}};
+ }
  function pin(type,name){const d=catalog[type];if(!d||typeof name!=='string')return null;const ps={...d.defaults,...(type==='TRNSFINDX'?{NMIN:64}:type==='INTERP'?{NUMR:10}:type==='SELECTOR'?{NMIN:7}:type==='DIGCOUNT'?{NMIN:12}:{})},p=ports({type,params:ps});if(Object.hasOwn(p.inputs,name)||d.unsupportedInputs?.includes(name))return{port:name,direction:'input'};if(Object.hasOwn(p.outputs,name)||d.unsupportedOutputs?.includes(name))return{port:name,direction:'output'};return null;}
- return{catalog,ports,pin,validate,evaluate};
+ return{catalog,ports,pin,validate,evaluate,rateStep};
 });

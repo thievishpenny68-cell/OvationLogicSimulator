@@ -1,0 +1,266 @@
+{
+  "basis": "hand-calculated quarter-second changes and strict hysteresis; 45 value + 18 history observations; not Ovation runtime capture",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "signal": {
+          "OUT": 0
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "rate": {
+          "OUT": 0
+        },
+        "alarm": {
+          "OUT": false
+        },
+        "value": {
+          "OUT": 0
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 0
+        },
+        "rate": {
+          "previousIN1": 0
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.25,
+      "values": {
+        "signal": {
+          "OUT": 1.25
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": 5
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": 5
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 1.25
+        },
+        "rate": {
+          "previousIN1": 1.25
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.5,
+      "values": {
+        "signal": {
+          "OUT": 2.25
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": 4
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": 4
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 2.25
+        },
+        "rate": {
+          "previousIN1": 2.25
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.75,
+      "values": {
+        "signal": {
+          "OUT": 3
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": 3
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": 3
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 3
+        },
+        "rate": {
+          "previousIN1": 3
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 1,
+      "values": {
+        "signal": {
+          "OUT": 3.5
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "rate": {
+          "OUT": 2
+        },
+        "alarm": {
+          "OUT": false
+        },
+        "value": {
+          "OUT": 2
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 3.5
+        },
+        "rate": {
+          "previousIN1": 3.5
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 1.25,
+      "values": {
+        "signal": {
+          "OUT": 2.25
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": -5
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": -5
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 2.25
+        },
+        "rate": {
+          "previousIN1": 2.25
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "time": 1.5,
+      "values": {
+        "signal": {
+          "OUT": 1.25
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": -4
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": -4
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 1.25
+        },
+        "rate": {
+          "previousIN1": 1.25
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "time": 1.75,
+      "values": {
+        "signal": {
+          "OUT": 0.5
+        },
+        "monitor": {
+          "OUT": true
+        },
+        "rate": {
+          "OUT": -3
+        },
+        "alarm": {
+          "OUT": true
+        },
+        "value": {
+          "OUT": -3
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 0.5
+        },
+        "rate": {
+          "previousIN1": 0.5
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "time": 2,
+      "values": {
+        "signal": {
+          "OUT": 0
+        },
+        "monitor": {
+          "OUT": false
+        },
+        "rate": {
+          "OUT": -2
+        },
+        "alarm": {
+          "OUT": false
+        },
+        "value": {
+          "OUT": -2
+        }
+      },
+      "states": {
+        "monitor": {
+          "previousIN1": 0
+        },
+        "rate": {
+          "previousIN1": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "basis": "Hand-calculated per-scan reference",
+  "trace": [
+    {
+      "tick": 0,
+      "time": 0,
+      "values": {
+        "limit": {
+          "OUT": 0,
+          "FOUT": false
+        },
+        "change": {
+          "HCHG": false,
+          "MCHG": false,
+          "SCHG": false
+        },
+        "detect": {
+          "DCHG": false,
+          "SHFT": false,
+          "WCHG": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "time": 0.25,
+      "values": {
+        "limit": {
+          "OUT": 2,
+          "FOUT": true
+        },
+        "change": {
+          "HCHG": true,
+          "MCHG": true,
+          "SCHG": true
+        },
+        "detect": {
+          "DCHG": false,
+          "SHFT": false,
+          "WCHG": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "time": 0.5,
+      "values": {
+        "limit": {
+          "OUT": 4,
+          "FOUT": true
+        },
+        "change": {
+          "HCHG": true,
+          "MCHG": true,
+          "SCHG": true
+        },
+        "detect": {
+          "DCHG": true,
+          "SHFT": true,
+          "WCHG": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "time": 0.75,
+      "values": {
+        "limit": {
+          "OUT": 6,
+          "FOUT": true
+        },
+        "change": {
+          "HCHG": false,
+          "MCHG": false,
+          "SCHG": false
+        },
+        "detect": {
+          "DCHG": false,
+          "SHFT": false,
+          "WCHG": false
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "time": 1,
+      "values": {
+        "limit": {
+          "OUT": 4,
+          "FOUT": true
+        },
+        "change": {
+          "HCHG": false,
+          "MCHG": false,
+          "SCHG": false
+        },
+        "detect": {
+          "DCHG": false,
+          "SHFT": false,
+          "WCHG": false
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "time": 1.25,
+      "values": {
+        "limit": {
+          "OUT": 4,
+          "FOUT": false
+        },
+        "change": {
+          "HCHG": false,
+          "MCHG": false,
+          "SCHG": false
+        },
+        "detect": {
+          "DCHG": false,
+          "SHFT": false,
+          "WCHG": false
+        }
+      }
+    }
+  ]
+}

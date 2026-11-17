@@ -103,6 +103,8 @@
   canvas.addEventListener('pointerup',e=>{if(gesture?.id!==e.pointerId)return;const p={x:e.clientX,y:e.clientY};if(['rect','ellipse'].includes(gesture.mode))shapePoint(gesture.op,p,e.shiftKey);else{append(gesture.op,p);paint(gesture.last,p);}finish();});
   canvas.addEventListener('pointercancel',finish);canvas.addEventListener('lostpointercapture',finish);canvas.addEventListener('pointerleave',()=>cursor.hidden=true);canvas.addEventListener('contextmenu',e=>e.preventDefault());addEventListener('resize',resize);addEventListener('blur',()=>{finish();finishText(true);});canvas.width=canvas.height=1;canvas.dataset.eraserMode=eraserMode;canvas.dataset.eraserSize=String(eraserSize);
   return{
+   snapshot(){finish();finishText(true);return structuredClone(operations);},
+   restore(saved){finish();finishText(false);operations=structuredClone(saved);serial=operations.reduce((n,op)=>Math.max(n,op.id),0);repaint();cursor.hidden=true;},
    setMode(next){if(mode===next)return;finish();finishText(true);mode=next;resize();canvas.dataset.mode=next;canvas.classList.toggle('annotation-active',tools.includes(next));cursor.hidden=true;},
    setEraserMode(next){if(!['local','stroke'].includes(next))return;finish();eraserMode=next;canvas.dataset.eraserMode=next;cursor.hidden=true;},
    setEraserSize(next){if(!Number.isFinite(Number(next)))return;finish();eraserSize=Math.max(4,Math.min(120,Math.round(Number(next))));canvas.dataset.eraserSize=String(eraserSize);cursor.hidden=true;},

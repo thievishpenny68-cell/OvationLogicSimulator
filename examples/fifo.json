@@ -1,0 +1,405 @@
+{
+  "schemaVersion": 2,
+  "engineVersion": "0.33.0",
+  "profile": "ref1100-2006-normal-v1",
+  "title": "FIFO 数字事件排队与出队",
+  "dtUs": 100000,
+  "nodes": [
+    {
+      "id": "fifo",
+      "type": "FIFO",
+      "name": "FIFO",
+      "x": 560,
+      "y": 85,
+      "params": {},
+      "initial": {
+        "OUT": 0,
+        "FLAG": false,
+        "previousMask": 0,
+        "previousRTAT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "src-IN1",
+      "type": "INPUT",
+      "name": "IN1",
+      "x": 70,
+      "y": 70,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "src-IN9",
+      "type": "INPUT",
+      "name": "IN9",
+      "x": 70,
+      "y": 245,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              true
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "src-IN16",
+      "type": "INPUT",
+      "name": "IN16",
+      "x": 70,
+      "y": 420,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              true
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "src-RTAT",
+      "type": "INPUT",
+      "name": "RTAT",
+      "x": 70,
+      "y": 595,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              true
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              true
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              true
+            ],
+            [
+              0.8,
+              false
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "src-CLR",
+      "type": "INPUT",
+      "name": "CLR",
+      "x": 70,
+      "y": 770,
+      "params": {
+        "kind": "boolean",
+        "wave": {
+          "mode": "table",
+          "points": [
+            [
+              0,
+              false
+            ],
+            [
+              0.1,
+              false
+            ],
+            [
+              0.2,
+              false
+            ],
+            [
+              0.3,
+              false
+            ],
+            [
+              0.4,
+              false
+            ],
+            [
+              0.5,
+              false
+            ],
+            [
+              0.6,
+              false
+            ],
+            [
+              0.7,
+              false
+            ],
+            [
+              0.8,
+              true
+            ]
+          ]
+        }
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "display-OUT",
+      "type": "OUTPUT",
+      "name": "出队编号",
+      "x": 1050,
+      "y": 120,
+      "params": {
+        "kind": "analog"
+      },
+      "initial": {
+        "OUT": 0
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    },
+    {
+      "id": "display-FLAG",
+      "type": "OUTPUT",
+      "name": "队列非空",
+      "x": 1050,
+      "y": 305,
+      "params": {
+        "kind": "boolean"
+      },
+      "initial": {
+        "OUT": false
+      },
+      "provenance": {
+        "origin": "manual"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "src-IN1",
+      "fromPort": "OUT",
+      "to": "fifo",
+      "toPort": "IN1"
+    },
+    {
+      "from": "src-IN9",
+      "fromPort": "OUT",
+      "to": "fifo",
+      "toPort": "IN9"
+    },
+    {
+      "from": "src-IN16",
+      "fromPort": "OUT",
+      "to": "fifo",
+      "toPort": "IN16"
+    },
+    {
+      "from": "src-RTAT",
+      "fromPort": "OUT",
+      "to": "fifo",
+      "toPort": "RTAT"
+    },
+    {
+      "from": "src-CLR",
+      "fromPort": "OUT",
+      "to": "fifo",
+      "toPort": "CLR"
+    },
+    {
+      "from": "fifo",
+      "fromPort": "OUT",
+      "to": "display-OUT",
+      "toPort": "IN1"
+    },
+    {
+      "from": "fifo",
+      "fromPort": "FLAG",
+      "to": "display-FLAG",
+      "toPort": "IN1"
+    }
+  ],
+  "issues": [],
+  "sources": [],
+  "scopes": [
+    {
+      "id": "scope-1",
+      "name": "出队与队列深度",
+      "x": 1050,
+      "y": 530,
+      "width": 540,
+      "height": 360,
+      "windowSeconds": 10,
+      "channels": [
+        "[\"fifo\",\"values\",\"OUT\"]",
+        "[\"fifo\",\"values\",\"FLAG\"]",
+        "[\"fifo\",\"states\",\"depth\"]"
+      ]
+    }
+  ]
+}
