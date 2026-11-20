@@ -1,8 +1,9 @@
 /* Offline classic script; also loadable by Node's built-in test runner. */
-(function(root,factory){const node=typeof module==='object'&&module.exports,api=factory(node?require('./project-state.js'):root.LogicProjectState,node?require('./declared-interfaces.js'):root.LogicDeclaredInterfaces,node?require('./basic-analog.js'):root.LogicBasicAnalog,node?require('./elementary.js'):root.LogicElementary,node?require('./point-records.js'):root.LogicPointRecords,node?require('./packed-words.js'):root.LogicPackedWords,node?require('./firstout.js'):root.LogicFirstOut,node?require('./bcd.js'):root.LogicBCD,node?require('./transport.js'):root.LogicTransport,node?require('./fifo.js'):root.LogicFIFO,node?require('./clock-blocks.js'):root.LogicClockBlocks);if(node)module.exports=api;else root.LogicCore=api;})(typeof globalThis!=='undefined'?globalThis:this,function(F,DI,B,E,PR,P,FO,BC,TR,FIFO,Clock){
+(function(root,factory){const node=typeof module==='object'&&module.exports,api=factory(node?require('./project-state.js'):root.LogicProjectState,node?require('./declared-interfaces.js'):root.LogicDeclaredInterfaces,node?require('./basic-analog.js'):root.LogicBasicAnalog,node?require('./elementary.js'):root.LogicElementary,node?require('./point-records.js'):root.LogicPointRecords,node?require('./packed-words.js'):root.LogicPackedWords,node?require('./firstout.js'):root.LogicFirstOut,node?require('./bcd.js'):root.LogicBCD,node?require('./transport.js'):root.LogicTransport,node?require('./fifo.js'):root.LogicFIFO,node?require('./clock-blocks.js'):root.LogicClockBlocks,node?require('./wave-recorder.js'):root.LogicWaveRecorder,node?require('./signal-quality.js'):root.LogicSignalQuality);if(node)module.exports=api;else root.LogicCore=api;})(typeof globalThis!=='undefined'?globalThis:this,function(F,DI,B,E,PR,P,FO,BC,TR,FIFO,Clock,WaveRecorder,Q){
  'use strict';
  const PROFILE='ref1100-2006-normal-v1';
- const ENGINE_VERSION='0.35.0';
+ const ENGINE_VERSION='0.38.0';
+ const MACRO_TYPE='CUSTOM_MACRO';
  const FORCE_MODEL='publish-override-private-state-v1';
  const DISABLE_MODEL='dependency-closure-v1';
  // A disabled output has no value. Suspend every consumer instead of inventing one.
@@ -73,6 +74,8 @@
  });
  Object.assign(catalog,B.catalog);
  Object.assign(catalog,E.catalog,P.catalog,FO.catalog,BC.catalog,TR.catalog,FIFO.catalog,Clock.catalog);
+ catalog[WaveRecorder.type]=WaveRecorder.definition;
+ catalog[MACRO_TYPE]={label:'自定义宏',group:'信号',defaults:{},stateful:true,model:'embedded-macro-scan-v1',source:'软件模块。命名 INPUT/OUTPUT 与父画布端口相连，内部图按父工程周期扫描。'};
  Object.values(catalog).forEach(d=>{d.evidence=d.group==='信号'?'软件定义':'文档规则；未取得 Ovation 运行对照';});
  function gateInputPins(value){
   if(Number.isInteger(value)&&value>=2&&value<=8)return Array.from({length:value},(_,i)=>'IN'+(i+1));
@@ -83,9 +86,35 @@
   return [...value].sort((a,b)=>Number(a.slice(2))-Number(b.slice(2)));
  }
  function gateInputConfig(value){const pins=gateInputPins(value);return pins.every((pin,i)=>pin==='IN'+(i+1))?pins.length:pins;}
+ function macroInterface(graph){
+  const boundary=type=>(Array.isArray(graph?.nodes)?graph.nodes:[]).filter(n=>n?.type===type&&!n.macroReference).map(n=>({id:n.id,name:typeof n.name==='string'?n.name.trim():'',kind:n.params?.kind||'unknown'}));
+  return{inputs:boundary('INPUT'),outputs:boundary('OUTPUT')};
+ }
+ function macroProject(graph,parent){
+  const g={...graph,dtUs:parent.dtUs};
+  if(parent.utcStart!==undefined)g.utcStart=parent.utcStart;else delete g.utcStart;
+  if(!Array.isArray(g.nodes)||!Array.isArray(g.edges))return g;
+  g.nodes=g.nodes.map(n=>{
+   if(n?.type!=='INPUT'||n.macroReference||!['analog','boolean','packed16'].includes(n.params?.kind))return n;
+   const {qualityWave,...node}=n;
+   return{...node,params:{...n.params,wave:{mode:'constant',value:n.initial?.OUT??(n.params.kind==='boolean'?false:0)}}};
+  });
+  if(g.execution?.mode!=='explicit'&&requiresExecutionReview(g)){
+   const plan=executionPlan(g);
+   if(!plan.issues.some(i=>i.code!=='EXECUTION_CONFIRMATION_REQUIRED')){
+    g.execution={model:SCAN_MODEL,mode:'topological',required:true,confirmation:{signature:plan.signature,note:'宏使用父工程周期及内部拓扑顺序',at:'inherited'}};
+   }
+  }
+  return g;
+ }
+ function modelNodes(p){
+  const nodes=executionProject(p)?.nodes||[];
+  return nodes.flatMap(n=>n?.type===MACRO_TYPE&&!n.macroReference&&n.macroGraph?[n,...modelNodes(n.macroGraph)]:[n]);
+ }
  function ports(n){
   if(n.macroReference&&!n.macroPorts)return{inputs:{},outputs:{}};
   if(n.macroReference&&n.macroPorts)return{inputs:{...n.macroPorts.inputs},outputs:{...n.macroPorts.outputs}};
+  if(n.type===MACRO_TYPE){const io=macroInterface(n.macroGraph);return Object.fromEntries(Object.entries(io).map(([side,rows])=>[side,Object.fromEntries(rows.filter(row=>row.name).map(row=>[row.name,row.kind]))]));}
   if(!catalog[n.type]){const d=!n.macroReference&&DI.get(n.type);return d?{inputs:{...d.inputs},outputs:{...d.outputs}}:{inputs:{},outputs:{}};}
   if(TR.catalog[n.type])return TR.ports(n);
   if(BC.catalog[n.type])return BC.ports(n);
@@ -96,6 +125,7 @@
   if(B.catalog[n.type])return B.ports(n.type);
   if(E.catalog[n.type])return E.ports(n);
   const kind=['analog','boolean','packed16'].includes(n.params?.kind)?n.params.kind:'unknown';let ins=[],out='boolean';
+  if(n.type===WaveRecorder.type)return{inputs:{IN1:kind},outputs:{OUT:kind}};
   if(n.type==='INPUT')out=kind;
   else if(n.type==='OUTPUT')return{inputs:{IN1:kind},outputs:{}};
   else if(['AND','OR'].includes(n.type)){let pins;try{pins=gateInputPins(n.params?.inputs);}catch{pins=['IN1','IN2'];}ins=pins.map(pin=>[pin,'boolean']);}
@@ -118,12 +148,12 @@
   if(p.forceModel!==FORCE_MODEL||![1,2,3].includes(p.editorSchemaVersion)||!recordObject(p.runtimeForces))throw Error('强制运行记录版本或模型无效');
   const source=clone(p);source.schemaVersion=source.editorSchemaVersion;delete source.editorSchemaVersion;delete source.forceModel;delete source.runtimeForces;return source;
  }
- function forceableOutputs(n){return ['INPUT','OUTPUT'].includes(n?.type)?{}:Object.fromEntries(Object.entries(ports(n).outputs).filter(([,kind])=>kind==='boolean'||kind==='analog'));}
+ function forceableOutputs(n){return ['INPUT','OUTPUT',WaveRecorder.type].includes(n?.type)?{}:Object.fromEntries(Object.entries(ports(n).outputs).filter(([,kind])=>kind==='boolean'||kind==='analog'));}
  function forceOutputIssues(n,map){
   const issues=[],add=message=>issues.push({code:'FORCE_OUTPUT',message,nodeId:n.id,severity:'error'});
   if(!recordObject(map)){add('强制输出必须是逐引脚配置');return issues;}
   const eligible=forceableOutputs(n);for(const [port,value]of Object.entries(map)){
-   if(!own(eligible,port)){add(n.name+'：不能强制该输出 '+port+'；仅支持非INPUT/OUTPUT模块的数字量、模拟量输出');continue;}
+   if(!own(eligible,port)){add(n.type===WaveRecorder.type?'录波模块的输出由输入信号或预设驱动，不能强制':n.name+'：不能强制该输出 '+port+'；仅支持非INPUT/OUTPUT模块的数字量、模拟量输出');continue;}
    try{typed(value,eligible[port]);}catch(e){add(n.name+'.'+port+' 强制值：'+e.message);}
   }return issues;
  }
@@ -138,10 +168,13 @@
   pins.sort((a,b)=>a.nodeId.localeCompare(b.nodeId,'en')||a.port.localeCompare(b.port,'en'));return{model:FORCE_MODEL,pins};
  }
  // Recording limits are presentation/resource policy, not algorithm semantics.
- function recordingPlan(p,{outputForces}={}){
+ function configuredQuality(n){return !!n&&(own(n,'qualityWave')||n.type===WaveRecorder.type&&n.params?.mode==='replay'&&!!WaveRecorder.activePreset(n.params)?.qualities);}
+ function hasQuality(p){return modelNodes(p).some(configuredQuality);}
+ function recordingPlan(p,{outputForces,includeQuality=false}={}){
   const forced=new Set(outputForcing(p,outputForces).pins.map(pin=>pin.nodeId));p=executionProject(p?.schemaVersion===4?sourceProject(p):p);
   const nodes=Array.isArray(p?.nodes)?p.nodes.filter(Boolean):[],shared=Array.isArray(p?.packedPoints)?p.packedPoints.length:0,maxCells=2100000;
-  let frameScalars=2+shared;for(const n of nodes){frameScalars+=Object.keys(valueTypes(n)).length*(forced.has(n.id)?2:1);if(!n.macroReference)frameScalars+=Object.keys(catalog[n.type]?.stateTypes||{}).length;if(!n.macroReference&&FIFO.catalog[n.type])frameScalars+=FIFO.capacity;if(shared)frameScalars+=Object.values(ports(n).inputs).filter(kind=>kind==='packed16').length;}
+  includeQuality||=hasQuality(p);
+  let frameScalars=2+shared;for(const n of nodes){const outputs=Object.values(valueTypes(n));frameScalars+=outputs.length*(forced.has(n.id)?2:1);if(includeQuality)frameScalars+=outputs.filter(type=>type!=='packed16').length;if(!n.macroReference)frameScalars+=Object.keys(catalog[n.type]?.stateTypes||{}).length;if(!n.macroReference&&FIFO.catalog[n.type])frameScalars+=FIFO.capacity;if(!n.macroReference&&n.type===MACRO_TYPE&&n.macroGraph)frameScalars+=recordingPlan(n.macroGraph,{includeQuality}).frameScalars;if(shared)frameScalars+=Object.values(ports(n).inputs).filter(kind=>kind==='packed16').length;}
   const validTime=Number.isSafeInteger(p?.dtUs)&&p.dtUs>0,timeScans=validTime?Math.floor(Number.MAX_SAFE_INTEGER/p.dtUs):0,maxSnapshots=Math.max(0,Math.min(10001,Math.floor(maxCells/frameScalars),timeScans+1)),maxScans=Math.max(0,maxSnapshots-1);
   return{maxScans,maxSnapshots,frameScalars,maxCells,seconds:validTime?maxScans*p.dtUs/1e6:0};
  }
@@ -212,7 +245,16 @@
   const signature=JSON.stringify({dtUs:p.dtUs,mode,order,taskConstraints:p.executionConstraints||null,...(p.packedPoints?.length||p.nodes.some(n=>n.packedPoint!==undefined)?{packedPoints:p.packedPoints||[],packedBindings:p.nodes.filter(n=>n.packedPoint!==undefined).map(n=>[n.id,n.packedPoint])}:{}),nodes:p.nodes.map(n=>[n.id,n.type,canonicalPorts(n)]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0),edges:p.edges.map(e=>e&&[e.from,e.fromPort,e.to,e.toPort]).sort((a,b)=>JSON.stringify(a)<JSON.stringify(b)?-1:JSON.stringify(a)>JSON.stringify(b)?1:0)});
   const confirmation=config?.confirmation,confirmed=!!confirmation&&confirmation.signature===signature&&typeof confirmation.note==='string'&&!!confirmation.note.trim()&&typeof confirmation.at==='string';
   const required=!!requiresExecutionReview(p);if((required||config&&(mode==='explicit'||confirmation!=null))&&!confirmed)add('EXECUTION_CONFIRMATION_REQUIRED','请在扫描设置中确认当前周期及执行顺序；已有确认缺失或已过期');
-  for(const edge of backwardEdges){const source=p.nodes.find(n=>n.id===edge.from);if(source.type==='INPUT')continue;try{const fixed=catalog[source.type]?.fixedInitialOutputs||{};if(!own(source.initial||{},edge.fromPort)&&!own(fixed,edge.fromPort))throw Error('未填写');typed(own(source.initial||{},edge.fromPort)?source.initial[edge.fromPort]:fixed[edge.fromPort],ports(source).outputs[edge.fromPort]);}catch(e){add('EXECUTION_INITIAL_REQUIRED','读取上拍的 '+source.id+'.'+edge.fromPort+' 需要明确有效初值：'+e.message,source.id);}}
+  for(const edge of backwardEdges){
+   const source=p.nodes.find(n=>n.id===edge.from);if(source.type==='INPUT')continue;
+   const boundary=source.type===MACRO_TYPE&&!source.macroReference?macroInterface(source.macroGraph).outputs.find(port=>port.name===edge.fromPort):null;
+   const initial=boundary?source.macroGraph.nodes.find(n=>n.id===boundary.id)?.initial:source.initial;
+   const pin=boundary?'OUT':edge.fromPort,fixed=catalog[source.type]?.fixedInitialOutputs||{};
+   try{
+    if(!own(initial||{},pin)&&!own(fixed,pin))throw Error('未填写');
+    typed(own(initial||{},pin)?initial[pin]:fixed[pin],ports(source).outputs[edge.fromPort]);
+   }catch(e){add('EXECUTION_INITIAL_REQUIRED','读取上拍的 '+source.id+'.'+edge.fromPort+' 需要明确有效初值：'+e.message,source.id);}
+  }
   return{model:SCAN_MODEL,mode,order:clone(order),backwardEdges,signature,confirmed:config?confirmed:false,required,issues};
  }
  function confirmExecution(project,{mode,order,note}){
@@ -269,6 +311,23 @@
    if(!n||typeof n.id!=='string'||!n.id||ids.has(n.id)){add('NODE_ID','块 ID 缺失或重复',n?.id);continue;}ids.set(n.id,n);
    if(n.macroReference){add('MACRO_UNEXPANDED',n.macroReference.displayOnly?'自定义宏仅显示与连线，不提供仿真输出：'+n.type:'宏实例需要确认绑定后展开：'+n.type,n.id);continue;}
    const d=catalog[n.type];if(!d){const declared=DI.get(n.type);add(declared?'INTERFACE_ONLY':'UNKNOWN_BLOCK',declared?n.type+'接口已核对；LP.A2打包点状态及共享写入模型尚未实现，禁止执行':'未支持的控制块：'+n.type,n.id);continue;}
+   if(n.type===MACRO_TYPE){
+    const graph=n.macroGraph;
+    if(!graph){add('MACRO_GRAPH_REQUIRED','请给自定义宏导入 Control Sheet SVG',n.id);}
+    else if(!Array.isArray(graph.nodes)||!Array.isArray(graph.edges)){add('PROJECT','宏内部图结构无效',n.id);}
+    else{
+     const io=macroInterface(graph),active=new Set(executionScope(graph).active);
+     for(const rows of Object.values(io)){
+      const names=new Set();
+      for(const row of rows){
+       if(!row.name||names.has(row.name)||!['analog','boolean','packed16'].includes(row.kind)||!active.has(row.id))add('MACRO_INTERFACE','宏端口需有唯一名称和明确信号类型，且参与内部扫描：'+(row.name||row.id),n.id);
+       names.add(row.name);
+      }
+     }
+     if(!io.outputs.length)add('MACRO_INTERFACE','宏内部需有至少一个 OUTPUT 作为外部输出',n.id);
+     for(const issue of validate(macroProject(graph,p)))issues.push({code:issue.code,message:n.name+' / '+issue.message,nodeId:n.id,macroPath:[n.id,...(issue.macroPath||[]),...(!issue.macroPath&&issue.nodeId?[issue.nodeId]:[])],severity:'error'});
+    }
+   }
    if(Clock.catalog[n.type]){
     try{Clock.parseStart(p.utcStart);}catch(e){add('UTC_CLOCK_REQUIRED',e.message,n.id);}
     for(const [key,value] of Object.entries(d.fixedInitialOutputs)){
@@ -282,7 +341,11 @@
    if(own(n,'initial')){if(!n.initial||typeof n.initial!=='object'||Array.isArray(n.initial))add('INITIAL_REQUIRED',n.type+'初态结构必须为对象',n.id);else{const allowed=new Set([...Object.keys(valueTypes(n)),...(d.inputHistory?['previousIN1']:[]),...Object.keys(d.initialStateTypes||{})]);for(const key of Object.keys(n.initial))if(!allowed.has(key))add('INITIAL_REQUIRED','未支持的'+n.type+'初态字段 '+key,n.id);}}
    for(const key of Object.keys(d.defaults))if(!own(ps,key)&&!d.optionalParameters?.includes(key)&&!(d.selectableInputs?.[key]&&wired.has(n.id+'\0'+key)))add('PARAMETER','缺少参数 '+key,n.id);
    for(const key of Object.keys(ps))if(!own(d.defaults,key))add('PARAMETER','当前模式未支持参数 '+key,n.id);
-   if(own(n,'quality')&&n.quality!=='GOOD')add('QUALITY_UNSUPPORTED','当前规则仅支持 GOOD 质量信号',n.id);
+   if(own(n,'quality')&&n.quality!=='GOOD')add('QUALITY_UNSUPPORTED','旧质量字段仅接受 GOOD；自定义 INPUT 质量请使用质量波形',n.id);
+   if(own(n,'qualityWave')){
+    if(n.type!=='INPUT'||!['analog','boolean'].includes(n.params.kind))add('QUALITY_WAVE_INVALID','只有独立的模拟量或数字量 INPUT 可配置质量波形',n.id);
+    else try{Q.checkWave(n.qualityWave);}catch(e){add('QUALITY_WAVE_INVALID',e.message,n.id);}
+   }
    if(['INPUT','OUTPUT'].includes(n.type)&&!['boolean','analog','packed16'].includes(ps.kind))add('PARAMETER','信号类型必须为 boolean/analog/packed16',n.id);
    if(['AND','OR'].includes(n.type))try{gateInputPins(ps.inputs);}catch(e){add('PARAMETER',e.message,n.id);}
    if(n.type==='FLIPFLOP'){
@@ -315,6 +378,7 @@
     if(d.inputHistory&&typeof n.initial?.previousIN1!=='boolean')add('INITIAL_REQUIRED',n.type+'需要明确上一拍IN1（布尔沿检测初态）',n.id);
    }
    if(n.type==='INPUT')try{checkWave(ps.wave,ps.kind);}catch(e){add('WAVE_INVALID',e.message,n.id);}
+   if(n.type===WaveRecorder.type)try{WaveRecorder.validate(ps,wired.has(n.id+'\0IN1'),typed);}catch(e){add('WAVE_RECORDER',e.message,n.id);}
    if(n.initial)for(const[port,kind]of Object.entries(valueTypes(n)))if(own(n.initial,port))try{typed(n.initial[port],kind);}catch(e){add('INITIAL_REQUIRED',port+'初态：'+e.message,n.id);}
   }
   const pointAnalysis=PR.analyze(p,ports);issues.push(...pointAnalysis.issues,...P.inspect(p,ports,pointAnalysis).issues);
@@ -329,7 +393,7 @@
    else if(['boolean','analog','packed16'].includes(from.outputs[e.fromPort])&&['boolean','analog','packed16'].includes(to.inputs[e.toPort])&&from.outputs[e.fromPort]!==to.inputs[e.toPort])add('PORT_TYPE','端口信号类型不一致',e.to,i);
    const key=e.to+'\0'+e.toPort;if(drivers.has(key))add('MULTIPLE_DRIVERS','输入端口存在多个驱动源',e.to,i);drivers.set(key,e);
   });
-  for(const n of p.nodes.filter(n=>n&&!n.macroReference?.displayOnly))for(const port of Object.keys(ports(n).inputs))if(!drivers.has(n.id+'\0'+port)&&!(n.type==='UNPACK16'&&n.packedPoint&&port==='PIN')&&!( !n.macroReference&&catalog[n.type]?.selectableInputs?.[port])&&!( !n.macroReference&&catalog[n.type]?.optionalInputs?.includes(port))&&!(!n.macroReference&&DI.get(n.type)?.optionalInputs.includes(port)))add('MISSING_INPUT','缺少输入 '+port,n.id);
+  for(const n of p.nodes.filter(n=>n&&!n.macroReference?.displayOnly))for(const port of Object.keys(ports(n).inputs))if(!drivers.has(n.id+'\0'+port)&&!(n.type===WaveRecorder.type&&n.params?.mode==='replay'&&port==='IN1')&&!(n.type==='UNPACK16'&&n.packedPoint&&port==='PIN')&&!( !n.macroReference&&catalog[n.type]?.selectableInputs?.[port])&&!( !n.macroReference&&catalog[n.type]?.optionalInputs?.includes(port))&&!(!n.macroReference&&DI.get(n.type)?.optionalInputs.includes(port)))add('MISSING_INPUT','缺少输入 '+port,n.id);
   if(ids.size===p.nodes.length)issues.push(...executionPlan(p).issues);
   if(p.connectionCandidates!==undefined&&!Array.isArray(p.connectionCandidates))add('PROJECT','候选连接必须为数组');
   if(Array.isArray(p.connectionCandidates))for(const candidate of p.connectionCandidates){
@@ -348,14 +412,15 @@
   if(n.type==='AAFLIPFLOP'){const out=ins.RSET?false:state.firstPass?(own(ins,'INIT')?ins.INIT:previous.OUT):ins.SRST&&!state.previousSRST?!previous.OUT:previous.OUT;return{values:{OUT:out},state:{memory:out,previousSRST:ins.SRST,firstPass:false}};}
   let count=ins.RSET?0:previous.OUT;if(ins.IN1&&!state.previousIN1){if(count>=2**24)throw Error('PULSECNT超出当前支持的精确整数范围0～2^24，本次扫描未提交');count=typed(count+1,'analog');}return{values:{OUT:count},state:{previousIN1:ins.IN1}};
  }
- function evaluate(n,ins,previous,time,dtUs){
-  if(B.catalog[n.type])return B.evaluate(n,ins,previous,typed,precisionCheck);
+ function evaluate(n,ins,previous,time,dtUs,timeUs,replayPreset,quality){
+  if(B.catalog[n.type])return B.evaluate(n,ins,previous,typed,precisionCheck,quality);
   if(n.type==='BCDNIN')return{OUT:typed(BC.decode(ins.IN,n.params),'analog')};
-  if(E.catalog[n.type])return E.evaluate(n,ins,previous,typed,precisionCheck,dtUs);
+  if(E.catalog[n.type])return E.evaluate(n,ins,previous,typed,precisionCheck,dtUs,quality);
   const ps=n.params;let v;
   switch(n.type){
    case 'INPUT':v=sample(ps.wave,time,ps.kind);break;
    case 'OUTPUT':v=ins.IN1;break;
+   case WaveRecorder.type:v=ps.mode==='replay'?WaveRecorder.sample(replayPreset,timeUs):ins.IN1;break;
    case 'AND':v=Object.values(ins).every(x=>x===true);break;
    case 'OR':v=Object.values(ins).some(x=>x===true);break;
    case 'NOT':v=!ins.IN1;break;
@@ -406,6 +471,7 @@
   else{next.timing=false;return result(false,act);}
   const actual=timerActual(next.anchorACT,next.elapsedUs,base),out=actual<target;next.timing=out;return result(out,actual);
  }
+ function withoutBad(ins,quality){return Object.fromEntries(Object.entries(ins).filter(([pin])=>quality[pin]!=='BAD'));}
  function createRun(project,options={}){
   const errors=validate(project);if(errors.length){const e=Error(errors.map(i=>i.message).join('\n'));e.issues=errors;throw e;}
   const original=sourceProject(project),config=clone(own(options,'outputForces')?options.outputForces:project.schemaVersion===4?project.runtimeForces:{}),forceErrors=validateOutputForces(original,config);if(forceErrors.length){const e=Error(forceErrors.map(i=>i.message).join('\n'));e.issues=forceErrors;throw e;}
@@ -413,22 +479,50 @@
   const recordForces=Object.fromEntries(declaration.pins.map(pin=>pin.nodeId).filter((id,i,ids)=>ids.indexOf(id)===i).map(id=>[id,Object.fromEntries(declaration.pins.filter(pin=>pin.nodeId===id).map(pin=>[pin.port,pin.requested]))])),hasForces=Object.keys(config).length>0||project.schemaVersion===4,recorded=hasForces?{...clone(original),schemaVersion:4,editorSchemaVersion:original.schemaVersion,forceModel:FORCE_MODEL,runtimeForces:recordForces}:original;
   const p=executionProject(original),order=executionPlan(p).order,byId=new Map(p.nodes.map(n=>[n.id,n]));
   const utcStart=p.nodes.some(n=>Clock.catalog[n.type])?Clock.parseStart(p.utcStart):null;
+  const replayPresets=new Map(p.nodes.filter(n=>n.type===WaveRecorder.type&&n.params.mode==='replay').map(n=>[n.id,WaveRecorder.activePreset(n.params)]));
+  const macros=new Map(p.nodes.filter(n=>n.type===MACRO_TYPE).map(n=>{
+   const io=macroInterface(n.macroGraph);
+   return[n.id,{run:createRun(macroProject(n.macroGraph,p)),inputs:new Map(io.inputs.map(port=>[port.id,port.name])),outputs:io.outputs}];
+  }));
+  const macroValues=(macro,frame)=>Object.fromEntries(macro.outputs.map(port=>[port.name,frame.values[port.id].OUT]));
+  function writeMacroQualities(frame,id,macro,inside){
+   if(!inside.qualities&&!frame.qualities)return;
+   Q.write(frame,id,Object.fromEntries(macro.outputs.map(port=>[port.name,Q.read(inside,port.id,'OUT')]).filter(([,q])=>q!=='GOOD')));
+  }
   const incoming=new Map(p.nodes.map(n=>[n.id,p.edges.filter(e=>e.to===n.id)])),fingerprints=F.fingerprints(recorded);let current,lastFailure=null,prepared=null;const packed=P.inspect(p,ports,PR.analyze(p,ports));
   function publish(frame,id){if(!forced.has(id))return;const raw=frame.values[id];frame.computedValues[id]=clone(raw);const output={...raw};for(const [port,value]of Object.entries(forced.get(id))){typed(raw[port],ports(byId.get(id)).outputs[port]);output[port]=value;}frame.values[id]=output;}
   function reset(){
    const values=Object.create(null),states=Object.create(null);
-   for(const n of p.nodes){const initial={};for(const[port,kind]of Object.entries(valueTypes(n)))initial[port]=typed(own(n.initial||{},port)?n.initial[port]:kind==='boolean'?false:0,kind);values[n.id]=initial;if(catalog[n.type].rateState)states[n.id]={previousIN1:typed(n.initial.previousIN1,'analog')};if(FO.catalog[n.type])states[n.id]=FO.initial(n);if(FIFO.catalog[n.type])states[n.id]=FIFO.initial(n);if(Clock.catalog[n.type])states[n.id]=Clock.initial(n,utcStart);if(n.type==='INPUT')values[n.id].OUT=own(options.initialInputs||{},n.id)?typed(options.initialInputs[n.id],n.params.kind):sample(n.params.wave,0,n.params.kind);if(n.type==='FLIPFLOP'||catalog[n.type].monitor)states[n.id]={memory:values[n.id].OUT};if(catalog[n.type].edgeState)states[n.id]=n.type==='AAFLIPFLOP'?{memory:initial.OUT,previousSRST:false,firstPass:true}:{previousIN1:n.initial.previousIN1};if(catalog[n.type].timer){states[n.id]={timing:n.type==='ONESHOT'?initial.OUT:n.type==='OFFDELAY'?initial.OUT&&!n.initial.previousIN1:false,elapsedUs:0,anchorACT:initial.ACT};if(n.type==='ONDELAY')states[n.id].started=false;if(catalog[n.type].inputHistory)states[n.id].previousIN1=n.initial.previousIN1;}}
-   const frame={values,...(forced.size?{computedValues:{}}:{})};for(const id of forced.keys())publish(frame,id);
+   for(const n of p.nodes){const initial={};for(const[port,kind]of Object.entries(valueTypes(n)))initial[port]=typed(own(n.initial||{},port)?n.initial[port]:kind==='boolean'?false:0,kind);values[n.id]=initial;if(catalog[n.type].rateState)states[n.id]={previousIN1:typed(n.initial.previousIN1,'analog')};if(FO.catalog[n.type])states[n.id]=FO.initial(n);if(FIFO.catalog[n.type])states[n.id]=FIFO.initial(n);if(Clock.catalog[n.type])states[n.id]=Clock.initial(n,utcStart);if(n.type==='INPUT')values[n.id].OUT=own(options.initialInputs||{},n.id)?typed(options.initialInputs[n.id],n.params.kind):sample(n.params.wave,0,n.params.kind);if(replayPresets.has(n.id))values[n.id].OUT=typed(WaveRecorder.sample(replayPresets.get(n.id),0),n.params.kind);if(n.type==='FLIPFLOP'||catalog[n.type].monitor)states[n.id]={memory:values[n.id].OUT};if(catalog[n.type].edgeState)states[n.id]=n.type==='AAFLIPFLOP'?{memory:initial.OUT,previousSRST:false,firstPass:true}:{previousIN1:n.initial.previousIN1};if(catalog[n.type].timer){states[n.id]={timing:n.type==='ONESHOT'?initial.OUT:n.type==='OFFDELAY'?initial.OUT&&!n.initial.previousIN1:false,elapsedUs:0,anchorACT:initial.ACT};if(n.type==='ONDELAY')states[n.id].started=false;if(catalog[n.type].inputHistory)states[n.id].previousIN1=n.initial.previousIN1;}}
+   const frame={values,...(forced.size?{computedValues:{}}:{})};
+   for(const n of p.nodes)if(n.type==='INPUT'){
+    const quality=options.initialInputQualities?.[n.id]??Q.sample(n.qualityWave,0);
+    if(quality!=='GOOD')Q.write(frame,n.id,{OUT:Q.checkState(quality)});
+   }
+   for(const [id,preset] of replayPresets){const quality=WaveRecorder.qualityAt(preset,0);if(quality!=='GOOD')Q.write(frame,id,{OUT:quality});}
+   if(macros.size){frame.macros=Object.create(null);for(const [id,macro] of macros){const inside=macro.run.reset();frame.macros[id]=inside;values[id]=macroValues(macro,inside);writeMacroQualities(frame,id,macro,inside);}}
+   for(const id of forced.keys())publish(frame,id);
    for(const n of p.nodes)if(TR.catalog[n.type]){const edge=incoming.get(n.id).find(e=>e.toPort==='IN1');states[n.id]=TR.initial(n,values[edge.from][edge.fromPort],(frame.computedValues?.[n.id]||values[n.id]).OUT,p.dtUs);}
    current={tick:0,time:0,...frame,states,...(packed.points.size?{packedPoints:Object.fromEntries([...packed.points].map(([id,r])=>[id,r.initial])),packedReads:{}}:{})};lastFailure=null;prepared=null;return snapshot();
   }
   function snapshot(){return clone(current);}
-  function prepareStep({readInput,publishOutput}={}){
+  function prepareStep({readInput,readInputQuality,publishOutput}={}){
    prepared=null;const tick=current.tick+1,time=tick*p.dtUs/1e6;
    if(!Number.isSafeInteger(tick*p.dtUs)){lastFailure={code:'TIME_INDEX_RANGE',tick,nodeId:null,message:'时间索引超出精确整数范围'};throw Error(lastFailure.message);}
    const next=clone(current);next.tick=tick;next.time=time;if(packed.points.size)next.packedReads={};
-   for(const id of order){const n=byId.get(id),ins={};for(const e of incoming.get(id))ins[e.toPort]=next.values[e.from][e.fromPort];
-    try{const previousComputed=current.computedValues?.[id]||current.values[id],external=n.type==='INPUT'&&readInput?readInput(n,time):undefined,shared=packed.bindings.get(n.id),sharedValue=shared!==undefined?next.packedPoints[shared]:undefined;if(n.type==='INPUT'&&external!==undefined){next.values[id]={OUT:typed(external,n.params.kind)};}else if(catalog[n.type].rateState){const result=E.rateStep(n,ins,previousComputed,current.states[id],typed,precisionCheck,p.dtUs);next.values[id]=result.values;next.states[id]=result.state; }else if(Clock.catalog[n.type]){
+   for(const id of order){
+    const n=byId.get(id),drivers=incoming.get(id),ins=Object.create(null),inputQuality=Object.create(null);
+    for(const e of drivers){
+     ins[e.toPort]=next.values[e.from][e.fromPort];
+     if(next.qualities){const quality=Q.read(next,e.from,e.fromPort);if(quality!=='GOOD')inputQuality[e.toPort]=quality;}
+    }
+    const quality=Object.keys(inputQuality).length?{input:inputQuality,output:{},worst:Q.worst}:null;
+    try{const previousComputed=current.computedValues?.[id]||current.values[id],external=n.type==='INPUT'&&readInput?readInput(n,time):undefined,shared=packed.bindings.get(n.id),sharedValue=shared!==undefined?next.packedPoints[shared]:undefined;if(macros.has(id)){
+     const macro=macros.get(id),inside=macro.run.prepareStep({
+      readInput:input=>ins[macro.inputs.get(input.id)],readInputQuality:input=>inputQuality[macro.inputs.get(input.id)]
+     });
+     next.macros[id]=inside;next.values[id]=macroValues(macro,inside);writeMacroQualities(next,id,macro,inside);
+    }else if(n.type==='INPUT'&&external!==undefined){next.values[id]={OUT:typed(external,n.params.kind)};}else if(catalog[n.type].rateState){const result=E.rateStep(n,ins,previousComputed,current.states[id],typed,precisionCheck,p.dtUs);next.values[id]=result.values;next.states[id]=result.state; }else if(Clock.catalog[n.type]){
      const result=Clock.step(n,current.states[id],utcStart,tick*p.dtUs);
      next.values[id]=result.values;
      next.states[id]=result.state;
@@ -436,14 +530,30 @@
      const result=FIFO.step(ins,previousComputed,current.states[id]);
      next.values[id]=result.values;
      next.states[id]=result.state;
-    }else if(TR.catalog[n.type]){const result=TR.step(n,ins.IN1,previousComputed,current.states[id],p.dtUs);next.values[id]=result.values;next.states[id]=result.state;}else if(n.type==='BCDNOUT'){const value=BC.encode(shared!==undefined?sharedValue:previousComputed.OUT,ins.IN,n.params);next.values[id]={OUT:value};if(shared!==undefined)next.packedPoints[shared]=value;}else if(FO.catalog[n.type]){const previous={...previousComputed,...(shared!==undefined?{MNTR:sharedValue}:{})},result=FO.step(n,ins,previous,current.states[id]);next.values[id]=result.values;next.states[id]=result.state;if(shared!==undefined&&result.monitorWritten)next.packedPoints[shared]=P.word(result.values.MNTR);}else if(n.type==='UNPACK16'){const input=shared!==undefined?sharedValue:ins.PIN;if(packed.points.size)next.packedReads[id]={PIN:input};next.values[id]=P.unpack(input);}else if(n.type==='PACK16'){const value=P.pack(shared!==undefined?sharedValue:previousComputed.POUT,ins);next.values[id]={POUT:value};if(shared!==undefined)next.packedPoints[shared]=value;}else if(catalog[n.type].edgeState){const result=edgeMemory(n,ins,previousComputed,current.states[id]);next.values[id]=result.values;next.states[id]=result.state;}else if(catalog[n.type].timer){const result=(n.type==='ONDELAY'?ondelay:edgeTimer)(n,ins,previousComputed,current.states[id],p.dtUs);next.values[id]=result.values;next.states[id]=result.state;}else next.values[id]=evaluate(n,ins,previousComputed,time,p.dtUs);if(packed.points.size){const reads=Object.fromEntries(Object.entries(ins).filter(([pin])=>ports(n).inputs[pin]==='packed16'));if(Object.keys(reads).length)next.packedReads[id]=reads;}if(['ASSIGN','SATOSP'].includes(n.type)&&shared!==undefined)next.packedPoints[shared]=P.word(next.values[id][P.output(n)]);if(shared!==undefined&&P.output(n))for(const peer of p.nodes)if(packed.bindings.get(peer.id)===shared&&P.output(peer)){next.values[peer.id][P.output(peer)]=next.packedPoints[shared];if(next.computedValues?.[peer.id])next.computedValues[peer.id][P.output(peer)]=next.packedPoints[shared];}if(n.type==='FLIPFLOP'||catalog[n.type].monitor)next.states[id]={memory:next.values[id].OUT};publish(next,id);if(n.type==='OUTPUT'&&publishOutput)publishOutput(n,next.values[id].OUT);}
-    catch(e){lastFailure={code:'SCAN_FAILED',tick,timeUs:tick*p.dtUs,nodeId:id,message:'扫描 '+tick+'，块 '+n.name+' ('+id+')：'+e.message};throw Error(lastFailure.message);}
+    }else if(TR.catalog[n.type]){const result=TR.step(n,ins.IN1,previousComputed,current.states[id],p.dtUs);next.values[id]=result.values;next.states[id]=result.state;}else if(n.type==='BCDNOUT'){const value=BC.encode(shared!==undefined?sharedValue:previousComputed.OUT,ins.IN,n.params);next.values[id]={OUT:value};if(shared!==undefined)next.packedPoints[shared]=value;}else if(FO.catalog[n.type]){const previous={...previousComputed,...(shared!==undefined?{MNTR:sharedValue}:{})},result=FO.step(n,ins,previous,current.states[id]);next.values[id]=result.values;next.states[id]=result.state;if(shared!==undefined&&result.monitorWritten)next.packedPoints[shared]=P.word(result.values.MNTR);}else if(n.type==='UNPACK16'){const input=shared!==undefined?sharedValue:ins.PIN;if(packed.points.size)next.packedReads[id]={PIN:input};next.values[id]=P.unpack(input);}else if(n.type==='PACK16'){const value=P.pack(shared!==undefined?sharedValue:previousComputed.POUT,quality?withoutBad(ins,inputQuality):ins);next.values[id]={POUT:value};if(shared!==undefined)next.packedPoints[shared]=value;}else if(catalog[n.type].edgeState){const evaluated=n.type==='AAFLIPFLOP'&&inputQuality.INIT==='BAD'?Object.fromEntries(Object.entries(ins).filter(([pin])=>pin!=='INIT')):ins;const result=edgeMemory(n,evaluated,previousComputed,current.states[id]);next.values[id]=result.values;next.states[id]=result.state;}else if(catalog[n.type].timer){const result=(n.type==='ONDELAY'?ondelay:edgeTimer)(n,ins,previousComputed,current.states[id],p.dtUs);next.values[id]=result.values;next.states[id]=result.state;}else{
+     const evaluated=n.type==='QAVERAGE'&&quality?withoutBad(ins,inputQuality):ins;
+     if(n.type==='QAVERAGE'&&!Object.keys(evaluated).length||n.type==='SATOSP'&&inputQuality.IN==='BAD')next.values[id]={...previousComputed};
+     else next.values[id]=evaluate(n,evaluated,previousComputed,time,p.dtUs,tick*p.dtUs,replayPresets.get(id),quality);
+    }if(packed.points.size){const reads=Object.fromEntries(Object.entries(ins).filter(([pin])=>ports(n).inputs[pin]==='packed16'));if(Object.keys(reads).length)next.packedReads[id]=reads;}if(['ASSIGN','SATOSP'].includes(n.type)&&shared!==undefined)next.packedPoints[shared]=P.word(next.values[id][P.output(n)]);if(shared!==undefined&&P.output(n))for(const peer of p.nodes)if(packed.bindings.get(peer.id)===shared&&P.output(peer)){next.values[peer.id][P.output(peer)]=next.packedPoints[shared];if(next.computedValues?.[peer.id])next.computedValues[peer.id][P.output(peer)]=next.packedPoints[shared];}if(n.type==='FLIPFLOP'||catalog[n.type].monitor)next.states[id]={memory:next.values[id].OUT};if(n.type==='INPUT'){
+     const quality=n.params.kind==='packed16'?'GOOD':external!==undefined?readInputQuality?.(n,time)??'GOOD':Q.sample(n.qualityWave,time);
+     if(quality!=='GOOD'||next.qualities)Q.write(next,id,quality==='GOOD'?{}:{OUT:Q.checkState(quality)});
+    }else if(replayPresets.has(id)){
+     const replayQuality=WaveRecorder.qualityAt(replayPresets.get(id),tick*p.dtUs);
+     if(replayQuality!=='GOOD'||next.qualities)Q.write(next,id,replayQuality==='GOOD'?{}:{OUT:replayQuality});
+    }else if(!macros.has(id)&&(quality||current.qualities?.[id])){
+     Q.write(next,id,Q.outputQuality(n,ins,inputQuality,current.qualities?.[id]??{},valueTypes(n),Object.keys(ports(n).inputs),quality?.output));
+    }
+    publish(next,id);if(n.type==='OUTPUT'&&publishOutput)publishOutput(n,next.values[id].OUT,Q.read(next,id,'OUT'));}
+    catch(e){lastFailure={code:'SCAN_FAILED',tick,timeUs:tick*p.dtUs,nodeId:id,message:'扫描 '+tick+'，块 '+n.name+' ('+id+')：'+e.message};const inner=macros.get(id)?.run.manifest().diagnostics[0];if(inner)lastFailure.macroPath=[id,...(inner.macroPath||[inner.nodeId])];throw Error(lastFailure.message);}
    }
+   if(next.qualities&&!Object.keys(next.qualities).length)delete next.qualities;
    prepared=next;return next;
   }
-  function commitStep(candidate){if(candidate!==prepared||candidate.tick!==current.tick+1)throw Error('候选扫描已失效，不能提交');current=candidate;prepared=null;lastFailure=null;return snapshot();}
+  function commitStep(candidate){if(candidate!==prepared||candidate.tick!==current.tick+1)throw Error('候选扫描已失效，不能提交');for(const [id,macro] of macros)macro.run.commitStep(candidate.macros[id]);current=candidate;prepared=null;lastFailure=null;return snapshot();}
   function step(){return commitStep(prepareStep());}
-  reset();return {step,prepareStep,commitStep,reset,snapshot,order:clone(order),manifest:()=>({engineVersion:ENGINE_VERSION,profile:PROFILE,fingerprints:clone(fingerprints),resultRange:{firstTick:0,lastTick:current.tick,firstTimeUs:0,lastTimeUs:current.tick*p.dtUs,executedScans:current.tick,snapshotCount:current.tick+1},diagnostics:lastFailure?[clone(lastFailure)]:[],comparisonTolerances:null,project:clone(recorded),...(hasForces?{outputForcing:clone(declaration)}:{}),...(original.schemaVersion===3?{executionScope:executionScope(original)}:{}),order:clone(order),scanModel:SCAN_MODEL,execution:clone(original.execution||{model:SCAN_MODEL,mode:'topological',required:false,confirmation:null}),numericValidationModel:NUMERIC_VALIDATION_MODEL,arithmeticModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.arithmetic).map(([type,d])=>[type,d.model])),...(p.nodes.some(n=>(catalog[n.type].edgeState||catalog[n.type].stateful||catalog[n.type].packed))?{stateModels:Object.fromEntries(p.nodes.filter(n=>catalog[n.type].edgeState||catalog[n.type].stateful||catalog[n.type].packed).map(n=>[n.type,catalog[n.type].model]))}:{}),numericMode:'Float32 正常有限数；GAINBIAS 乘加分别舍入；计时块整数微秒计段、秒数/BASE/ACT逐阶段Float32',monitorModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.monitor).map(([type,d])=>[type,d.model])),timerModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.timer).map(([type,d])=>[type,d.model])),evidence:'文档规则与明确的软件扫描契约；未取得 Ovation 运行对照'})};
+  const activeNodes=modelNodes(p),qualityUsed=activeNodes.some(configuredQuality);
+  const stateModels=Object.fromEntries(activeNodes.filter(n=>catalog[n.type].edgeState||catalog[n.type].stateful||catalog[n.type].packed||catalog[n.type].replayTimeline).map(n=>[n.type,catalog[n.type].model]));
+  reset();return {step,prepareStep,commitStep,reset,snapshot,order:clone(order),manifest:()=>({engineVersion:ENGINE_VERSION,profile:PROFILE,...(qualityUsed?{qualityModel:Q.model}:{}),fingerprints:clone(fingerprints),resultRange:{firstTick:0,lastTick:current.tick,firstTimeUs:0,lastTimeUs:current.tick*p.dtUs,executedScans:current.tick,snapshotCount:current.tick+1},diagnostics:lastFailure?[clone(lastFailure)]:[],comparisonTolerances:null,project:clone(recorded),...(hasForces?{outputForcing:clone(declaration)}:{}),...(original.schemaVersion===3?{executionScope:executionScope(original)}:{}),order:clone(order),scanModel:SCAN_MODEL,execution:clone(original.execution||{model:SCAN_MODEL,mode:'topological',required:false,confirmation:null}),numericValidationModel:NUMERIC_VALIDATION_MODEL,arithmeticModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.arithmetic).map(([type,d])=>[type,d.model])),...(Object.keys(stateModels).length?{stateModels:clone(stateModels)}:{}),numericMode:'Float32 正常有限数；GAINBIAS 乘加分别舍入；计时块整数微秒计段、秒数/BASE/ACT逐阶段Float32',monitorModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.monitor).map(([type,d])=>[type,d.model])),timerModels:Object.fromEntries(Object.entries(catalog).filter(([,d])=>d.timer).map(([type,d])=>[type,d.model])),evidence:'文档规则与明确的软件扫描契约；未取得 Ovation 运行对照'})};
  }
- return {parseUtcStart:Clock.parseStart,forceableOutputs,forceOutputIssues,validateOutputForces,outputForcing,sourceProject,FORCE_MODEL,outputDependencies,executionScope,executionProject,setNodeDisabled,DISABLE_MODEL,recordingPlan,transportPlan:TR.plan,allowedPointRecords:PR.allowed,pointRecordAnalysis:p=>PR.analyze(p,ports),PROFILE,ENGINE_VERSION,catalog,valueTypes,declaredInterfaces:DI,gateInputPins,gateInputConfig,ports,newProject,newNode,validate,checkWave,sample,createRun,executionPlan,confirmExecution,executionTaskIssues,parameterBindingIssues};
+ return {signalQuality:Q,hasQuality,MACRO_TYPE,macroInterface,macroProject,modelNodes,captureWave:(node,frames,lastTick,dtUs)=>WaveRecorder.capture(node,frames,lastTick,dtUs,typed),parseUtcStart:Clock.parseStart,forceableOutputs,forceOutputIssues,validateOutputForces,outputForcing,sourceProject,FORCE_MODEL,outputDependencies,executionScope,executionProject,setNodeDisabled,DISABLE_MODEL,recordingPlan,transportPlan:TR.plan,allowedPointRecords:PR.allowed,pointRecordAnalysis:p=>PR.analyze(p,ports),PROFILE,ENGINE_VERSION,catalog,valueTypes,declaredInterfaces:DI,gateInputPins,gateInputConfig,ports,newProject,newNode,validate,checkWave,sample,createRun,executionPlan,confirmExecution,executionTaskIssues,parameterBindingIssues};
 });

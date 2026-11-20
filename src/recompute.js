@@ -7,11 +7,12 @@
   const multi=E.isProject(m.project),engine=multi?E:C,run=engine.createRun(m.project),actual=run.manifest(),lastTick=frames.length-1,lastTimeUs=lastTick*m.project.dtUs;
   check(Number.isSafeInteger(lastTimeUs),'记录逻辑时间范围超出精确整数');
   check(m.profile===actual.profile&&m.scanModel===actual.scanModel&&m.numericMode===actual.numericMode,'记录的算法profile、扫描模型或数值合同缺失/不兼容');
+  check(m.qualityModel===actual.qualityModel,'记录的信号质量模型缺失或不兼容');
   check(Array.isArray(m.order)&&same(m.order,actual.order),'记录声明顺序与工程实际执行顺序不一致');
   check(m.execution&&same(m.execution,actual.execution),'记录声明扫描计划与工程不一致');
   check(same(m.executionScope??null,actual.executionScope??null),'记录禁用执行范围缺失或不一致');check(same(m.outputForcing??null,actual.outputForcing??null),'记录强制输出声明缺失或不一致');const active=multi?{nodes:E.activeNodes(E.sourceProject(m.project))}:C.executionProject(C.sourceProject(m.project));if(multi)check(m.sharedSignalModel===actual.sharedSignalModel,'共享信号模型缺失或不兼容');
-  const models={};for(const n of active.nodes){const d=C.catalog[n.type],sections=[...(d.edgeState||d.stateful||d.packed?['stateModels']:[]),...(d.timer?['timerModels']:[]),...(d.monitor?['monitorModels']:[]),...(d.arithmetic?['arithmeticModels']:[])],section=sections[0];if(section){check(m[section]?.[n.type]===d.model,'记录缺少或不支持模型 '+n.type);for(const declared of sections.slice(1))if(m[declared]&&own(m[declared],n.type))check(m[declared][n.type]===d.model,'记录存在冲突或不支持模型 '+declared+'.'+n.type);models[n.type]=d.model;}}
-  const numericValidationRequired=active.nodes.some(n=>{const d=C.catalog[n.type];return d.timer||d.monitor||d.arithmetic;});if(numericValidationRequired)check(m.numericValidationModel===actual.numericValidationModel,'记录缺少或不支持当前精度核对模型');
+  const modelNodes=C.modelNodes(active),models={};for(const n of modelNodes){const d=C.catalog[n.type],sections=[...(d.edgeState||d.stateful||d.packed||d.replayTimeline?['stateModels']:[]),...(d.timer?['timerModels']:[]),...(d.monitor?['monitorModels']:[]),...(d.arithmetic?['arithmeticModels']:[])],section=sections[0];if(section){check(m[section]?.[n.type]===d.model,'记录缺少或不支持模型 '+n.type);for(const declared of sections.slice(1))if(m[declared]&&own(m[declared],n.type))check(m[declared][n.type]===d.model,'记录存在冲突或不支持模型 '+declared+'.'+n.type);models[n.type]=d.model;}}
+  const numericValidationRequired=modelNodes.some(n=>{const d=C.catalog[n.type];return d.timer||d.monitor||d.arithmetic;});if(numericValidationRequired)check(m.numericValidationModel===actual.numericValidationModel,'记录缺少或不支持当前精度核对模型');
   const fingerprintCheck=m.fingerprints===undefined?'not-present':'matched';if(m.fingerprints!==undefined)check(same(m.fingerprints,actual.fingerprints),'记录工程指纹不匹配或指纹合同未支持');
   const range={firstTick:0,lastTick,firstTimeUs:0,lastTimeUs,executedScans:lastTick,snapshotCount:frames.length},rangeCheck=m.resultRange===undefined?'not-present':'matched';if(m.resultRange!==undefined)check(m.resultRange&&Object.keys(range).every(k=>m.resultRange[k]===range[k]),'记录声明范围与完整轨迹/周期不一致');
   const failures=m.diagnostics===undefined?[]:m.diagnostics;check(Array.isArray(failures)&&failures.length<=1,'记录故障诊断格式未支持');
@@ -25,7 +26,7 @@
    difference(path,expected,computed);
   }
   function finish(){
-   if(failure){try{run.step();difference(['manifest','diagnostics'],'应发生已记录的失败扫描','扫描却成功');}catch{actualFailure=run.manifest().diagnostics[0]||null;for(const key of ['code','tick','nodeId',...(multi?['canvasId']:[]),...(failure.code==='SCAN_FAILED'?['timeUs']:[])])if(failure[key]!==actualFailure?.[key])difference(['manifest','diagnostics',key],failure[key],actualFailure?.[key]);}}
+   if(failure){try{run.step();difference(['manifest','diagnostics'],'应发生已记录的失败扫描','扫描却成功');}catch{actualFailure=run.manifest().diagnostics[0]||null;for(const key of ['code','tick','nodeId',...(multi?['canvasId']:[]),...(failure.code==='SCAN_FAILED'?['timeUs']:[])])if(failure[key]!==actualFailure?.[key])difference(['manifest','diagnostics',key],failure[key],actualFailure?.[key]);if(!same(failure.macroPath??null,actualFailure?.macroPath??null))difference(['manifest','diagnostics','macroPath'],failure.macroPath,actualFailure?.macroPath);}}
    actualRange=run.manifest().resultRange;status=differenceCount?'different':'matched';
   }
   function advance(count=1){check(Number.isInteger(count)&&count>0,'分片次数必须为正整数');if(!['ready','running'].includes(status))return progress();status='running';for(let i=0;i<count&&processed<frames.length;i++){

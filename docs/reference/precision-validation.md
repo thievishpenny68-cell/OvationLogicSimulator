@@ -45,7 +45,7 @@ GAINBIAS：IN1=0.7、GAIN=1.1、BIAS=0.3、限幅±4，两个最终Float32候选
 
 - numericValidationModel：`f32-f64-output-agreement-v1`。
 - arithmeticModels.GAINBIAS：`ref1100-2006-gainbias-v1`（首次单独命名的增益模型）。
-- arithmeticModels.SUM为`ref1100-2006-sum-exact-check-v3`；MULTIPLY/DIVIDE/HISELECT/LOSELECT为`ref1100-2006-<小写算法名>-v1`；monitorModels.DBEQUALS为`ref1100-2006-dbequals-v2`。
+- arithmeticModels.SUM为`ref1100-2006-sum-optional-zero-v4`；MULTIPLY/DIVIDE/HISELECT/LOSELECT为`ref1100-2006-<小写算法名>-v1`；monitorModels.DBEQUALS为`ref1100-2006-dbequals-v3`。
 - SMOOTH的arithmeticModels与stateModels均为`ref1100-2006-smooth-v2`。旧v1完整记录须重跑；正常工程可直接用当前模型运行。详见`smooth.md`与独立消减向量。
 - monitorModels：`ref1100-2006-monitor-v2`。
 - timerModels：ONDELAY为`ref1100-2006-scan-v3`（修正恢复累计）；OFFDELAY/ONESHOT为`ref1100-2006-scan-v2`。

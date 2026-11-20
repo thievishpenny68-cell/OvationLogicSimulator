@@ -31,7 +31,7 @@
   function refresh(){
    const p=options.getProject(),id=options.getActiveCanvas(),c=p.canvases.find(c=>c.id===id)||p.canvases[0],key=JSON.stringify([p.title,p.canvases.map(c=>[c.id,c.name]),id]);
    if(key!==signature){signature=key;if(editing)editing.finish(false);if(doc.activeElement!==title)title.value=p.title;tabs.replaceChildren();for(const canvas of p.canvases){const b=button('',(p.canvases.indexOf(canvas)+1)+'. '+canvas.name,()=>options.selectCanvas(canvas.id));b.removeAttribute('id');b.dataset.canvasTab=canvas.id;b.setAttribute('role','tab');b.setAttribute('aria-selected',String(canvas.id===id));b.title='双击重命名画布';b.ondblclick=()=>renameTab(canvas,b);tabs.append(b);}}
-   const index=p.canvases.indexOf(c),running=options.isRunning();for(const key of ['canvas-add','import','canvas-delete','canvas-left','canvas-right'])$(key).disabled=running||key==='canvas-delete'&&p.canvases.length===1||key==='canvas-left'&&index===0||key==='canvas-right'&&index===p.canvases.length-1;title.disabled=importTarget.disabled=running;if(running&&editing)editing.finish(false);matching.refresh();
+   const index=p.canvases.indexOf(c),running=options.isRunning(),inside=options.isInsideMacro?.();for(const key of ['canvas-add','import','canvas-delete','canvas-left','canvas-right'])$(key).disabled=running||inside||key==='canvas-delete'&&p.canvases.length===1||key==='canvas-left'&&index===0||key==='canvas-right'&&index===p.canvases.length-1;title.disabled=running;importTarget.disabled=running||inside;$('signal-matching').disabled=inside;if((running||inside)&&editing)editing.finish(false);matching.refresh();
   }
   return{refresh,importTarget:()=>importTarget.value,dialog:matching.dialog};
  }

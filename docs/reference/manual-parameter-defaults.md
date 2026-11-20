@@ -13,7 +13,7 @@ SVG/MCR/TFT导入先采用明确配置，再为真正缺席的参数补齐手册
 | 手册默认值为“-” | 不猜数值，继续明确缺参 |
 | 不支持的默认模式或不能运行的默认数量 | 保留真实默认值，由运行前检查说明限制 |
 
-重点差异：COUNTER.DRCT默认0；HIGHLOWMON.HISP默认0；SELECTOR.NMIN、DIGCOUNT.NMIN/MTRU和INTERP.NUMR默认0；INTERP的X1～X10默认均为0。输入数量0仍需要配置为有效数量。TRANSFER.OTRK默认ON，当前仅实现无跟踪的OFF模式，因此导入后明确提示模式限制；用户须按实际工况配置，程序不自动改为OFF。BCDNIN.BITP没有手册默认值，仍需指定起始位。
+重点差异：COUNTER.DRCT默认0；HIGHLOWMON.HISP默认0；SELECTOR.NMIN、DIGCOUNT.NMIN/MTRU和INTERP.NUMR默认0；INTERP的X1～X10默认均为0。SELECTOR允许NMIN=0，此时所有地址输出0。DIGCOUNT和INTERP的输入数量仍须配置为各自的有效数量。TRANSFER.OTRK默认ON，当前仅实现无跟踪的OFF模式，因此导入后明确提示模式限制；用户须按实际工况配置，程序不自动改为OFF。BCDNIN.BITP没有手册默认值，仍需指定起始位。
 
 TRANSFER的SLEW、OTRK可从同名SVG/MCR属性恢复；不把整字节TFT的X1猜拆成两个选项。手册明确的枚举值作等价表示：INTERP的“线性”保存为LINEAR，BCD的“直接”保存为0，GAINBIAS的PROQ=ON保存为1。
 

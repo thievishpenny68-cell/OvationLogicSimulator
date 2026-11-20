@@ -65,7 +65,15 @@
     else{
      tile.name.setAttribute('aria-pressed','false');if(!tile.preview||tile.project!==canvas.project||tile.revision!==options.getRevision())buildPreview(tile,canvas);
      const frame=options.getFrame(canvas.id);
-     for(const v of tile.values){const key=E.nodeKey(canvas.id,v.nodeId),reason=disabled.has(key)?'已禁用':suspended.has(key)?'依赖暂停':'',value=frame?.values?.[v.nodeId]?.[v.port];v.element.textContent=reason||(typeof value==='boolean'?(value?'TRUE':'FALSE'):typeof value==='number'?W.describe(v.kind,value).text:'—');v.group.setAttribute('data-execution-state',reason==='已禁用'?'disabled':reason?'suspended':'active');v.group.setAttribute('class','logic-node'+(reason==='已禁用'?' execution-disabled':reason?' dependency-suspended':''));}
+     for(const v of tile.values){
+      const key=E.nodeKey(canvas.id,v.nodeId),reason=disabled.has(key)?'已禁用':suspended.has(key)?'依赖暂停':'',value=frame?.values?.[v.nodeId]?.[v.port];
+      const quality=reason||value===undefined||v.kind==='packed16'?'GOOD':C.signalQuality.read(frame,v.nodeId,v.port);
+      const display=reason||(typeof value==='boolean'?(value?'TRUE':'FALSE'):typeof value==='number'?W.describe(v.kind,value).text:'—');
+      const text=quality==='GOOD'?display:display+' · '+quality;
+      if(v.element.textContent!==text)v.element.textContent=text;
+      v.group.setAttribute('data-execution-state',reason==='已禁用'?'disabled':reason?'suspended':'active');
+      v.group.setAttribute('class','logic-node'+(reason==='已禁用'?' execution-disabled':reason?' dependency-suspended':''));
+     }
      for(const wire of tile.wires){const state=disabled.has(E.nodeKey(canvas.id,wire.nodeId))||suspended.has(E.nodeKey(canvas.id,wire.nodeId))?'inactive':W.describe(wire.kind,frame?.values?.[wire.nodeId]?.[wire.port]).state;wire.element.setAttribute('class','wire '+wire.kind+' '+state);}
      if(canvas.project.scopes?.length){S.render(tile.scopeLayer,canvas.project,options.getFrames(canvas.id),options.getCursor(),{change:()=>{},remove:()=>{},select:()=>{},connect:()=>{}});for(const panel of tile.scopeLayer.querySelectorAll('.scope-panel'))panel.inert=true;}
     }

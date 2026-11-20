@@ -1,12 +1,12 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "entry": "index.html",
   "edition": "public-offline",
   "files": [
     {
       "path": "docs/algorithm-support-matrix.md",
-      "bytes": 14563,
-      "sha256": "61fb3317351c536767c3893be19ca02fab0d48aaa2f07e19e4c1601390f18b2a"
+      "bytes": 14733,
+      "sha256": "94842a6797ff3f7726828fa2494f69e1632774d407a487e60f6a8a6684308907"
     },
     {
       "path": "docs/images/guide/0.67.1/01-first-run.png",
@@ -89,6 +89,36 @@
       "sha256": "1ace7fc6ca4fe7c7d997ea7c94a7a56275c4c81548388bd70c463478b2ad77dd"
     },
     {
+      "path": "docs/images/guide/2.1.0/control-sheet-import.png",
+      "bytes": 8675,
+      "sha256": "72018dcee5b94e3eba8e569a175f3dd0604f65619c877f4e5f41463435296027"
+    },
+    {
+      "path": "docs/images/guide/2.1.0/custom-macro-canvas.png",
+      "bytes": 78049,
+      "sha256": "da23bfcc9ca30d93b4163bdad96d5ee842df09c87927490ac44a24d8b97cc176"
+    },
+    {
+      "path": "docs/images/guide/2.1.0/custom-macro-import.png",
+      "bytes": 44315,
+      "sha256": "c0e004cf8867070d49b1eeceee9b47df43422ecead2c662db58098e0f9196798"
+    },
+    {
+      "path": "docs/images/guide/2.1.0/multi-canvas.png",
+      "bytes": 66310,
+      "sha256": "eb89d8bf0de7fb82acb893246945f2063cb67680573e7c16819e51606a030673"
+    },
+    {
+      "path": "docs/images/guide/2.1.0/signal-matching.png",
+      "bytes": 114942,
+      "sha256": "6cc9079c49a073a9961907856df49c8b5b17ffd1eff56042dfdcc5aa1d67cdba"
+    },
+    {
+      "path": "docs/images/guide/2.1.0/wave-recorder.png",
+      "bytes": 48258,
+      "sha256": "6db017a7a6b3739decbf9c911a0aebb1d7740ff4d0c2723c948c3f920a1529a0"
+    },
+    {
       "path": "docs/reference/automatic-port-mapping-and-routing.md",
       "bytes": 718,
       "sha256": "e2d42f771057cbfe860b3e565474e09c4183fbca73bc3ff558ce7ccb787c974c"
@@ -100,8 +130,8 @@
     },
     {
       "path": "docs/reference/basic-blocks.md",
-      "bytes": 5690,
-      "sha256": "03561790ad64e97e88889eebab6c73ed6c15d69b2ba2d903252a7a213876fa09"
+      "bytes": 5696,
+      "sha256": "1b453c49639e23b4b088beb04d31e48f4e97aabe4df8d5e2a5139f3d2c89ac4c"
     },
     {
       "path": "docs/reference/bcd.md",
@@ -115,8 +145,8 @@
     },
     {
       "path": "docs/reference/dbequals-exact-check.md",
-      "bytes": 1865,
-      "sha256": "2a827efd1164edd85a42e18af0f2e1d0c1ebe33208e8bd5ac61b1753ad487dbb"
+      "bytes": 1880,
+      "sha256": "e51ed201c46223d16e5325453a29462899a22cae50652e99a41599b3be07ea8d"
     },
     {
       "path": "docs/reference/disabled-blocks.md",
@@ -140,8 +170,8 @@
     },
     {
       "path": "docs/reference/elementary-blocks.md",
-      "bytes": 4956,
-      "sha256": "5b54b0d0b391cc37b58ae251a7c9ff16da0258ca8646b533f173de588baa677e"
+      "bytes": 5077,
+      "sha256": "1c204bdceb5c4574e3c453194d7c9674b708b344ed7c28115050502f8604f52a"
     },
     {
       "path": "docs/reference/error-feedback.md",
@@ -150,8 +180,8 @@
     },
     {
       "path": "docs/reference/exact-sum-check.md",
-      "bytes": 3649,
-      "sha256": "163a43f54dd6b3e0d2e9883de9d903cd9bf116d17319bb3cc7155715c465e2be"
+      "bytes": 3696,
+      "sha256": "78a5efe420b69fa7ec26f2e91e05c6b3a9774613e53f6877920cddd7f4c7bb2a"
     },
     {
       "path": "docs/reference/excel-input-waveforms.md",
@@ -200,8 +230,8 @@
     },
     {
       "path": "docs/reference/imported-custom-macro-symbols.md",
-      "bytes": 2116,
-      "sha256": "9ef992aa847d079fef46d74169c8be551d3140312910b5a0ffd23db3fc69753a"
+      "bytes": 2416,
+      "sha256": "4ecf4fb11b2f4fccb0fb4446f5a6190f933ac9387f051af63850624482aa51e1"
     },
     {
       "path": "docs/reference/input-encoding.md",
@@ -230,13 +260,13 @@
     },
     {
       "path": "docs/reference/lookup-blocks.md",
-      "bytes": 4358,
-      "sha256": "f6f50ec6f4cbd30d47814dd556cd412f7c357b18dddb8a7049ca550c35f9f2fe"
+      "bytes": 4368,
+      "sha256": "468fec614f15c2e5941c3c2b98e041647e4f08c6bb3660fc59753aea422df2bd"
     },
     {
       "path": "docs/reference/manual-parameter-defaults.md",
-      "bytes": 3306,
-      "sha256": "8662bc46d45b6d572e2788ece12c5ab9a16f57540d3d631bb495fcf7cedd80e8"
+      "bytes": 3382,
+      "sha256": "0c2902165f089c653bd2b49a8b22f3429ddba644db3d24691410b43b6f72490c"
     },
     {
       "path": "docs/reference/manual-symbols-and-scope-fifo.md",
@@ -260,8 +290,8 @@
     },
     {
       "path": "docs/reference/multi-canvas-projects.md",
-      "bytes": 9633,
-      "sha256": "7936fb1e586cd4cd5ec7ed36c6860a91816f1cce55d6207e534143ae5f4dc44e"
+      "bytes": 9612,
+      "sha256": "2ca1e982078411bf1add141c36e977cb24acabdc8df0d54e4fecb0927194e149"
     },
     {
       "path": "docs/reference/ondelay-state-machine.md",
@@ -315,8 +345,8 @@
     },
     {
       "path": "docs/reference/precision-validation.md",
-      "bytes": 6209,
-      "sha256": "9126603b0bc752fbb53c95eb3f56d86e7d9853127255b3f4a8c63a30ef586fb2"
+      "bytes": 6211,
+      "sha256": "a055bc6b12d6d477bb0212f91c97a60b365b411f0b08f0452b013b6300fed2a8"
     },
     {
       "path": "docs/reference/problem-groups.md",
@@ -325,8 +355,8 @@
     },
     {
       "path": "docs/reference/qaverage.md",
-      "bytes": 2249,
-      "sha256": "ae4de0bc65a2f2b4b652c985850259fdf05ca603fb20aa6cf65631a0afd7b836"
+      "bytes": 1936,
+      "sha256": "d2e0f7d45645b9be9f6c435c8f4578bbe0eb0274d5ceaa05fbb3e56e5d3f602e"
     },
     {
       "path": "docs/reference/rate-algorithms.md",
@@ -355,8 +385,8 @@
     },
     {
       "path": "docs/reference/run-record-format.md",
-      "bytes": 8014,
-      "sha256": "15280c094bfd7bc414fec073a6e7057ac872f1d7297eba5ee37bd66e23abc631"
+      "bytes": 8589,
+      "sha256": "2b169997325545cef7048262c5ceae6abc1c8689cd18b31305aea9fd2e00e2b8"
     },
     {
       "path": "docs/reference/scan-execution-model.md",
@@ -372,6 +402,11 @@
       "path": "docs/reference/shared-signal-trunks-and-title-block.md",
       "bytes": 2599,
       "sha256": "6c3128e2ef80e803fbc0dbaacf240e70388a969170e59e7d5c783588a1ba7756"
+    },
+    {
+      "path": "docs/reference/signal-quality.md",
+      "bytes": 5398,
+      "sha256": "f1dc9249c95fd10a69c30088eeabc4c49f04efff4e9012f50120f4b554514503"
     },
     {
       "path": "docs/reference/simple-conversions.md",
@@ -395,8 +430,8 @@
     },
     {
       "path": "docs/reference/sum-four-inputs.md",
-      "bytes": 2523,
-      "sha256": "d01c64ab3a6e9b845adf63617c0830b3c0b913439bad2e5743261137483cec0e"
+      "bytes": 1872,
+      "sha256": "f9e7308707744c6f30e737f807d645ddd5fba3b53a92ceb1697f5fc1df74d573"
     },
     {
       "path": "docs/reference/svg-connections.md",
@@ -430,8 +465,8 @@
     },
     {
       "path": "docs/user-guide.md",
-      "bytes": 21205,
-      "sha256": "04907735a9bdefd327508d1646d0d5525a23ff3c91341db649e1cb1085b1e57a"
+      "bytes": 23842,
+      "sha256": "3b98959cbaf4d8bab0282d8af42116bba8a5ec9ea3a74afa44446973685bae9d"
     },
     {
       "path": "docs/validation/manual-acceptance.md",
@@ -490,8 +525,8 @@
     },
     {
       "path": "examples/elementary-blocks.json",
-      "bytes": 8849,
-      "sha256": "b40378e5ab59e7f1b5855251022db952884eed802f740e660f5ddca368f36f84"
+      "bytes": 8954,
+      "sha256": "57dffc0279d881c5b2047ca3c354b58d42b2ed8674346a7bac147c3ff6c6ed4b"
     },
     {
       "path": "examples/explicit-scan-order.json",
@@ -820,18 +855,18 @@
     },
     {
       "path": "guide.html",
-      "bytes": 33520,
-      "sha256": "17ddf7d81b803f34d5f766f29a970a0acf4b461febb4eaec63328b51d4e44952"
+      "bytes": 39899,
+      "sha256": "60cb31077a8ea7c61dd49509a5e94c0d18dfa68ec880ea93221a0c82060b90e7"
     },
     {
       "path": "index.html",
-      "bytes": 29687,
-      "sha256": "41f8b7f16ce1e9feabba79a80967660b31419a06a713242d75d8951328da9548"
+      "bytes": 29703,
+      "sha256": "1aa40cc80238019a7f08f7bd293ae7d22c3a5ddb8d277d3d44c374f6f9ec7c65"
     },
     {
       "path": "README.md",
-      "bytes": 1886,
-      "sha256": "893bd2a4a3402c5a847d1d87a9b79ccd8e3ecf839c43632a66d4baa74d279fd8"
+      "bytes": 1948,
+      "sha256": "0cae58a0075c41193acfd38fe8aad928bf4c3931c8f688a5eeee34ce797cc372"
     },
     {
       "path": "src/annotations.js",
@@ -840,13 +875,13 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 180147,
-      "sha256": "fbc13255e93b53ba4082fce1f8e817946a79956cd317da36abec9198a3489d94"
+      "bytes": 194728,
+      "sha256": "1aac4eaecc2478d1396e29ac4358de59b0fb3b65bee22f727653eda5826792c4"
     },
     {
       "path": "src/basic-analog.js",
-      "bytes": 6822,
-      "sha256": "5a7f6ab70c6010c2d7623c775985a57a526a4974a634a7475276606b6894c038"
+      "bytes": 7868,
+      "sha256": "193dd6f2fb752e8bad2b7b532a9c10644a3c79bf1ee9ed7e9be06acb8755c576"
     },
     {
       "path": "src/bcd.js",
@@ -865,8 +900,8 @@
     },
     {
       "path": "src/canvas-workspace.js",
-      "bytes": 12915,
-      "sha256": "868db8ce27ea910e95a703f1b7eab179b58ffa5fc4ea920d3814d13dc74a7ccc"
+      "bytes": 13192,
+      "sha256": "86d6aa9e1b49a45d3f2d8f960bc9e321470c3d2bb681eee48dbc8d4b9ba11241"
     },
     {
       "path": "src/clock-blocks.js",
@@ -880,8 +915,8 @@
     },
     {
       "path": "src/core.js",
-      "bytes": 58514,
-      "sha256": "0cb482124df6ceb643a3d73851e5e0d67705510d3e59874e7f91a47e7706326f"
+      "bytes": 67543,
+      "sha256": "232be31ed6873ee8f131ff2760a1c7ea71af8800febe62233f2f27cb4154466b"
     },
     {
       "path": "src/declared-interfaces.js",
@@ -895,18 +930,18 @@
     },
     {
       "path": "src/elementary.js",
-      "bytes": 23665,
-      "sha256": "88c7dc428752fedb473fa9bd9923a6a1f9b434cb310073f52d3d66e223a82170"
+      "bytes": 24339,
+      "sha256": "e975be0944415de9f81af6e450f38ae2cd9b66db18c6025412171afca5058054"
     },
     {
       "path": "src/engineering-ui.js",
-      "bytes": 4474,
-      "sha256": "dde25a37e3dcc9659bb66f0302b025477a23577e883d819ee08a0f017640a78a"
+      "bytes": 4578,
+      "sha256": "9ee503c0ef6951c03f787f88af4605527e4c43d5adb1003fed9ebfd39245a6d1"
     },
     {
       "path": "src/engineering.js",
-      "bytes": 12028,
-      "sha256": "137d1d897c9c1bad008472d87ee9d0f168fcefd9d980e49521c3ff7c379e9ae9"
+      "bytes": 12721,
+      "sha256": "233dd30350889b270d961faf9d3f664eb480c487f63cffb4479deb0215b95ce8"
     },
     {
       "path": "src/exact-math.js",
@@ -935,13 +970,13 @@
     },
     {
       "path": "src/importer.js",
-      "bytes": 39023,
-      "sha256": "6819889145d9458e053002d147d23322ff3002d4eaf65c2c7e89eda7df780d68"
+      "bytes": 39887,
+      "sha256": "eab0735f67036ca5dcef2dce7e9c1a70266616e944ca3d0133e2998f6a540c2f"
     },
     {
       "path": "src/input-wave-editor.js",
-      "bytes": 17396,
-      "sha256": "c528c221dfd64d39f74805444eaf802a26c7abb2ce44e6ab3aa5e9a185a1ff4b"
+      "bytes": 21752,
+      "sha256": "c5e078f118639194a93b8b3855ca0eecab2da180bf67890889db7fd0a8a59108"
     },
     {
       "path": "src/input-wave-excel.js",
@@ -1005,13 +1040,13 @@
     },
     {
       "path": "src/project-state.js",
-      "bytes": 3390,
-      "sha256": "e01ea3943166b49d1f926709c1498ca41ddfc1bfc4b7f7fb543cb89d1a47a783"
+      "bytes": 3985,
+      "sha256": "5632d9b6f9e3b7f5755235ba0a353b064905f3803d4df228cefc2c7c9add337c"
     },
     {
       "path": "src/recompute.js",
-      "bytes": 8342,
-      "sha256": "2b9f692cb8c3d0f7c045da77e932dec4b2a58705a1dbb29e924b341f4c9f06d8"
+      "bytes": 8643,
+      "sha256": "fd4a92f555c3797f1aa86159fb71d703ec264f7e36a1fce265af43ba17d718af"
     },
     {
       "path": "src/reference-csv.js",
@@ -1044,6 +1079,11 @@
       "sha256": "fbcc172587f5b7393dd5770994c3ab9ead91e7b88d8a6aab178f88863321db3b"
     },
     {
+      "path": "src/signal-quality.js",
+      "bytes": 4644,
+      "sha256": "6d3202793f14ee58f9551d70c1120002fc1496c7585af54896417cf3d2521b29"
+    },
+    {
       "path": "src/source-preview.js",
       "bytes": 12976,
       "sha256": "1f5da61ea98f9db993c5995af943be822c642ee250b7bf24865c85b9c1aac8a5"
@@ -1055,8 +1095,8 @@
     },
     {
       "path": "src/style.css",
-      "bytes": 76540,
-      "sha256": "6c4355ea1ee4f82f7afa759ea95eb70099e5560b66e9130ee08cb8b0fd6714b0"
+      "bytes": 77094,
+      "sha256": "f0ce6f29e3ee691e2d1adab42296535ada18e9eb554efc0312a148b3029e6320"
     },
     {
       "path": "src/svg-auto-ports.js",
@@ -1095,8 +1135,8 @@
     },
     {
       "path": "src/trace.js",
-      "bytes": 8435,
-      "sha256": "b248a564a34f88e87d43dca5da30fc446741b3faaee08c08a933cec0cad1b3dd"
+      "bytes": 8200,
+      "sha256": "cc22eb1b19c163a00387e4eb1f87d1c88922267132289b452ecd7b1ffe8063db"
     },
     {
       "path": "src/transport.js",
@@ -1112,6 +1152,11 @@
       "path": "src/vendor/xlsx.mini.min.js",
       "bytes": 279523,
       "sha256": "0cb353f830d7288385492c83d277b058ddeac664ca51cf1393aa1fd3e2b70939"
+    },
+    {
+      "path": "src/wave-recorder.js",
+      "bytes": 4405,
+      "sha256": "8015eccdd32e5819ae98d08def39ddc7a71f21be1046e6e13da1ddef23ac43d8"
     },
     {
       "path": "src/wire-display.js",

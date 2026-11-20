@@ -20,7 +20,7 @@
   function modelEntry(field,label,ap,av,rp,rv){const valid=(p,v)=>!p||typeof v==='string'&&v.trim().length>0,status=!valid(ap,av)||!valid(rp,rv)?'invalid':!ap||!rp?'not-declared':av===rv?'matched':'different';modelChecks.push({field,status,actualPresent:ap,referencePresent:rp,...(ap?{actual:av}:{}),...(rp?{expected:rv}:{})});if(status==='different'||status==='invalid')add(field==='profile'?'profile':'model','模型声明'+(status==='invalid'?'无效':'冲突')+'：'+label,{field,label,actual:av,expected:rv});}
   for(const[field,label]of [['profile','算法规则'],['scanModel','扫描模型'],['numericMode','数值规则'],['numericValidationModel','精度核对模型']])modelEntry(field,label,own(manifests[0],field),manifests[0][field],own(manifests[1],field),manifests[1][field]);
   for(const[section,label]of [['timerModels','计时模型'],['monitorModels','监视模型'],['arithmeticModels','算术模型'],['stateModels','状态模型']]){const present=manifests.map(m=>own(m,section)),maps=manifests.map((m,i)=>{if(!present[i])return{};if(object(m[section]))return m[section];modelChecks.push({field:section,status:'invalid',side:i===0?'actual':'reference'});add('model',(i===0?'当前':'参考')+'模型声明无效：'+label,{field:section,label});return{};});const types=new Set([...Object.keys(maps[0]),...Object.keys(maps[1])]);if(!types.size&&section!=='stateModels')modelChecks.push({field:section,status:present.every(Boolean)?'matched':'not-declared',actualPresent:present[0],referencePresent:present[1]});for(const type of types)modelEntry(section+'.'+type,label+' · '+type,own(maps[0],type),maps[0][type],own(maps[1],type),maps[1][type]);}
-  const modelStatus=modelChecks.some(c=>['different','invalid'].includes(c.status))?'different':modelChecks.some(c=>c.status==='not-declared')?'partial':'matched',modelSummary=modelStatus==='different'?'模型声明冲突或无效，不能报告整体匹配；数值样本仍单独比较。':modelStatus==='partial'?'部分模型信息未声明；所选信号数值匹配不代表模型一致。':'双方已提供的模型声明一致；这不证明引擎版本等价或现场准确性。';
+  const modelStatus=modelChecks.some(c=>['different','invalid'].includes(c.status))?'different':modelChecks.some(c=>c.status==='not-declared')?'partial':'matched',modelSummary=modelStatus==='different'?'模型声明冲突或无效。数值差异单独列出。':modelStatus==='partial'?'部分模型信息未声明，本次仅对照所选信号值。':'模型声明一致。';
   for(const[tick,s]of a){const ref=r.get(tick);if(!ref){add('missingScan','参考缺少当前扫描',{tick});continue;}
    if(Math.abs(s.time-ref.time)>settings.timeTol)add('time','同一扫描的时间超出容差',{tick,actual:s.time,expected:ref.time});
    for(const c of selected){const value=read(s,c),expected=read(ref,c),detail={tick,channel:c.key||JSON.stringify([c.nodeId,c.section,c.field]),label:c.label,actual:value,expected};
@@ -31,7 +31,7 @@
    }
   }
   for(const tick of r.keys())if(!a.has(tick))add('extraScan','参考包含当前记录未覆盖的扫描',{tick});
-  return{matched:diagnosticCount===0,counts,diagnostics,diagnosticCount,diagnosticsTruncated:diagnosticCount>diagnostics.length,comparedSamples,requestedSamples:a.size*selected.length,maxAbsoluteError,settings:structuredClone(settings),modelStatus,modelSummary,modelChecks,evidenceStatus:'comparison-only',scope:'仅覆盖所选信号及两份轨迹的扫描；数字量/LP整字精确比较，模拟量 |当前-参考| ≤ absTol + relTol×|参考|；按tick对齐，不插值。'+modelSummary+' 对照结果不提升算法验证等级。'};
+  return{matched:diagnosticCount===0,counts,diagnostics,diagnosticCount,diagnosticsTruncated:diagnosticCount>diagnostics.length,comparedSamples,requestedSamples:a.size*selected.length,maxAbsoluteError,settings:structuredClone(settings),modelStatus,modelSummary,modelChecks,evidenceStatus:'comparison-only',scope:'按扫描号对齐。数字量和 LP 整字精确比较，模拟量按所填容差比较。 '+modelSummary};
  }
  return{recordingPlan:C.recordingPlan,nodeLabel,channels,read,compare};
 });

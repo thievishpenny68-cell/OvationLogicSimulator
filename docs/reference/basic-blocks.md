@@ -4,8 +4,8 @@
 
 |块|当前规则|原始手册|
 |---|---|---|
-|DBEQUALS|d=abs(IN1−IN2)；d>DBND置TRUE，d<abs(DBND−RTRN)置FALSE；两条相等边界及中间范围保持OUT。须显式布尔OUT初态，当前范围0≤RTRN≤DBND|REF_1100 §4.25 p81|
-|SUM|2～4路分别做增益偏置后相加并限幅；IN3/IN4可选，未接路及偏置不参与|§4.112 p396～398|
+|DBEQUALS|d=abs(IN1−IN2)；先判定d>DBND置TRUE，再判定d<abs(DBND−RTRN)置FALSE，其余保持OUT。须显式布尔OUT初态，DBND与RTRN均须非负|REF_1100 §4.25 p81|
+|SUM|2～4路分别做增益偏置后相加并限幅；IN3/IN4可选，未接输入值取0，已设偏置照常计入|§4.112 p396～399|
 |MULTIPLY|分别做增益偏置后，两路相乘并限幅|§4.64 p249～251|
 |DIVIDE|先变换分子a、分母b；b≠0时a/b；b=0时a≥0取上限，否则取下限，所以0/0取上限|§4.33 p151～153|
 |HISELECT|分别做增益偏置后取较大值，再限幅|§4.47 p188～192|

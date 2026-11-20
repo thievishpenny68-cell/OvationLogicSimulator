@@ -12,7 +12,7 @@
 
 ## INTERP — §4.52 p197～200
 
-- XIN和Y1～Y10均为模拟输入，YOUT模拟输出，VALID数字输出。NUMR选择2～10个表节点，X1～XNUMR为固定模拟参数，对应数量的Y输入必须明确接线。
+- XIN和Y1～Y10均为模拟输入，YOUT模拟输出，VALID数字输出。NUMR选择2～10个表节点，X1～XNUMR为固定模拟参数。XIN必接，表中已启用的Y输入未接时取0。
 - TYPE明确为LINEAR；不推断来源中的未知数字编码。X1～XNUMR须给出；未采用的X参数可以缺省，不参与计算。新建时提供可修改的工作表，导入缺参仍须补齐。
 - XIN等于表节点时采用对应Y，节点之间按手册公式`Yn + (Yn+1-Yn) × ((XIN-Xn)/(Xn+1-Xn))`插值，再应用BTSC/TPSC限幅。
 - 闭区间X1～XNUMR内VALID=TRUE；低于第一节点输出第一Y，高于最后节点输出最后Y，VALID=FALSE。

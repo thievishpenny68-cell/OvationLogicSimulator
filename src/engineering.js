@@ -36,7 +36,7 @@
    let g=clone(c.project);g.dtUs=p.dtUs;if(p.utcStart!==undefined)g.utcStart=p.utcStart;else delete g.utcStart;const initialInputs=Object.create(null);
    for(const b of index.bindings.filter(b=>b.input.canvasId===c.id)){
     const n=g.nodes.find(n=>n.id===b.input.nodeId),source=p.canvases.find(c=>c.id===b.source.canvasId).project.nodes.find(n=>n.id===b.source.nodeId);
-    const value=own(source.initial||{},'OUT')?source.initial.OUT:b.kind==='boolean'?false:0;n.params.wave={mode:'constant',value};initialInputs[n.id]=value;
+    const value=own(source.initial||{},'OUT')?source.initial.OUT:b.kind==='boolean'?false:0;n.params.wave={mode:'constant',value};delete n.qualityWave;initialInputs[n.id]=value;
    }
    const suspended=g.nodes.filter(n=>n.disabled!==true&&inactive.has(nodeKey(c.id,n.id))).map(n=>n.id);if(suspended.length)g=C.setNodeDisabled(g,suspended,true);
    return{canvas:c,project:g,initialInputs};
@@ -52,7 +52,7 @@
   return issues;
  }
  function recordingPlan(p,{outputForces}={}){
-  const plans=runtimeProjects(p).map(r=>C.recordingPlan(r.project,{outputForces:(outputForces??p.runtimeForces??{})[r.canvas.id]||{}})),frameScalars=2+signals(p).rows.filter(r=>r.source).length+plans.reduce((n,r)=>n+r.frameScalars,0),maxCells=2100000,maxSnapshots=Math.max(0,Math.min(10001,Math.floor(maxCells/frameScalars),Math.floor(Number.MAX_SAFE_INTEGER/p.dtUs)+1)),maxScans=Math.max(0,maxSnapshots-1);
+  const runtime=runtimeProjects(p),includeQuality=runtime.some(r=>C.hasQuality(r.project)),plans=runtime.map(r=>C.recordingPlan(r.project,{outputForces:(outputForces??p.runtimeForces??{})[r.canvas.id]||{},includeQuality})),sources=signals(p).rows.filter(r=>r.source),frameScalars=2+sources.length+(includeQuality?sources.filter(r=>r.kind!=='packed16').length:0)+plans.reduce((n,r)=>n+r.frameScalars,0),maxCells=2100000,maxSnapshots=Math.max(0,Math.min(10001,Math.floor(maxCells/frameScalars),Math.floor(Number.MAX_SAFE_INTEGER/p.dtUs)+1)),maxScans=Math.max(0,maxSnapshots-1);
   return{maxScans,maxSnapshots,frameScalars,maxCells,seconds:maxScans*p.dtUs/1e6};
  }
  function fingerprints(p){
@@ -68,14 +68,28 @@
   function reset(){const canvases=Object.fromEntries(runs.map(r=>[r.canvas.id,r.run.reset()])),shared=Object.create(null);for(const row of index.rows)if(row.source&&active.has(nodeKey(row.source.canvasId,row.source.nodeId)))shared[row.name]=canvases[row.source.canvasId].values[row.source.nodeId].OUT;current={tick:0,time:0,canvases,signals:shared};lastFailure=null;return snapshot();}
   function snapshot(){return clone(current);}
   function step(){
-   const shared=Object.assign(Object.create(null),current.signals),candidates=[];
-   for(const r of runs){const reads=new Map(index.bindings.filter(b=>b.input.canvasId===r.canvas.id).map(b=>[b.input.nodeId,b.name]));try{const candidate=r.run.prepareStep({readInput:n=>reads.has(n.id)?shared[reads.get(n.id)]:undefined,publishOutput:(n,value)=>{shared[n.name.trim()]=value;}});candidates.push([r,candidate]);}catch(e){lastFailure={...r.run.manifest().diagnostics[0],canvasId:r.canvas.id,message:r.canvas.name+'：'+e.message};throw Error(lastFailure.message);}}
-   const canvases=Object.fromEntries(candidates.map(([r,frame])=>[r.canvas.id,r.run.commitStep(frame)]));current={tick:current.tick+1,time:(current.tick+1)*original.dtUs/1e6,canvases,signals:shared};lastFailure=null;return snapshot();
+   const shared=Object.assign(Object.create(null),current.signals),sharedQuality=Object.assign(Object.create(null),current.signalQualities),candidates=[];
+   for(const r of runs){
+    const reads=new Map(index.bindings.filter(b=>b.input.canvasId===r.canvas.id).map(b=>[b.input.nodeId,b.name]));
+    try{
+     const candidate=r.run.prepareStep({
+      readInput:n=>reads.has(n.id)?shared[reads.get(n.id)]:undefined,
+      readInputQuality:n=>reads.has(n.id)?sharedQuality[reads.get(n.id)]:undefined,
+      publishOutput:(n,value,quality)=>{
+       const name=n.name.trim();shared[name]=value;
+       if(quality==='GOOD')delete sharedQuality[name];else sharedQuality[name]=quality;
+      }
+     });
+     candidates.push([r,candidate]);
+    }catch(e){lastFailure={...r.run.manifest().diagnostics[0],canvasId:r.canvas.id,message:r.canvas.name+'：'+e.message};throw Error(lastFailure.message);}
+   }
+   const canvases=Object.fromEntries(candidates.map(([r,frame])=>[r.canvas.id,r.run.commitStep(frame)]));
+   current={tick:current.tick+1,time:(current.tick+1)*original.dtUs/1e6,canvases,signals:shared,...(Object.keys(sharedQuality).length?{signalQualities:sharedQuality}:{})};lastFailure=null;return snapshot();
   }
   function manifest(){
    const ms=runs.map(r=>[r.canvas.id,r.run.manifest()]),first=ms[0][1],models={};for(const key of ['arithmeticModels','stateModels','monitorModels','timerModels']){const rows=ms.filter(([,m])=>m[key]);if(rows.length)models[key]=Object.assign({},...rows.map(([,m])=>m[key]));}
    const forcing=ms.flatMap(([canvasId,m])=>(m.outputForcing?.pins||[]).map(pin=>({...pin,canvasId})));
-   return{engineVersion:C.ENGINE_VERSION,profile:C.PROFILE,scanModel:MODEL,sharedSignalModel:MODEL,numericMode:first.numericMode,numericValidationModel:first.numericValidationModel,...models,project:clone(recorded),fingerprints:fingerprints(recorded),order:ms.flatMap(([id,m])=>m.order.map(n=>nodeKey(id,n))),execution:{model:MODEL,canvasOrder:original.canvases.map(c=>c.id),canvases:Object.fromEntries(ms.map(([id,m])=>[id,m.execution]))},executionScope:clone(executionScope),...(forcing.length?{outputForcing:{model:C.FORCE_MODEL,pins:forcing}}:{}),resultRange:{firstTick:0,lastTick:current.tick,firstTimeUs:0,lastTimeUs:current.tick*original.dtUs,executedScans:current.tick,snapshotCount:current.tick+1},diagnostics:lastFailure?[clone(lastFailure)]:[],comparisonTolerances:null,evidence:'软件约定：有序画布与同名信号；未取得 Ovation 实机多任务运行对照'};
+   return{engineVersion:C.ENGINE_VERSION,profile:C.PROFILE,scanModel:MODEL,sharedSignalModel:MODEL,...(ms.some(([,m])=>m.qualityModel)?{qualityModel:C.signalQuality.model}:{}),numericMode:first.numericMode,numericValidationModel:first.numericValidationModel,...models,project:clone(recorded),fingerprints:fingerprints(recorded),order:ms.flatMap(([id,m])=>m.order.map(n=>nodeKey(id,n))),execution:{model:MODEL,canvasOrder:original.canvases.map(c=>c.id),canvases:Object.fromEntries(ms.map(([id,m])=>[id,m.execution]))},executionScope:clone(executionScope),...(forcing.length?{outputForcing:{model:C.FORCE_MODEL,pins:forcing}}:{}),resultRange:{firstTick:0,lastTick:current.tick,firstTimeUs:0,lastTimeUs:current.tick*original.dtUs,executedScans:current.tick,snapshotCount:current.tick+1},diagnostics:lastFailure?[clone(lastFailure)]:[],comparisonTolerances:null,evidence:'软件约定：有序画布与同名信号；未取得 Ovation 实机多任务运行对照'};
   }
   reset();return{step,reset,snapshot,manifest};
  }

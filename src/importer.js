@@ -226,5 +226,22 @@
   const computed=C.validate({...project,issues:[]});
   return {targetFound:true,selectionRequired:false,targets,project,issues:[...issues,...computed],summary:{nodes:project.nodes.length,connections:project.edges.length,usedImplementation:!!impl,target:target.file.name,documents:svgDocs.map(d=>d.file.name)}};
  }
- return {importFiles,parseTft};
+ function importMacro(files,Parser){
+  const result=importFiles(files,Parser);
+  if(!result.targetFound)throw Error(result.issues.map(i=>i.message).join('；')||'未找到可用的 Control Sheet SVG');
+  const p=result.project;
+  if(!p.nodes.length)throw Error('SVG 未包含可导入的逻辑模块');
+  for(const n of p.nodes){
+   if(n.macroReference||!['INPUT','OUTPUT'].includes(n.type))continue;
+   const attrs=n.provenance.attributes,key=n.type==='INPUT'?'cb-alg-out':'cb-alg-tout',name=attrs[key];
+   if(name&&!name.startsWith('$'))n.name=name.trim();
+  }
+  for(const issue of p.issues){
+   if(issue.code==='INPUT_SCENARIO_REQUIRED'||issue.code==='SCAN_CONFIGURATION_REQUIRED'){
+    issue.resolved=true;issue.resolution={method:'macro-parent',note:'宏继承父画布端口信号和工程扫描周期'};
+   }
+  }
+  return p;
+ }
+ return {importFiles,importMacro,parseTft};
 });

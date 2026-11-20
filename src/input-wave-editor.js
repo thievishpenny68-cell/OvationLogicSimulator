@@ -23,7 +23,7 @@
  const descriptions={constant:'整个仿真期间保持同一个值。',step:'变化时刻之前取“变化前”，从该时刻起取“变化后”。',ramp:'开始前保持起始值，开始后按每秒斜率变化。',table:'到达节点时切换到该行的值，两节点之间保持前值。',linear:'相邻节点之间线性变化。'};
  function example(mode,kind){const a=kind==='boolean'?false:0,b=kind==='boolean'?true:1;return mode==='constant'?{mode,value:a}:mode==='step'?{mode,at:1,before:a,after:b}:mode==='ramp'?{mode,start:0,value:0,slope:1}:{mode,points:[[0,a],[1,b]]};}
  function fields(w){return{mode:w?.mode||'',value:str(w?.value),at:str(w?.at),before:str(w?.before),after:str(w?.after),start:str(w?.start),slope:str(w?.slope),points:(w?.points||[]).map(p=>p.map(str))};}
- function mount(parent,{kind,wave,dtUs,draft,onChange=()=>{}}){
+ function mount(parent,{kind,wave,dtUs,draft,quality,onChange=()=>{}}){
   const original=wave==null?null:copy(wave),initial=fields(original);let state=draft?copy(draft.state):copy(initial),lastWave=null,lastPreview=null,excelRequest=0,excelDraft=null,editRevision=0;
   const doc=parent.ownerDocument,html=(tag,attrs={},text)=>{const e=doc.createElement(tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,String(v));if(text!==undefined)e.textContent=text;return e;},svg=(tag,attrs={},text)=>{const e=doc.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,String(v));if(text!==undefined)e.textContent=text;return e;};
   const root=html('section',{class:'wave-editor'}),toolbar=html('div',{class:'wave-mode-toolbar'}),modeLabel=html('label',{},'输入规律 '),mode=html('select',{id:'wave-mode','aria-label':'输入规律'}),buttons=html('div',{class:'wave-mode-buttons'}),workspace=html('div',{class:'wave-editor-workspace'}),editor=html('div',{class:'wave-form-panel'}),form=html('div',{class:'wave-fields'}),description=html('p',{class:'source-note'}),presets=html('div',{class:'wave-presets'}),panel=html('section',{class:'wave-preview-panel','aria-label':'输入波形预览'}),previewHeader=html('div',{class:'wave-preview-toolbar'}),endLabel=html('label',{},'预览至 '),end=html('input',{id:'wave-preview-end',type:'number',min:'0',step:'any','aria-label':'预览终点（秒）'}),chart=svg('svg',{id:'wave-preview',viewBox:'0 0 660 250',preserveAspectRatio:'none',role:'img','aria-label':'手工输入波形及扫描采样点'}),error=html('p',{id:'wave-preview-error',class:'wave-preview-error',role:'status'}),readout=html('p',{id:'wave-preview-readout',class:'wave-preview-readout'}),note=html('p',{id:'wave-preview-note',class:'source-note'}),status=html('p',{id:'wave-draft-status',role:'status'}),discard=html('button',{id:'wave-discard',type:'button'},'恢复已应用设置');
@@ -41,7 +41,7 @@
   function read(){const m=state.mode,w=m==='constant'?{mode:m,value:value(state.value)}:m==='step'?{mode:m,at:time(state.at),before:value(state.before),after:value(state.after)}:m==='ramp'?{mode:m,start:time(state.start),value:value(state.value),slope:time(state.slope)}:['table','linear'].includes(m)?{mode:m,points:state.points.map(p=>[time(p[0]),value(p[1])])}:null;if(!w)throw Error('请选择输入规律');C.checkWave(w,kind);return w;}
   function dirty(){try{return JSON.stringify(fields(read()))!==JSON.stringify(initial);}catch{return JSON.stringify(state)!==JSON.stringify(initial);}}
   function snapshot(){return{state:copy(state),end:end.value};}
-  function notify(edited=false){if(edited)editRevision++;const changed=dirty();status.textContent=changed?'草稿预览 · 尚未应用。点击“应用参数”后用于仿真。':'已应用输入规律的预览 · 不推进仿真时间。';status.className=changed?'wave-dirty':'source-note';discard.disabled=!changed;onChange(snapshot(),changed);}
+  function notify(edited=false){if(edited)editRevision++;const changed=dirty();status.textContent=changed?'草稿预览 · 尚未应用。点击“应用参数”后用于仿真。':'正在预览已应用的输入规律。';status.className=changed?'wave-dirty':'source-note';discard.disabled=!changed;onChange(snapshot(),changed);}
   const format=v=>kind==='boolean'?(v?'TRUE':'FALSE'):kind==='packed16'?'0x'+v.toString(16).toUpperCase().padStart(4,'0')+' ('+v+')':str(v);
   function draw(){chart.replaceChildren();lastPreview=null;lastWave=null;readout.textContent='移动指针查看时刻与数值；圆点表示扫描采样。';note.textContent='';try{const w=read(),p=preview(w,kind,{end:Number(end.value),dtUs}),x=t=>64+t/Number(end.value)*580,values=p.line.map(p=>Number(p[1])).concat(p.samples.map(p=>Number(p.value)));let min=kind==='boolean'?0:Math.min(...values),max=kind==='boolean'?1:Math.max(...values);if(min===max){const pad=Math.max(1,Math.abs(min)*.1);min-=pad;max+=pad;}const y=v=>204-(Number(v)-min)/(max-min)*178;
     for(let i=0;i<=4;i++){const t=Number(end.value)*i/4;chart.append(svg('line',{x1:x(t),y1:20,x2:x(t),y2:204,class:'wave-grid'}),svg('text',{x:x(t),y:228,'text-anchor':i===0?'start':i===4?'end':'middle'},number(t)+'s'));}
@@ -81,7 +81,80 @@
   excelSheet.onchange=()=>{if(!excelSheet.value||!excelDraft)return;try{adoptExcel(excelDraft,excelSheet.value);}catch(e){excelError('导入失败：'+e.message);}};
 
   mode.onchange=()=>{if(mode.value)selectMode(mode.value);else{state=fields(null);render();notify(true);}};end.oninput=()=>{draw();notify();};discard.onclick=()=>{state=copy(initial);render();notify(true);};render();notify();
-  return{read,snapshot};
+  const qualityEditor=quality?mountQuality(editor,quality):null;
+  return{read,snapshot,qualityEditor};
  }
- return{preview,mount};
+ function mountQuality(parent,{wave,draft,onChange=()=>{}}){
+  const Q=C.signalQuality,doc=parent.ownerDocument;
+  const create=(tag,label)=>{const node=doc.createElement(tag);if(label)node.textContent=label;return node;};
+  const stateOf=w=>({
+   mode:w?.mode??'',value:str(w?.value),at:str(w?.at),before:str(w?.before),after:str(w?.after),
+   points:Array.isArray(w?.points)?w.points.map(pair=>Array.isArray(pair)?[str(pair[0]),str(pair[1])]:['','']):[]
+  });
+  const source=wave===undefined?{mode:'constant',value:'GOOD'}:wave,initial=stateOf(source);
+  let state=copy(draft??initial);
+  const box=create('details'),summary=create('summary','信号质量'),controls=create('div'),status=create('p'),form=create('div');
+  box.className='input-quality-editor';box.open=!!draft||wave!==undefined;
+  status.className='source-note';status.setAttribute('role','status');
+  const reset=create('button','恢复已应用质量');reset.type='button';reset.id='quality-discard';
+  box.append(summary,controls,form,status,reset);parent.append(box);
+  function field(parent,label,id,inputValue,choices){
+   const wrapper=create('label',label),input=create(choices?'select':'input');
+   wrapper.className='field';input.id=id;
+   if(choices)for(const [value,name] of choices){const option=create('option',name);option.value=value;input.append(option);}
+   else{input.type='number';input.min='0';input.step='any';}
+   input.value=inputValue;
+   wrapper.append(input);parent.append(wrapper);
+   return input;
+  }
+  const known=[['','请选择质量'],...Q.states.map(state=>[state,state])];
+  const mode=field(controls,'质量规律','quality-mode',state.mode,[['','请选择规律'],['constant','常量'],['step','阶跃'],['table','分段保持']]);
+  function read(){
+   const time=t=>t.trim()?Number(t):NaN;
+   const w=state.mode==='constant'?{mode:state.mode,value:state.value}:
+    state.mode==='step'?{mode:state.mode,at:time(state.at),before:state.before,after:state.after}:
+    {mode:state.mode,points:state.points.map(([at,quality])=>[time(at),quality])};
+   Q.checkWave(w);return w;
+  }
+  function notify(){
+   const dirty=JSON.stringify(state)!==JSON.stringify(initial);
+   try{
+    const w=read(),label=w.mode==='constant'?w.value:modes[w.mode];
+    summary.textContent='信号质量 · '+label;
+    status.textContent=dirty?'质量草稿，点“应用参数”后与输入波形一起生效。':'质量与信号值分别设置，在同一拍采样。';
+   }catch(error){summary.textContent='信号质量 · 待配置';status.textContent=error.message;}
+   reset.disabled=!dirty;onChange(copy(state),dirty);
+  }
+  function render(){
+   mode.value=state.mode;form.replaceChildren();
+   const property=(label,key,choices)=>{
+    const input=field(form,label,'quality-'+key,state[key],choices);
+    input.oninput=()=>{state[key]=input.value;notify();};
+   };
+   if(state.mode==='constant')property('质量','value',known);
+   if(state.mode==='step'){property('变化时刻（秒）','at');property('变化前','before',known);property('变化后','after',known);}
+   if(state.mode==='table'){
+    state.points.forEach((point,i)=>{
+     const row=create('div');row.className='quality-point';
+     const at=field(row,'时刻（秒）','quality-time-'+i,point[0]),q=field(row,'质量','quality-point-'+i,point[1],known);
+     at.oninput=()=>{point[0]=at.value;notify();};q.oninput=()=>{point[1]=q.value;notify();};
+     const remove=create('button','删除节点');remove.type='button';remove.onclick=()=>{state.points.splice(i,1);render();};
+     row.append(remove);form.append(row);
+    });
+    const add=create('button','添加质量节点');add.type='button';add.id='quality-add-point';
+    add.onclick=()=>{const last=state.points.at(-1);state.points.push(last?[String((Number(last[0])||0)+1),last[1]]:['0','GOOD']);render();};
+    form.append(add);
+   }
+   notify();
+  }
+  mode.onchange=()=>{
+   const key=mode.value;
+   state=stateOf(key==='constant'?{mode:key,value:'GOOD'}:key==='step'?{mode:key,at:1,before:'GOOD',after:'BAD'}:
+    key==='table'?{mode:key,points:[[0,'GOOD'],[1,'BAD']]}:undefined);
+   render();
+  };
+  reset.onclick=()=>{state=copy(initial);render();};render();
+  return{read};
+ }
+ return{preview,mount,mountQuality};
 });

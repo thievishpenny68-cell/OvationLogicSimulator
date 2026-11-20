@@ -359,6 +359,12 @@
       "toPort": "IN2"
     },
     {
+      "from": "run",
+      "fromPort": "OUT",
+      "to": "compare",
+      "toPort": "ENBL"
+    },
+    {
       "from": "a",
       "fromPort": "OUT",
       "to": "selector",

@@ -11,7 +11,23 @@
  }
  function normalize(value){try{return JSON.parse(JSON.stringify(value));}catch(e){throw Error('工程必须可按JSON保存：'+e.message);}}
  function write(value){if(Array.isArray(value))return'['+value.map(write).join(',')+']';if(value&&typeof value==='object')return'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+write(value[k])).join(',')+'}';return JSON.stringify(value);}
- function omitDisplay(value){delete value.scopes;delete value.title;delete value.paper;delete value.titleBlock;for(const edge of value.edges||[])if(edge&&typeof edge==='object')delete edge.routing;for(const node of value.nodes||[]){delete node.x;delete node.y;delete node.name;if(!node.macroReference&&['INPUT','OUTPUT'].includes(node.type))delete node.ioOrientation;}return value;}
+ function omitDisplay(value,macro=false){
+  delete value.scopes;delete value.title;delete value.paper;delete value.titleBlock;
+  for(const edge of value.edges||[])if(edge&&typeof edge==='object')delete edge.routing;
+  for(const node of value.nodes||[]){
+   delete node.x;delete node.y;if(!macro||node.macroReference||!['INPUT','OUTPUT'].includes(node.type))delete node.name;
+   if(node.macroReference)continue;
+   if(node.type==='CUSTOM_MACRO'&&node.macroGraph)omitDisplay(node.macroGraph,true);
+   if(['INPUT','OUTPUT'].includes(node.type))delete node.ioOrientation;
+   const params=node.params;
+   if(node.type==='WAVE_RECORDER'&&Array.isArray(params?.presets)){
+    // Stored recordings change the project. Only the one being played changes the scan.
+    if(params.mode==='capture'){delete params.presets;delete params.presetId;}
+    else if(params.mode==='replay')params.presets=params.presets.filter(p=>p?.id===params.presetId);
+   }
+  }
+  return value;
+ }
  const canonical=value=>write(normalize(value)),logicKey=project=>write(omitDisplay(normalize(project)));
  function fingerprints(project){const value=normalize(project),full=write(value),simulation=write(omitDisplay(value));return{algorithm:'SHA-256',canonicalization:'sorted-json-v1',simulationProjection:'omit-display-v1',project:sha256(full),simulation:sha256(simulation)};}
  return{canonical,logicKey,sha256,fingerprints};

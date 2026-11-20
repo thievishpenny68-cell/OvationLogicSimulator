@@ -1,5 +1,7 @@
 # 导入时生成自定义宏外框
 
+控制块库中的可执行“自定义宏”可以单独导入内部 SVG，并在嵌入画布编辑和观察。其接口来自内部命名 INPUT/OUTPUT。使用方法见[自定义宏](../user-guide.md#13-自定义宏)。本页介绍由源 SVG 的 `ControlMacroReference` 直接生成的图形。
+
 0.55.0 仅对源 SVG 标记为 `cb-classname="ControlMacroReference"` 的对象生成自定义宏外框。它是用户定义的图形接口，不是新增的 Ovation 仿真算法。即使宏名与 AND、GAINBIAS 等内置算法相同，也不会套用这些算法的模型或引脚许可。
 
 ## 还原内容
