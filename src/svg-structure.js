@@ -28,8 +28,9 @@
  const semantic=new Set(['ControlAlgorithm','FastBooleanAlgorithm','ExternalPointInterface','ControlMacroReference']);
  const outputPorts=new Set(['OUT','ACT']);
  function ancestor(e,predicate){for(let n=e.parentNode;n?.nodeType===1;n=n.parentNode)if(predicate(n))return n;return null;}
- function analyze(root){
+ function analyze(root,{decodeFields=false}={}){
   const els=[root,...descendants(root)],issues=[],connections=[],candidates=[],layouts=Object.create(null),byId=new Map(),matrices=new Map();
+  const identityIndex=I.index(root),decode=(e,text)=>decodeFields?identityIndex.decodeField(e,text):null;
   const instances=new Map(els.filter(e=>cls(e)==='SignalConnection').map((e,i)=>[e,'connection-'+(i+1)]));
   const issue=(code,message,e)=>issues.push({code,message,objectId:e?.getAttribute('id')||null,connectionInstanceKey:instances.get(e)||null});
   for(const e of els){const id=e.getAttribute('id');if(id){if(!byId.has(id))byId.set(id,[]);byId.get(id).push(e);}}
@@ -54,8 +55,16 @@
    catch(err){issue(err.code||'SVG_TRANSFORM_UNSUPPORTED',err.message,e);}matrices.set(e,m);return m;
   }
   function coordinates(e,x,y){const m=world(e);if(!m)return null;const read=k=>{const v=e.getAttribute(k);return v===''||v===null?0:Number(v);};const px=read(x),py=read(y);if(!Number.isFinite(px)||!Number.isFinite(py)){issue('SVG_COORDINATE_INVALID','无法解析图形坐标',e);return null;}return transformPoint(m,{x:px,y:py});}
-  const owners=els.filter(e=>semantic.has(cls(e))),shapes=new Map();
+  const owners=els.filter(e=>semantic.has(cls(e))),shapes=new Map(),fieldNames=Object.create(null);
   for(const n of owners){
+   if(decodeFields&&identityIndex.key){
+    const decoded=Object.create(null);
+    for(const a of Array.from(n.attributes||[]))if(a.name.startsWith('cb-alg-')){
+     const name=decode(n,a.name.slice(7));
+     if(name&&/^[a-z][a-z0-9-]*$/i.test(name))decoded[a.name]='cb-alg-'+name.toLowerCase();
+    }
+    fieldNames[n.getAttribute('id')]=decoded;
+   }
    const shape=descendants(n).find(e=>['rect','ellipse','circle'].includes(e.localName||e.tagName)&&ancestor(e,p=>semantic.has(cls(p)))===n);
    if(shape){shapes.set(n,shape);const name=shape.localName||shape.tagName,p=coordinates(shape,name==='rect'?'x':'cx',name==='rect'?'y':'cy');if(p)layouts[n.getAttribute('id')]=p;}
   }
@@ -63,7 +72,8 @@
    const owner=ancestor(e,n=>semantic.has(cls(n))),name=e.getAttribute('cb-pin-name');
    const type=owner&&cls(owner)!=='ControlMacroReference'?(owner.getAttribute('cb-function-name')||'').toUpperCase():'',declared=DI.pin(type,name)||B.pin(type,name)||E.pin(type,name)||BC.pin(type,name)||TR.pin(type,name),port=DI.get(type)||B.catalog[type]||E.catalog[type]||BC.catalog[type]||TR.catalog[type]?declared?.port||null:/^(IN[1-8]|OUT|ACT|SET|RSET|ENBL|HISP|LOSP|SRST|INIT)$/.test(name||'')?name:null,direction=declared?.direction||(port?(outputPorts.has(port)?'output':'input'):null);
    const line=Array.from(e.childNodes).find(n=>n.nodeType===1&&(n.localName||n.tagName)==='line');
-   return{e,id:e.getAttribute('id'),owner:owner?.getAttribute('id'),port,direction,points:line?[coordinates(line,'x1','y1'),coordinates(line,'x2','y2')].filter(Boolean):[]};
+   const decodedName=decode(e,name)?.match(/^cb-alg-([a-z0-9][a-z0-9-]*)$/i)?.[1]?.toLowerCase();
+   return{e,id:e.getAttribute('id'),owner:owner?.getAttribute('id'),port,direction,...(decodedName?{decodedName}:{}),points:line?[coordinates(line,'x1','y1'),coordinates(line,'x2','y2')].filter(Boolean):[]};
   });
   // Advisory layout hypotheses are kept separate from explicit semantic names.
   const suggestions=new Map(),near=(a,b)=>Math.abs(a-b)<=1e-6,unaryLayouts=new Set(['GAINBIAS','ASSIGN','SMOOTH']);
@@ -120,7 +130,7 @@
     if(target.points.some(p=>endpoints.some(q=>coincides(p,q))))candidates.push({...base,destinationObjectId:target.owner,destinationPort:target.port,destinationPinId:target.id,sourcePortSuggestion:hint(source,'output'),destinationPortSuggestion:hint(target,'input'),requiresConfirmation:true,evidence:'coincident-graphic-endpoint-only'});
    }
   }
-  const identityIndex=I.index(root),physicalConnections=[];
+  const physicalConnections=[];
   function anchor(pin,direction){
    const owner=owners.find(e=>e.getAttribute('id')===pin.owner),shape=owner&&shapes.get(owner),m=shape&&world(shape);if(!shape||!m||!near(m[1],0)||!near(m[2],0))return{side:direction==='input'?'left':'right',fraction:.5};
    const tag=shape.localName||shape.tagName,num=k=>Number(shape.getAttribute(k)),rx=tag==='circle'?num('r'):num('rx'),ry=tag==='circle'?num('r'):num('ry'),x=tag==='rect'?num('x'):num('cx')-rx,y=tag==='rect'?num('y'):num('cy')-ry,w=tag==='rect'?num('width'):2*rx,h=tag==='rect'?num('height'):2*ry;
@@ -139,18 +149,23 @@
    const line=lineReferenceResolved?referencedLine:localLines.length===1?localLines[0]:null;
    if(!source?.owner||!line||cls(line.parentNode)!=='SignalSegment')continue;
    const endpoints=[coordinates(line,'x1','y1'),coordinates(line,'x2','y2')].filter(Boolean);
-   const targets=pins.filter(p=>p.owner&&p.owner!==source.owner&&p.direction!=='output'&&p.points.some(a=>endpoints.some(b=>coincides(a,b))));
+   const decodedTarget=decode(connection,connection.getAttribute('cb-input-pin'))?.match(/^\$(\d+)\$$/)?.[1];
+   const referencedPin=decodedTarget?identityIndex.reference(decodedTarget):null;
+   const targets=pins.filter(p=>p.owner&&p.owner!==source.owner&&p.direction!=='output'&&(!decodedTarget||p.e===referencedPin)&&p.points.some(a=>endpoints.some(b=>coincides(a,b))));
+   if(decodedTarget&&!targets.length)issue('SVG_ENDPOINT_CONFLICT','解码目标针脚与末端线段不一致',connection);
    if(targets.length!==1){if(targets.length>1)issue('SVG_ENDPOINT_AMBIGUOUS','明确线段末端对应多个目标针脚，保留歧义',connection);continue;}
    const target=targets[0],sourceOwner=identityIndex.raw(source.owner),destinationOwner=identityIndex.raw(target.owner),sourceActual=sourceOwner&&identityIndex.actual(sourceOwner);
    if(!sourceOwner||!destinationOwner||byId.get(source.id)?.length!==1||byId.get(target.id)?.length!==1)continue;
-   const bindings=Array.from(destinationOwner.attributes||[]).filter(a=>a.name.startsWith('cb-alg-')).map(a=>({attribute:a.name,value:a.value,ref:a.value.match(/^\$([^$]+)\$(cb-alg-[^$]+)\$$/)})).filter(a=>a.ref&&a.ref[1]===sourceActual);
+   const attrs=Array.from(destinationOwner.attributes||[]).filter(a=>a.name.startsWith('cb-alg-')).map(a=>({attribute:a.name,value:a.value,ref:a.value.match(/^\$([^$]+)\$(cb-alg-[^$]+)\$$/)}));
+   const exact=target.decodedName?attrs.filter(a=>fieldNames[target.owner]?.[a.attribute]==='cb-alg-'+target.decodedName):[];
+   const bindings=(exact.length?exact:attrs).filter(a=>a.ref&&a.ref[1]===sourceActual&&(!source.decodedName||a.ref[2].toLowerCase()==='cb-alg-'+source.decodedName));
    const refPorts=[...new Set(bindings.map(a=>a.ref[2].slice(7).toUpperCase()))];
    const sourcePort=source.port||(refPorts.length===1?refPorts[0]:hint(source,'output')?.port)||null;
    const ownerType=(destinationOwner.getAttribute('cb-function-name')||'').toUpperCase(),singleOutput=ownerType==='OUTPUT'&&pins.filter(p=>p.owner===target.owner).length===1;
    const semanticName=bindings.length===1?bindings[0].attribute.slice(7):null;
    const declared=semanticName&&(DI.pin(ownerType,semanticName)||B.pin(ownerType,semanticName)||E.pin(ownerType,semanticName)||BC.pin(ownerType,semanticName)||TR.pin(ownerType,semanticName));
    const destinationPort=target.port||(singleOutput?'IN1':declared?.direction==='input'?declared.port:null);
-   const corroborated=lineReferenceResolved&&bindings.length>0&&refPorts.length===1&&(!source.port||refPorts[0]===source.port);
+   const corroborated=lineReferenceResolved&&bindings.length>0&&refPorts.length===1&&(!source.port||refPorts[0]===source.port)&&(!exact.length||exact.every(a=>a.value===bindings[0].value));
    const evidence=corroborated?'property-reference-and-terminating-segment':lineReferenceResolved?'terminating-segment-unique-endpoint':'containing-segment-unique-endpoint';
    const segments=[];for(let n=connection.parentNode;n&&n!==source.e;n=n.parentNode)if(cls(n)==='SignalSegment')for(const l of Array.from(n.childNodes).filter(e=>e.nodeType===1&&(e.localName||e.tagName)==='line')){const points=[coordinates(l,'x1','y1'),coordinates(l,'x2','y2')];if(points.every(Boolean))segments.unshift({id:l.getAttribute('id'),points});}
    const route={sourceObjectId:source.owner,destinationObjectId:target.owner,sourcePinId:source.id,destinationPinId:target.id,sourcePort,destinationPort,connectionId:connection.getAttribute('id'),connectionInstanceKey:instances.get(connection),evidence,corroborated,lineReferenceResolved,graphicLineId:line.getAttribute('id'),actualGraphicLineId:graphicId,sourceActualId:sourceActual,destinationActualId:identityIndex.actual(destinationOwner),bindings:bindings.map(({attribute,value})=>({attribute,value})),segments,sourcePoints:source.points,destinationPoints:target.points,sourceAnchor:anchor(source,'output'),destinationAnchor:anchor(target,'input')};
@@ -169,7 +184,7 @@
     if(!direction&&attach){const polygon=Array.from(pin.e.childNodes).find(e=>e.nodeType===1&&(e.localName||e.tagName)==='polygon'),pm=polygon&&world(polygon),raw=(polygon?.getAttribute('points')||'').trim().split(/[\s,]+/).map(Number),ps=pm&&raw.length===6&&raw.every(Number.isFinite)?[0,2,4].map(i=>transformPoint(pm,{x:raw[i],y:raw[i+1]})):[];if(ps.some(p=>near(p.x,attach.x)&&near(p.y,attach.y))){direction='input';evidence='pin-arrow-into-body';}else if(ps.some(p=>near(p.x,terminal.x)&&near(p.y,terminal.y))){direction='output';evidence='pin-arrow-out-of-body';}else if(!polygon){direction=attach===a?'output':'input';evidence='serialized-pin-line-direction';}}
     const dx=attach&&terminal?terminal.x-attach.x:0,dy=attach&&terminal?terminal.y-attach.y:0,side=Math.abs(dx)>=Math.abs(dy)?dx<0?'left':'right':dy<0?'top':'bottom';return{id:pin.id,direction,evidence,attach,terminal,side,points:pin.points};})});
   }
-  return{layouts,connections,candidates,physicalConnections,macroSymbols,identity:{key:identityIndex.key,profile:identityIndex.profile,objects:owners.map(e=>({id:e.getAttribute('id'),actualId:identityIndex.actual(e)}))},issues,pins:pins.map(({e,...p})=>p),pinSuggestions:[...suggestions.values()]};
+  return{layouts,connections,candidates,physicalConnections,macroSymbols,fieldNames,identity:{key:identityIndex.key,profile:identityIndex.profile,objects:owners.map(e=>({id:e.getAttribute('id'),actualId:identityIndex.actual(e)}))},issues,pins:pins.map(({e,...p})=>p),pinSuggestions:[...suggestions.values()]};
  }
  return{analyze,transformMatrix,transformPoint};
 });

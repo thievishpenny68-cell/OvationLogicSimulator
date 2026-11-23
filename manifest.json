@@ -1,12 +1,12 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "entry": "index.html",
   "edition": "public-offline",
   "files": [
     {
       "path": "docs/algorithm-support-matrix.md",
       "bytes": 14733,
-      "sha256": "94842a6797ff3f7726828fa2494f69e1632774d407a487e60f6a8a6684308907"
+      "sha256": "8d4bcfb13b9ab7a636b020b7c1de5611f53a330f21350648a55cb7932e892ed1"
     },
     {
       "path": "docs/images/guide/0.67.1/01-first-run.png",
@@ -155,8 +155,8 @@
     },
     {
       "path": "docs/reference/display-controls.md",
-      "bytes": 2784,
-      "sha256": "08d9dad324cfdfb4e21d3c35f97b02bdf9a32f4ff3ed00fbe297e85bfa46c151"
+      "bytes": 2822,
+      "sha256": "8485fc76c5d15124517576023d5ffc449e19b165ed355552e963ae7e3d1c1de6"
     },
     {
       "path": "docs/reference/edge-memory.md",
@@ -210,8 +210,8 @@
     },
     {
       "path": "docs/reference/gate-inputs.md",
-      "bytes": 2338,
-      "sha256": "6910e28f8e58e28c646f9d8f2dedb0d9071105fe56e77d43e11c33b08f476226"
+      "bytes": 2379,
+      "sha256": "c08872b985edd02405d4b24c256be599a7e5050240076dda15c65f20a698c803"
     },
     {
       "path": "docs/reference/hysteresis-monitors.md",
@@ -270,8 +270,8 @@
     },
     {
       "path": "docs/reference/manual-symbols-and-scope-fifo.md",
-      "bytes": 3352,
-      "sha256": "93f5d1a7f9298e1c2bbd17ca10c1cd334c483a856991d9e2c17d90ec1e2b1bae"
+      "bytes": 2779,
+      "sha256": "4878e0d6272d57d2fd6d64536da97c4b3c6f38a9768bc86c4c96df47d87aba44"
     },
     {
       "path": "docs/reference/manual-wire-tool.md",
@@ -291,7 +291,7 @@
     {
       "path": "docs/reference/multi-canvas-projects.md",
       "bytes": 9612,
-      "sha256": "2ca1e982078411bf1add141c36e977cb24acabdc8df0d54e4fecb0927194e149"
+      "sha256": "1376ece66f8551e74416c50a659d410f9e3bcd7004e6b42ddffaf309d50112a7"
     },
     {
       "path": "docs/reference/ondelay-state-machine.md",
@@ -466,7 +466,7 @@
     {
       "path": "docs/user-guide.md",
       "bytes": 23842,
-      "sha256": "3b98959cbaf4d8bab0282d8af42116bba8a5ec9ea3a74afa44446973685bae9d"
+      "sha256": "4658c54e053926d568d0ceef9435e390486865606ec0a38be04b030aded55b11"
     },
     {
       "path": "docs/validation/manual-acceptance.md",
@@ -855,18 +855,18 @@
     },
     {
       "path": "guide.html",
-      "bytes": 39899,
-      "sha256": "60cb31077a8ea7c61dd49509a5e94c0d18dfa68ec880ea93221a0c82060b90e7"
+      "bytes": 39980,
+      "sha256": "4d9853e2e23cab7ab5a02c8047dda2f74a16680f79076f30209b44b0918ba379"
     },
     {
       "path": "index.html",
-      "bytes": 29703,
-      "sha256": "1aa40cc80238019a7f08f7bd293ae7d22c3a5ddb8d277d3d44c374f6f9ec7c65"
+      "bytes": 29865,
+      "sha256": "76a2539b23a1bee2dd6f3c3ff9f3dfef236e41ee49f7f28cd8366c7208d81d09"
     },
     {
       "path": "README.md",
-      "bytes": 1948,
-      "sha256": "0cae58a0075c41193acfd38fe8aad928bf4c3931c8f688a5eeee34ce797cc372"
+      "bytes": 2065,
+      "sha256": "edeac4098d621e09331dd5cb44b1adc5a34a7a1a27b3d6ce4fbc041cae0baef6"
     },
     {
       "path": "src/annotations.js",
@@ -875,8 +875,8 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 194728,
-      "sha256": "1aac4eaecc2478d1396e29ac4358de59b0fb3b65bee22f727653eda5826792c4"
+      "bytes": 195387,
+      "sha256": "f41c1fae726a9b4e73f2b4a0e00c2d2051e1ce33dde9ed1eafe73f549448ff2f"
     },
     {
       "path": "src/basic-analog.js",
@@ -900,8 +900,8 @@
     },
     {
       "path": "src/canvas-workspace.js",
-      "bytes": 13192,
-      "sha256": "86d6aa9e1b49a45d3f2d8f960bc9e321470c3d2bb681eee48dbc8d4b9ba11241"
+      "bytes": 13309,
+      "sha256": "579045888474aee9bb31b0d4214765ae05d4c314e0f0514361f9ccdc1c217664"
     },
     {
       "path": "src/clock-blocks.js",
@@ -970,8 +970,8 @@
     },
     {
       "path": "src/importer.js",
-      "bytes": 39887,
-      "sha256": "eab0735f67036ca5dcef2dce7e9c1a70266616e944ca3d0133e2998f6a540c2f"
+      "bytes": 42162,
+      "sha256": "b555221934f4d04b83977da3917a5b02f6346cff5a780f880354da5ad943d46d"
     },
     {
       "path": "src/input-wave-editor.js",
@@ -990,8 +990,8 @@
     },
     {
       "path": "src/macro-symbols.js",
-      "bytes": 7006,
-      "sha256": "1132e3746e862021ff64d8d3c8d3b8b7a46ed8c2b7758a5398ae2f27c6f874cf"
+      "bytes": 7541,
+      "sha256": "9c8fd40503412caa57eb31b65c0c96b4c41fe1e5851740cb6618fcbe22a2edc9"
     },
     {
       "path": "src/macros.js",
@@ -1040,8 +1040,8 @@
     },
     {
       "path": "src/project-state.js",
-      "bytes": 3985,
-      "sha256": "5632d9b6f9e3b7f5755235ba0a353b064905f3803d4df228cefc2c7c9add337c"
+      "bytes": 4011,
+      "sha256": "4cb4aaf2ef1029f0d0e8c6de5b7005cc36c71f75303fd535a30e2641ed54946e"
     },
     {
       "path": "src/recompute.js",
@@ -1090,8 +1090,18 @@
     },
     {
       "path": "src/source-semantics.js",
-      "bytes": 10357,
-      "sha256": "1ebe49b350b83db45f567fec6d5459f017b30fb0b028121a81a5903aa0036e3e"
+      "bytes": 10793,
+      "sha256": "eacf14cea963587c301e4ff05ee048610801f10fa0a8620adc5a9f1edbcd4419"
+    },
+    {
+      "path": "src/standard-symbol-data.js",
+      "bytes": 34737,
+      "sha256": "52bb89032c3fcc7c6bd36765e2df0103b172acc9d223a5a1c6fec34d3fca9e09"
+    },
+    {
+      "path": "src/standard-symbols.js",
+      "bytes": 8061,
+      "sha256": "4b4baba3aa2115be2f99b03037d5dca68b17070d45b1f8fa4f18e9871cac0e04"
     },
     {
       "path": "src/style.css",
@@ -1104,24 +1114,29 @@
       "sha256": "ef5994c9e3884bfbe21694dafeacc7017ce8c6340b934ccb10a18f202e324013"
     },
     {
+      "path": "src/svg-field-codec.js",
+      "bytes": 16059,
+      "sha256": "96887bac63e6884ef9cd5c9f29465279c1eb18461cc38ca1908ea97666ac8ad7"
+    },
+    {
       "path": "src/svg-identity.js",
-      "bytes": 1956,
-      "sha256": "52174d9c5b8af823a8c54c17d740e45bdf7c72e4364e3a2f645cf2db9abe9387"
+      "bytes": 3026,
+      "sha256": "0ebb84e3aa65c1621fd59682e7f478caa2cb58ede1ac377d72a5b18e67f40ed7"
     },
     {
       "path": "src/svg-port-names.js",
-      "bytes": 8535,
-      "sha256": "4f764117f3ad9946951a48aa1774c68ba70fc9c0b43a5c1dce1774f18e987b99"
+      "bytes": 8736,
+      "sha256": "929d68cdb7c4868d4aa28ca5d11146ebee43faaa831c5e0410fd8a63eb3586ea"
     },
     {
       "path": "src/svg-structure.js",
-      "bytes": 24289,
-      "sha256": "40b9bf5b7fd05f009e5a870abfbeff851d0e88a816ac6aa18f7ebb4b593567ce"
+      "bytes": 25598,
+      "sha256": "c71186a1b7e72e7dda086084f6a0f7315f98a5d0921ce30a913e1b3901767cc1"
     },
     {
       "path": "src/symbols.js",
-      "bytes": 10360,
-      "sha256": "20e775ccb9be9c14656fcac9f497cde9216ce781a2939fa22093b212b0085d5a"
+      "bytes": 10800,
+      "sha256": "ac12f175bdd2a9d04ab8f877b2b1fc29c59e267e216c8c263b369ae2e7de67a9"
     },
     {
       "path": "src/text-input.js",

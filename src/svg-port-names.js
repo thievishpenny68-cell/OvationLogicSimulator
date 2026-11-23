@@ -33,6 +33,8 @@
   for(let pass=0;pass<32;pass++){let changed=false;for(const f of fields){const names=f.dictionary.filter(name=>fits(f.e,f.raw,name));if(names.length===1)changed=learn(f.e,f.raw,names[0])||changed;}changed=declaredInputs()||changed;if(!changed)break;}
   const pins={},attributes={};if(!conflicts.length)for(const e of elements){const id=e.getAttribute('id');if(!id)continue;if(e.getAttribute('cb-classname')==='ControlPin'){const name=read(e,e.getAttribute('cb-pin-name')||'');if(name?.startsWith('cb-alg-'))pins[id]=name.slice(7);}for(const attr of Array.from(e.attributes||[]))if(attr.name.startsWith('cb-alg-')){const name=read(e,attr.name.slice(7));if(name)(attributes[id]||={})[attr.name]='cb-alg-'+name;}}
   const dynamicSources={};if(!conflicts.length)for(const f of frameFields){const name=read(f.e,f.raw);if(metadata.includes(name))dynamicSources[f.e.getAttribute('id')]=name;}
+  for(const pin of structure.pins||[])if(pin.decodedName)pins[pin.id]=pin.decodedName;
+  for(const[id,fields]of Object.entries(structure.fieldNames||{}))attributes[id]={...attributes[id],...fields};
   return{pins,attributes,proofs,dynamicSources,conflicts,supported:true,profile:'object-offset-substitution-constraints-v2'};
  }
  return{decode};

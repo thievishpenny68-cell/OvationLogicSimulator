@@ -15,7 +15,7 @@
   delete value.scopes;delete value.title;delete value.paper;delete value.titleBlock;
   for(const edge of value.edges||[])if(edge&&typeof edge==='object')delete edge.routing;
   for(const node of value.nodes||[]){
-   delete node.x;delete node.y;if(!macro||node.macroReference||!['INPUT','OUTPUT'].includes(node.type))delete node.name;
+   delete node.x;delete node.y;delete node.symbolVariant;if(!macro||node.macroReference||!['INPUT','OUTPUT'].includes(node.type))delete node.name;
    if(node.macroReference)continue;
    if(node.type==='CUSTOM_MACRO'&&node.macroGraph)omitDisplay(node.macroGraph,true);
    if(['INPUT','OUTPUT'].includes(node.type))delete node.ioOrientation;

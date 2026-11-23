@@ -3,6 +3,11 @@
  const all=e=>[e,...Array.from(e.getElementsByTagName('*'))];
  const attrs=e=>Object.fromEntries(Array.from(e.attributes||[]).map(a=>[a.name,a.value]));
  const cls=e=>e.getAttribute('cb-classname');
+ const svgValue=(node,name)=>{const at=node.provenance.attributes,decoded=node.provenance.decodedFields||{};
+  const values=[...new Set(Object.entries(at).filter(([key])=>(decoded[key]||key)===name).map(([,value])=>value))];
+  return values.length===1?values[0]:undefined;
+ };
+ const interfaceName=(node,type)=>svgValue(node,type==='INPUT'?'cb-alg-out':'cb-alg-tout')?.trim();
  const stem=name=>name.replace(/\\/g,'/').split('/').pop().replace(/\.[^.]+$/,'').toLowerCase();
  const logicClasses=new Set(['ControlAlgorithm','FastBooleanAlgorithm','ExternalPointInterface','ControlMacroReference']),builderKinds=new Set(['ControlFunction','ControlMacro','MacroImplementation']);
  function elements(root){return all(root).filter(e=>logicClasses.has(cls(e)));}
@@ -53,7 +58,7 @@
    if(!targets.find(t=>t.file===doc.file.name).selectable){if(!issues.some(i=>i.code==='SOURCE_CONFLICT'&&i.sourceFile===doc.file.name))add('SOURCE_CONFLICT','宏定义文件名重复，未生成定义：'+doc.file.name+'；请重命名后重新导入',undefined,'error',{sourceFile:doc.file.name});continue;}
    const localFiles=files.filter(f=>stem(f.name)===stem(doc.file.name));
    const graph=importFiles(localFiles,Parser,{target:doc.file.name,includeLibrary:false}).project;graph.sources=[];graph.library=[];
-   const io=type=>graph.nodes.filter(n=>n.type===type).map(n=>({name:n.provenance.attributes[type==='INPUT'?'cb-alg-out':'cb-alg-tout']||(type+'_'+n.provenance.objectId),nodeId:n.id,kind:n.params.kind||'unknown'}));
+   const io=type=>graph.nodes.filter(n=>n.type===type).map(n=>({name:interfaceName(n,type)||(type+'_'+n.provenance.objectId),nodeId:n.id,kind:n.params.kind||'unknown'}));
    const declared=all(doc.root).filter(e=>cls(e)==='ControlMacroParameterInterface').map(e=>e.getAttribute('cb-param-name')).filter(Boolean),parameters=[];
    for(const n of graph.nodes)for(const [key,source]of Object.entries(n.provenance.parameterSources||{}))if(declared.includes(source.record))parameters.push({name:source.record,nodeId:n.id,key,value:n.params[key],source});
    const unmapped=declared.filter(name=>!parameters.some(p=>p.name===name));
@@ -84,7 +89,9 @@
     add('COMPILED_PROGRAM_REVIEW_REQUIRED','编译XML '+doc.file+' 含 '+doc.instructions.length+' 条指令、'+doc.argumentsTotal+' 个参数记录；位置/类型/编译顺序未解读，需人工核对，未用于生成算法或执行计划',undefined,'error',{sourceFile:doc.file});
    }
   }
-  const structure=S.analyze(target.root);
+  const structure=S.analyze(target.root,{decodeFields:options.automaticPorts!==false});
+  const encodedSource=!impl&&structure.identity.key&&options.automaticPorts!==false;
+  const implementationAttrs=impl?rawNodes.map(attrs):[];
   const tft=parseTft(tftFile?.text||'');
   if(impl){
    const counts=ns=>{const c={};for(const n of ns){const k=n.getAttribute('cb-function-name');c[k]=(c[k]||0)+1;}return JSON.stringify(Object.entries(c).sort());};
@@ -125,13 +132,24 @@
      if(names.length){const pins=names.map(m=>'IN'+m[1]);n.params.inputs=pins;try{n.params.inputs=C.gateInputConfig(pins);}catch{/* Missing required pins remain invalid for explicit repair. */}}
    }
    const fields=n.macroReference?{}:A.fields[type]||{};
+   const decoded=!impl&&structure.fieldNames[id]||{};
+   if(Object.keys(decoded).length)n.provenance.decodedFields=decoded;
+   const wireNames=Object.fromEntries(Object.entries(decoded).map(([raw,field])=>[field,at[raw]]));
+   if(encodedSource){
+    const name=svgValue(n,'cb-alg-alg')||(['INPUT','OUTPUT'].includes(type)?interfaceName(n,type):null);
+    if(name?.trim()&&!name.startsWith('$'))n.name=name.trim();
+   }
+   const parameterConflicts=[];
    const group=tft.get(id);
    if(group?.duplicate)add('SOURCE_CONFLICT','TFT 中存在重复 ALGID：'+id+'；保留全部记录，不选择最后一份',nodeId);
    if(group&&group.type!==type)add('SOURCE_CONFLICT','TFT 的算法类型与对象不一致',nodeId);
    for(const [key,field] of Object.entries(fields)){
     const records=field===null?[]:(group?.records||[]).filter(r=>r.field===field);
-    const attributes=['cb-alg-'+key.toLowerCase(),...Object.entries(d?.parameterAliases||{}).filter(([,canonical])=>canonical===key).map(([alias])=>'cb-alg-'+alias.toLowerCase())],provided=attributes.filter(attribute=>Object.hasOwn(at,attribute)),explicitAttribute=provided[0]||attributes[0],rawExplicit=at[explicitAttribute],selectableReference=d?.selectableInputs?.[key]&&/^\$[^$]+\$[^$]+\$$/.test(rawExplicit||''),explicit=selectableReference?undefined:rawExplicit;
-    if(provided.some(attribute=>at[attribute]!==rawExplicit&&(!Number.isFinite(Number(at[attribute]))||!Number.isFinite(Number(rawExplicit))||Number(at[attribute])!==Number(rawExplicit)))){add('SOURCE_CONFLICT','参数 '+key+' 的明确别名值冲突，未采用',nodeId);continue;}
+    const attributes=['cb-alg-'+key.toLowerCase(),...Object.entries(d?.parameterAliases||{}).filter(([,canonical])=>canonical===key).map(([alias])=>'cb-alg-'+alias.toLowerCase())];
+    const provided=Object.keys(at).filter(attribute=>attributes.includes(decoded[attribute]||attribute));
+    const explicitAttribute=provided[0]||attributes[0],rawExplicit=at[explicitAttribute],selectableReference=d?.selectableInputs?.[key]&&/^\$[^$]+\$[^$]+\$$/.test(rawExplicit||'');
+    const explicit=selectableReference?undefined:type==='GAINBIAS'&&key==='PROQ'&&['ON','OFF'].includes(rawExplicit?.trim().toUpperCase())?(rawExplicit.trim().toUpperCase()==='ON'?'1':'0'):rawExplicit;
+    if(provided.some(attribute=>at[attribute]!==rawExplicit&&(!at[attribute].trim()||!rawExplicit.trim()||!Number.isFinite(Number(at[attribute]))||!Number.isFinite(Number(rawExplicit))||Number(at[attribute])!==Number(rawExplicit)))){parameterConflicts.push(...provided);add('SOURCE_CONFLICT','参数 '+key+' 的 SVG 字段值冲突，未采用',nodeId,'error',{sourceFields:provided});continue;}
     if(records.length&&(!group||group.duplicate||group.type!==type))continue;
     if(records.length===1&&records[0].value!==null){n.params[key]=records[0].value;n.provenance.parameterSources[key]={file:tftFile.name,record:records[0].name,field};if(explicit!==undefined&&(explicit.trim()===''||Number(explicit)!==records[0].value))add('SOURCE_CONFLICT','SVG/TFT 参数 '+key+' 不一致',nodeId);}
     else if(records.length>1)add('SOURCE_CONFLICT','TFT 参数 '+key+' 存在多个候选',nodeId);
@@ -139,25 +157,35 @@
     else if(!records.length&&explicit!==undefined&&!d?.paramChoices?.[key]&&explicit.trim()!==''&&Number.isFinite(Number(explicit))){n.params[key]=Number(explicit);n.provenance.parameterSources[key]={file:impl?.file.name||target.file.name,attribute:explicitAttribute};}
     else if(!records.length&&explicit!==undefined)add('SOURCE_PARAMETER_INVALID','参数 '+key+' 不是明确的有限数值',nodeId);
    }
-   D.apply(n,{attributes:[at,...(visual&&visual!==e?[attrs(visual)]:[])],fields,aliases:d?.parameterAliases,records:group?.records,blocked:implementationConflict||tfts.length>1||!!group&&(group.duplicate||group.type!==type)});
+   if(parameterConflicts.length)n.provenance.parameterFieldConflicts=parameterConflicts;
+   const symbolicSettings=new Set(Object.values(d?.paramChoices||{}).flat().filter(value=>typeof value==='string'));
+   if(type==='GAINBIAS'){symbolicSettings.add('ON');symbolicSettings.add('OFF');}
+   const opaqueSetting=encodedSource&&Object.keys(fields).length&&Object.entries(at).some(([attribute,value])=>{
+    const literal=value.trim();
+    return attribute.startsWith('cb-alg-')&&!Object.hasOwn(decoded,attribute)&&!A.declaredBinding(n,attribute.slice(7))
+      &&literal&&(Number.isFinite(Number(literal))||symbolicSettings.has(literal.toUpperCase()));
+   });
+   D.apply(n,{attributes:[at,wireNames,...(visual&&visual!==e?[attrs(visual)]:[])],fields,aliases:d?.parameterAliases,records:group?.records,blocked:opaqueSetting||implementationConflict||tfts.length>1||!!group&&(group.duplicate||group.type!==type)});
    for(const record of group?.records||[])if(A.role(n,record)==='parameter'&&!Object.values(fields).includes(record.field)){const key='TFT:'+record.field;if(!n.params[key])n.params[key]=[];n.params[key].push({record:record.name,value:record.value,sourceValue:record.sourceValue});}
-   for(const[key,field]of Object.entries(fields))if((!Object.hasOwn(d?.defaults||{},key)||d?.optionalParameters?.includes(key))&&!Object.hasOwn(n.params,key)){const records=(group?.records||[]).filter(r=>r.field===field),attribute='cb-alg-'+key.toLowerCase();if(records.length||at[attribute]!==undefined)n.params[key]={sourceStatus:'unresolved',records,explicitValue:at[attribute]??null};}
+   for(const[key,field]of Object.entries(fields))if((!Object.hasOwn(d?.defaults||{},key)||d?.optionalParameters?.includes(key))&&!Object.hasOwn(n.params,key)){const records=(group?.records||[]).filter(r=>r.field===field),attribute='cb-alg-'+key.toLowerCase(),value=at[attribute]??wireNames[attribute];if(records.length||value!==undefined)n.params[key]={sourceStatus:'unresolved',records,explicitValue:value??null};}
    for(const key of Object.keys(fields))if(Object.hasOwn(n.params,key)&&!Object.hasOwn(d?.defaults||{},key)&&!group?.records.some(r=>r.field===fields[key]))add('SOURCE_PARAMETER_UNSUPPORTED','当前模式未支持导入参数 '+key,nodeId);
-   {const opaque=Object.keys(at).filter(k=>k.startsWith('cb-alg-')&&!A.declaredBinding(n,k.slice(7)));if(opaque.length)add('OPAQUE_BINDINGS','存在未解析的端口/参数字段：'+opaque.join(', '),nodeId,MS.isDisplay(n)?'warning':'error',{sourceFile:impl?.file.name||target.file.name,sourceNamespace:impl?'implementation':'svg',sourceFields:opaque});}
+   {const opaque=Object.keys(at).filter(k=>k.startsWith('cb-alg-')&&!A.declaredBinding(n,(decoded[k]||k).slice(7)));if(opaque.length)add('OPAQUE_BINDINGS','存在未解析的端口/参数字段：'+opaque.join(', '),nodeId,MS.isDisplay(n)?'warning':'error',{sourceFile:impl?.file.name||target.file.name,sourceNamespace:impl?'implementation':'svg',sourceFields:opaque});}
    if(!n.macroReference){const documents=[[e,impl?.file.name||target.file.name],[visualForNode.get(nodeId),target.file.name]];
-    for(const port of d?.unsupportedInputs||[]){const bindings=[];for(const[element,file]of documents)for(const prefix of ['cb-alg-','cb-macro-']){const attribute=prefix+port.toLowerCase(),value=element?.getAttribute(attribute);if(value?.trim()&&!bindings.some(b=>b.file===file&&b.attribute===attribute&&b.value===value))bindings.push({file,attribute,value});}if(bindings.length){n.params[port]={unsupportedSourceBindings:bindings};add(port==='TRIN'?'TRACKING_UNSUPPORTED':'OPTIONAL_INPUT_UNSUPPORTED','当前基本模式未开放输入 '+port+'，原绑定已保留',nodeId);}}
+    for(const port of d?.unsupportedInputs||[]){const bindings=[];for(const[element,file]of documents)for(const prefix of ['cb-alg-','cb-macro-']){const attribute=prefix+port.toLowerCase(),value=element?.getAttribute(attribute);if(value?.trim()&&!bindings.some(b=>b.file===file&&b.attribute===attribute&&b.value===value))bindings.push({file,attribute,value});}for(const[attribute,field]of Object.entries(decoded))if(field==='cb-alg-'+port.toLowerCase()&&at[attribute].trim())bindings.push({file:target.file.name,attribute,value:at[attribute]});if(bindings.length){n.params[port]={unsupportedSourceBindings:bindings};add(port==='TRIN'?'TRACKING_UNSUPPORTED':'OPTIONAL_INPUT_UNSUPPORTED','当前基本模式未开放输入 '+port+'，原绑定已保留',nodeId);}}
     for(const port of d?.unsupportedOutputs||[])if(documents.some(([element])=>['cb-alg-','cb-macro-'].some(prefix=>element?.getAttribute(prefix+port.toLowerCase())?.trim())))add('TRACKING_OUTPUT_NOT_SIMULATED','已识别但未仿真的跟踪输出 '+port+'；当前仅计算OUT',nodeId,'warning');
    }
    project.nodes.push(n);
   }
-  const inputFields=A.inputFields;
+  const byNodeId=new Map(project.nodes.map(n=>[n.id,n]));
   for(const e of rawNodes){const to=nodeIds.get(e.getAttribute('id'));if(!to)continue;
+   const node=byNodeId.get(to);
    for(const [attr,v] of Object.entries(attrs(e))){
-    if(!attr.startsWith('cb-alg-'))continue;const key=attr.slice(7),port=A.inputField(project.nodes.find(n=>n.id===to),key);
+    if(!attr.startsWith('cb-alg-'))continue;const key=(node.provenance.decodedFields?.[attr]||attr).slice(7),port=A.inputField(node,key);
     const ref=v.match(/^\$([^$]+)\$([^$]+)\$$/);
-    if(ref&&port){const from=nodeIds.get(ref[1]);if(from)project.edges.push({from,fromPort:(()=>{const n=project.nodes.find(n=>n.id===from),key=ref[2].replace(/^cb-alg-/,'');return(!n.macroReference&&C.declaredInterfaces.outputField(n.type,key))||key.toUpperCase();})(),to,toPort:port,provenance:{file:impl?.file.name||target.file.name,attribute:attr,sourceValue:v}});else add('UNRESOLVED_REFERENCE','未找到连接源：'+ref[1],to);}
-    else if(port&&v&&!(C.catalog[project.nodes.find(n=>n.id===to)?.type]?.selectableInputs?.[port]&&Object.hasOwn(project.nodes.find(n=>n.id===to).params,port)))add('EXTERNAL_BINDING_REQUIRED','输入 '+port+' 的点/常量绑定需要补充：'+v,to);
-    else if(ref&&!port)add('PORT_MAPPING_REQUIRED','未支持的引用端口：'+attr,to);
+    if(ref&&encodedSource){add('PORT_MAPPING_REQUIRED','尚未核实引用的针脚：'+attr,to,'error',{sourceField:attr});continue;}
+    if(ref&&port){const from=nodeIds.get(ref[1]);if(from)project.edges.push({from,fromPort:(()=>{const n=byNodeId.get(from),key=ref[2].replace(/^cb-alg-/,'');return(!n.macroReference&&C.declaredInterfaces.outputField(n.type,key))||key.toUpperCase();})(),to,toPort:port,provenance:{file:impl?.file.name||target.file.name,attribute:attr,sourceValue:v}});else add('UNRESOLVED_REFERENCE','未找到连接源：'+ref[1],to);}
+    else if(port&&v&&!(C.catalog[node.type]?.selectableInputs?.[port]&&Object.hasOwn(node.params,port)))add('EXTERNAL_BINDING_REQUIRED','输入 '+port+' 的点/常量绑定需要补充：'+v,to);
+    else if(ref&&!port)add('PORT_MAPPING_REQUIRED','未支持的引用端口：'+attr,to,'error',{sourceField:attr});
    }
   }
   if(impl&&project.nodes.some(n=>!n.provenance.layoutMatched))add('LAYOUT_UNMAPPED','部分布局无法与宏实现唯一对应；采用临时位置，原始 SVG 已保留',undefined,'warning');
@@ -165,7 +193,7 @@
   const mapped=id=>visualMap.get(id)?.length===1?visualMap.get(id)[0]:null;
   for(const n of project.nodes){const visual=visualForNode.get(n.id),svgAttributes=visual?attrs(visual):{},mappingUsable=!!visual&&n.provenance.layoutEvidence!=='unique-type-layout-only'&&visualMap.get(n.provenance.svgObjectId)?.length===1&&visible.filter(v=>v.getAttribute('id')===n.provenance.svgObjectId).length===1&&rawNodes.filter(v=>v.getAttribute('id')===n.provenance.objectId).length===1;
    n.provenance.svgAttributes=svgAttributes;
-   const audit=A.auditNode(n,{svgAttributes,svgFile:target.file.name,tftRecords:tft.get(n.provenance.objectId)?.records||[],tftFile:tftFile?.name,implementationFile:impl?.file.name,implementationObjects:rawNodes.map(attrs),hasImplementation:!!impl,mappingUsable});n.provenance.fieldAudit=audit.fields;
+   const audit=A.auditNode(n,{svgAttributes,svgFile:target.file.name,tftRecords:tft.get(n.provenance.objectId)?.records||[],tftFile:tftFile?.name,implementationFile:impl?.file.name,implementationObjects:implementationAttrs,hasImplementation:!!impl,mappingUsable});n.provenance.fieldAudit=audit.fields;
    for(const issue of audit.diagnostics){const{code,message,nodeId,...extra}=issue;add(code,message,nodeId,MS.isDisplay(n)?'warning':'error',extra);}
   }
   for(const issue of structure.issues)add(issue.code,issue.message,undefined,'error',{sourceFile:target.file.name,sourceObjectId:issue.objectId,sourceInstanceKey:issue.connectionInstanceKey,sourceConnectionInstanceKey:issue.connectionInstanceKey});
@@ -192,7 +220,9 @@
    for(const issue of issues){let fixed=false;if(['SVG_PORT_MAPPING_REQUIRED','SVG_REFERENCE_UNRESOLVED'].includes(issue.code)&&mappedConnections.has(issue.sourceInstanceKey))fixed=true;
     const n=project.nodes.find(n=>n.id===issue.nodeId),known={...n?.provenance.decodedPortFields,...n?.provenance.sourcePinFields};
     if(['OPAQUE_BINDINGS','SVG_FIELDS_UNRESOLVED'].includes(issue.code)&&issue.sourceFields){issue.sourceFields=issue.sourceFields.filter(f=>!Object.hasOwn(known,f));if(!issue.sourceFields.length)fixed=true;else issue.message='尚未解析的来源字段：'+issue.sourceFields.join(', ');}
-    if(issue.code==='PORT_MAPPING_REQUIRED'&&n){const refs=Object.entries(n.provenance.attributes).filter(([k,v])=>k.startsWith('cb-alg-')&&/^\$[^$]+\$cb-alg-[^$]+\$$/.test(v));if(refs.length&&refs.every(([k])=>Object.hasOwn(known,k)))fixed=true;}
+    if(issue.code==='PORT_MAPPING_REQUIRED'&&n&&issue.sourceField){
+     fixed=Object.hasOwn(n.provenance.sourcePinFields||{},issue.sourceField)||(!encodedSource&&Object.hasOwn(known,issue.sourceField));
+    }
     if(fixed){issue.resolved=true;issue.resolution={method:'automatic',note:'程序已按源引用、针脚编码及算法接口完成自动映射'};}}
   }
   for(const n of project.nodes)if(!n.macroReference)for(const key of Object.keys(C.catalog[n.type]?.selectableInputs||{}))if(n.provenance.parameterSources[key]?.kind==='manual-default'&&project.edges.some(edge=>edge.to===n.id&&edge.toPort===key)){delete n.params[key];delete n.provenance.parameterSources[key];}
@@ -233,7 +263,7 @@
   if(!p.nodes.length)throw Error('SVG 未包含可导入的逻辑模块');
   for(const n of p.nodes){
    if(n.macroReference||!['INPUT','OUTPUT'].includes(n.type))continue;
-   const attrs=n.provenance.attributes,key=n.type==='INPUT'?'cb-alg-out':'cb-alg-tout',name=attrs[key];
+   const name=interfaceName(n,n.type);
    if(name&&!name.startsWith('$'))n.name=name.trim();
   }
   for(const issue of p.issues){
